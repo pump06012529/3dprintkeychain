@@ -1,4 +1,4 @@
-import { BRAND } from '@vostok/brand';
+
 import '@vostok/ui-kit/styles.css';
 import { topbarLinks } from '@vostok/ui-kit';
 import './style.css';

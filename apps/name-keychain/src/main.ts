@@ -17,7 +17,7 @@ import {
   qualityCallout,
   sidebarFooter,
 } from '@vostok/ui-kit';
-import { BRAND } from '@vostok/brand';
+
 // @ts-ignore
 import * as opentype from 'opentype.js';
 import { unzipSync } from 'fflate';
