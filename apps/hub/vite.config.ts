@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
-  base: '/',
+export default defineConfig(({ command }) => ({
+  base: command === 'serve' ? '/' : '/3dprintkeychain/',
   server: {
     proxy: {
       '/Clicker-Generator': {
@@ -20,4 +20,4 @@ export default defineConfig({
     port: 5174,
     strictPort: true,
   },
-});
+}));
