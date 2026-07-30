@@ -46,7 +46,7 @@ jobs:
         run: pnpm build:keychain
 
       - name: Copy Name Keychain to Hub Dist
-        run: cp -r apps/name-keychain/dist apps/hub/dist/name-keychain
+        run: cp -r apps/name-keychain/dist apps/hub/dist/Name-Keychain
 
       - name: Build Clicker Generator
         run: pnpm build:clicker
