@@ -34,16 +34,9 @@ export interface GeneratorHeaderOptions {
 
 /** Title + description + "Made by Vostok Labs" — the top of every generator sidebar. */
 export function generatorHeader(opts: GeneratorHeaderOptions): HTMLElement {
-  const credit = el('a', {
-    className: 'vl-credit-link',
-    attrs: { href: opts.madeByUrl ?? BRAND.urls.makerworld, target: '_blank', rel: 'noopener noreferrer' },
-  });
-  credit.append(parseSvg(VOSTOK_MARK), document.createTextNode('Vostok Labs'));
-
   return el('div', { className: 'vl-app-header' }, [
     el('h1', { className: 'vl-app-title', text: opts.title }),
     el('p', { className: 'vl-app-subtitle', text: opts.description }),
-    el('p', { className: 'vl-app-credit' }, [document.createTextNode('สร้างโดย '), credit]),
   ]);
 }
 

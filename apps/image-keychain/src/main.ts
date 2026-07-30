@@ -91,7 +91,17 @@ dropZone.addEventListener('drop', async (e) => {
   if (file) handleFileSelected(file);
 });
 
-const previewImg = el('img', { attrs: { style: 'width: 100%; height: auto; max-height: 200px; border-radius: 8px; border: 1px dashed var(--border); display: none; object-fit: contain; padding: 4px; background: rgba(0,0,0,0.1); margin-bottom: 12px;' } }) as HTMLImageElement;
+const previewImg = el('img', { attrs: { style: 'width: 100%; height: auto; max-height: 180px; border-radius: 8px; border: 1px dashed var(--border); display: none; object-fit: contain; padding: 4px; background: rgba(0,0,0,0.1); cursor: pointer;' } }) as HTMLImageElement;
+previewImg.title = 'คลิกเพื่อเปลี่ยนรูป';
+previewImg.addEventListener('click', () => fileInput.click());
+
+const changeImgBtn = el('button', {
+  className: 'nk-btn-change-img',
+  text: '🔄 เปลี่ยนรูปภาพ',
+  attrs: { type: 'button', style: 'display: none; width: 100%; margin-bottom: 8px; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-2, rgba(255,255,255,0.06)); color: var(--fg); cursor: pointer; font-size: 13px;' }
+}) as HTMLButtonElement;
+changeImgBtn.addEventListener('click', () => fileInput.click());
+
 
 const statusEl = el('div', { className: 'nk-status show', text: 'กรุณาอัปโหลดรูปภาพ...' });
 const stage = el('section', { className: 'nk-stage', attrs: { style: 'position: relative; flex: 1; height: 100%;' } });
@@ -114,6 +124,7 @@ async function handleFileSelected(file: File) {
   uploadedFile = file;
   previewImg.src = URL.createObjectURL(file);
   previewImg.style.display = 'block';
+  changeImgBtn.style.display = 'block';
   dropZone.style.display = 'none';
   colorCountSlider.classList.toggle('hidden', file.type === 'image/svg+xml');
   removeBgToggle.classList.toggle('hidden', file.type === 'image/svg+xml');
@@ -273,6 +284,7 @@ const boldnessSlider = sliderRow({ label: 'ความหนารูปภา�
 const settings = el('div', { className: 'vl-section' }, [
   el('h4', { text: 'เลือกรูปภาพ' }),
   previewImg,
+  changeImgBtn,
   dropZone,
   fileInput,
   el('div', { attrs: { style: 'margin-top: 12px;' } }, [colorCountSlider, removeBgToggle]),
@@ -395,7 +407,7 @@ const footer = sidebarFooter({
 });
 
 const shell = appShell({
-  topbar: topbarLinks({ githubUrl: BRAND.urls.github, themeToggle: false }),
+  topbar: topbarLinks({ homeUrl: '../', themeToggle: false }),
   left: {
     scroll: [
       generatorHeader({ title: 'พวงกุญแจรูปภาพ', description: 'แปลงโลโก้หรือรูปภาพให้เป็นพวงกุญแจ 3 มิติได้ทันที' }),

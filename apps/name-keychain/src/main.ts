@@ -1019,8 +1019,7 @@ stage.append(
 
 app.append(el('main', { className: 'vl-app', attrs: { style: 'position: relative;' } }, [
   topbarLinks({
-    githubUrl: BRAND.urls.github,
-    boostUrl: BRAND.urls.makerworld,
+    homeUrl: '../',
     themeToggle: false,
     themeStorageKey: 'name-keychain-theme'
   }),
