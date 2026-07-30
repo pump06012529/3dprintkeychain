@@ -187,7 +187,7 @@ export function buildProfiles(wasm: any, textContours: number[][][], params: Bui
   const holeX = lugCx + params.ringPosX;
   const holeY = lugCy + params.ringPosY;
 
-  const angle = params.ringAngle ?? defaultAngle;
+  const angle = defaultAngle + (params.ringAngle ?? 0);
   const rad = (angle * Math.PI) / 180;
   const neckLen = Math.max(lugOuter * 2.2, 10.0);
   const anchorX = holeX - neckLen * Math.cos(rad);

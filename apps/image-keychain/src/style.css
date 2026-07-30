@@ -1,0 +1,398 @@
+/* Image Keychain Styles */
+
+:root {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Keychain-specific hint text ---- */
+.nk-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+.nk-noams-readout { color: var(--accent); }
+
+/* ---- Text inputs ---- */
+.nk-name-input,
+.nk-second-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 9px var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-field);
+  background: var(--panel-2);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.nk-second-input {
+  font: inherit;
+}
+
+/* ---- Font grid (right panel) ---- */
+.nk-font-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+  height: 190px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+}
+
+.nk-font-card {
+  min-height: 66px;
+  text-align: left;
+  padding: var(--space-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-field);
+  background: var(--panel-2);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.nk-font-card:hover {
+  border-color: var(--muted);
+}
+
+.nk-font-card.active {
+  border-color: var(--accent);
+  box-shadow: var(--ring);
+}
+
+.nk-font-card__sample {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding-right: 20px;
+}
+
+.nk-font-card__name {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* ---- Colour swatches ---- */
+.nk-colors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.nk-color {
+  display: grid;
+  gap: var(--space-1);
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.nk-color input {
+  width: 100%;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-field);
+  background: var(--panel-2);
+  cursor: pointer;
+}
+
+/* ---- Stage (3D viewport) — keychain adds a radial gradient bg ---- */
+.nk-stage {
+  background: radial-gradient(circle at center, var(--panel-2), var(--bg) 70%);
+}
+
+.nk-stage canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* ---- Status overlay ---- */
+.nk-status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  border: 1px solid var(--line);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-box);
+  pointer-events: none;
+  display: none;
+}
+
+.nk-status.show {
+  display: block;
+}
+
+/* ---- Mobile responsive ---- */
+@media (max-width: 760px) {
+  body {
+    overflow-y: auto;
+  }
+  .nk-stage {
+    min-height: 300px;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---- Font section in the right column: fill the height, grid scrolls ---- */
+.nk-font-section-scroll { overflow: hidden; }
+.nk-font-section {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.nk-font-section .vl-label { flex: 0 0 auto; }
+.nk-font-section .nk-font-grid {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 120px;
+}
+.nk-font-section .nk-browse-fonts { flex: 0 0 auto; }
+
+/* ---- Font section: browse-all button ---- */
+.nk-browse-fonts {
+  margin-top: var(--space-2);
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-field);
+  background: var(--panel-2);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.12s, color 0.12s;
+}
+.nk-browse-fonts:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---- Advanced section ---- */
+.nk-advanced {
+  /* No special borders needed since it's a vl-section now */
+}
+.nk-advanced__hint { color: var(--muted); font-family: var(--font-body); font-weight: 400; font-size: 0.75rem; }
+.nk-advanced__body {
+  padding: var(--space-3) var(--space-3) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+.nk-advanced__summary::-webkit-details-marker { display: none; }
+.nk-advanced__summary::after {
+  content: '⌄';
+  margin-left: auto;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+.nk-advanced[open] .nk-advanced__summary::after { transform: rotate(180deg); }
+.nk-nudge { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+/* ---- Font browser modal ---- */
+.vl-dialog:has(.nk-fontmodal) { width: min(760px, 96vw); }
+.nk-fontmodal { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-3); }
+.nk-fb__search {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-field);
+  background: var(--panel-2);
+  color: var(--text);
+  font: inherit;
+}
+.nk-fb__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.nk-fb__chip {
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--panel-2);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.nk-fb__chip:hover { border-color: var(--muted); color: var(--text); }
+.nk-fb__chip.active { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+.nk-fb__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: var(--space-2);
+  max-height: 56vh;
+  overflow-y: auto;
+  padding: 2px;
+}
+.nk-fb__row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  padding: 10px 12px;
+  min-height: 72px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-field);
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  position: relative;
+}
+.nk-fb__row:hover { border-color: var(--muted); }
+.nk-fb__row.active { border-color: var(--accent); box-shadow: var(--ring); }
+.nk-fb__preview {
+  font-size: 1.75rem;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 1.9rem;
+}
+.nk-fb__meta { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.nk-fb__name { font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nk-fb__cat { color: var(--muted); font-size: 0.68rem; flex: 0 0 auto; }
+.nk-fb__empty { color: var(--muted); grid-column: 1 / -1; text-align: center; padding: 24px; }
+
+/* Unsupported fonts */
+.nk-font-card.unsupported,
+.nk-fb__row.unsupported {
+  opacity: 0.5;
+}
+.nk-font-card__warn,
+.nk-fb__warn {
+  color: #ff4747;
+  font-weight: 900;
+  margin-left: auto;
+}
+.nk-font-card__warn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: var(--panel-2);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* ---- Emoji Picker ---- */
+.nk-emoji-toggle {
+  align-self: flex-start;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+.nk-emoji-grid {
+  grid-template-columns: repeat(auto-fill, minmax(32px, 1fr));
+  gap: 6px;
+  background: var(--panel-2);
+  padding: 8px;
+  border-radius: var(--radius-field);
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+
+.nk-emoji-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  text-align: center;
+  transition: background 0.15s;
+}
+
+.nk-emoji-btn:hover {
+  background: var(--hover);
+}
+
+.drop {
+  border: 2px dashed var(--accent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  outline-offset: 3px;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  color: var(--muted);
+  cursor: pointer;
+  background: color-mix(in srgb, var(--accent) 3%, var(--panel-2));
+  font-size: 15px;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, outline-color 0.15s, background-color 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.drop-icon {
+  color: var(--accent);
+  margin-bottom: 10px;
+  transition: transform 0.18s ease, color 0.15s;
+}
+.drop-title {
+  font-size: 18.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.drop-text {
+  color: var(--text);
+}
+.drop:hover, .drop.over {
+  border-color: var(--accent);
+  outline-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--panel-2));
+  color: var(--text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+.drop:hover .drop-icon, .drop.over .drop-icon {
+  transform: translateY(-2px);
+}

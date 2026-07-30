@@ -121,12 +121,12 @@ function makerlabPlugin(enabled) {
   };
 }
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ command, mode }) => ({
   // Relative asset URLs so the build works under any subpath (e.g. GitHub Pages
   // serves this app at /<repo-name>/, not at the domain root).
-  base: './',
+  base: command === 'serve' ? '/SVG-keycap-generator/' : './',
   plugins: [iconsManifestPlugin(mode === 'makerworld'), makerlabPlugin(mode === 'makerworld')],
-  server: { open: true },
+  server: { open: false, port: 5179, strictPort: true },
   // manifold-3d ships its own WASM; let it load the asset directly instead of prebundling.
   optimizeDeps: { exclude: ['manifold-3d'] },
   // Swap manifold's RUNTIME for our -sDYNAMIC_EXECUTION=0 rebuild. The npm package stays

@@ -1,0 +1,27 @@
+{
+  "name": "image-keychain",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@vostok/brand": "workspace:*",
+    "@vostok/ui-kit": "workspace:*",
+    "d3-contour": "^4.0.2",
+    "fflate": "^0.8.3",
+    "imagetracerjs": "^1.2.6",
+    "manifold-3d": "^3.5.1",
+    "pica": "^10.0.2",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@types/d3-contour": "^3.0.6",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  }
+}

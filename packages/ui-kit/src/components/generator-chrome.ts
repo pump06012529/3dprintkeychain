@@ -43,7 +43,7 @@ export function generatorHeader(opts: GeneratorHeaderOptions): HTMLElement {
   return el('div', { className: 'vl-app-header' }, [
     el('h1', { className: 'vl-app-title', text: opts.title }),
     el('p', { className: 'vl-app-subtitle', text: opts.description }),
-    el('p', { className: 'vl-app-credit' }, [document.createTextNode('Made by '), credit]),
+    el('p', { className: 'vl-app-credit' }, [document.createTextNode('สร้างโดย '), credit]),
   ]);
 }
 
@@ -125,11 +125,11 @@ export function projectActions(opts: ProjectActionsOptions): HTMLElement {
     fileInput.value = '';
   });
 
-  const save = actionBtn('Save project', ICONS.save, () => opts.onSave());
-  const load = actionBtn('Load project', ICONS.load, () => fileInput.click());
+  const save = actionBtn('บันทึกโปรเจกต์', ICONS.save, () => opts.onSave());
+  const load = actionBtn('โหลดโปรเจกต์', ICONS.load, () => fileInput.click());
 
   const row2: HTMLElement[] = [];
-  if (opts.onHelp) row2.push(actionBtn('Help', ICONS.help, () => opts.onHelp!()));
+  if (opts.onHelp) row2.push(actionBtn('ช่วยเหลือ', ICONS.help, () => opts.onHelp!()));
   if (opts.theme ?? true) {
     row2.push(themeToggleButton({
       storageKey: opts.themeStorageKey,

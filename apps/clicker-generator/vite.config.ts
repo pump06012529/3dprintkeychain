@@ -86,8 +86,8 @@ function makerlabPlugin(enabled: boolean) {
 
 // Relative base so the static build works on ANY GitHub Pages URL
 // (user/org page at '/', or a project page at '/<repo>/') with no reconfig.
-export default defineConfig(({ mode }) => ({
-  base: './',
+export default defineConfig(({ command, mode }) => ({
+  base: command === 'serve' ? '/Clicker-Generator/' : './',
   plugins: [trademarkCleanPlugin(mode === 'makerworld'), makerlabPlugin(mode === 'makerworld')],
   worker: {
     format: 'es' as const,
@@ -95,7 +95,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: 'es2022',
   },
-  server: { open: true },
+  server: { open: false, port: 5175, strictPort: true },
   // manifold-3d ships its own WASM; keep esbuild from trying to pre-bundle it.
   optimizeDeps: {
     exclude: ['manifold-3d'],

@@ -15,5 +15,8 @@
     "dev:keycap": "pnpm --filter keycap-generator dev",
     "build:keycap": "pnpm --filter keycap-generator build",
     "typecheck": "pnpm -r --if-present typecheck"
+  },
+  "dependencies": {
+    "opentype.js": "^2.0.0"
   }
 }

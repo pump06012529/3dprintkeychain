@@ -104,6 +104,11 @@ function layoutLine(
   const contours: number[][][] = [];
   let x = xStart;
 
+  let previousWasUpperVowel = false;
+  let previousWasDescender = false;
+  let previousUpperVowelTopPx = 0;
+  let previousDescenderBottomPx = 0;
+
   for (let i = 0; i < chars.length; i++) {
     const char = chars[i]!;
     let g = font.charToGlyph(char);
@@ -117,8 +122,30 @@ function layoutLine(
       }
     }
 
+    const isCombining = /[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E\u0300-\u036F]/.test(char);
+    if (i > 0 && !isCombining) {
+      x += track;
+    }
+
     const activeScale = isFb ? fbScale : scale;
-    const path = g.getPath(x, yBaseline, size);
+    
+    let yOffset = yBaseline;
+    if (/[\u0E48-\u0E4C]/.test(char) && previousWasUpperVowel) {
+      const bounds = g.getBoundingBox();
+      const charBottomPx = bounds.y1 * activeScale;
+      const paddingPx = size * 0.02;
+      const shiftPx = previousUpperVowelTopPx - charBottomPx + paddingPx;
+      if (shiftPx > 0) yOffset -= shiftPx;
+    }
+    if (/[\u0E38\u0E39]/.test(char) && previousWasDescender) {
+      const bounds = g.getBoundingBox();
+      const charTopPx = bounds.y2 * activeScale;
+      const paddingPx = size * 0.02;
+      const shiftPx = charTopPx - previousDescenderBottomPx + paddingPx;
+      if (shiftPx > 0) yOffset += shiftPx;
+    }
+
+    const path = g.getPath(x, yOffset, size);
     contours.push(...pathCommandsToPolygons(path.commands));
 
     let adv = (g.advanceWidth || 0) * activeScale;
@@ -130,8 +157,21 @@ function layoutLine(
         adv += kern;
       }
     }
-    adv += track;
     x += adv;
+
+    if (/[\u0E31\u0E34-\u0E37\u0E4D]/.test(char)) {
+      previousWasUpperVowel = true;
+      previousUpperVowelTopPx = g.getBoundingBox().y2 * activeScale;
+    } else if (!/[\u0E48-\u0E4C]/.test(char)) {
+      previousWasUpperVowel = false;
+    }
+
+    if (/[\u0E0E\u0E0F\u0E10]/.test(char)) {
+      previousWasDescender = true;
+      previousDescenderBottomPx = g.getBoundingBox().y1 * activeScale;
+    } else if (!/[\u0E38\u0E39]/.test(char)) {
+      previousWasDescender = false;
+    }
   }
 
   return { contours, width: x - xStart };
@@ -232,22 +272,95 @@ export function getVerticalContours(
   const vstep = baseVStep * lineSpacing + letterSpacing * textSize;
   const contours: number[][][] = [];
 
+  let currentY = 0;
+  
+  let clusterContours: number[][][] = [];
+  let clusterX = 0;
+
+  let previousWasUpperVowel = false;
+  let previousWasDescender = false;
+  let previousUpperVowelTopPx = 0;
+  let previousDescenderBottomPx = 0;
+
+  function flushCluster() {
+    if (clusterContours.length === 0) return;
+    const cb = bboxOf(clusterContours);
+    const cx = (cb.minX + cb.maxX) / 2 || 0;
+    for (const p of clusterContours) {
+      for (const pt of p) {
+        pt[0] -= cx;
+        pt[1] += currentY;
+      }
+    }
+    contours.push(...clusterContours);
+    clusterContours = [];
+    clusterX = 0;
+    currentY -= vstep;
+  }
+
   for (let i = 0; i < chars.length; i++) {
     const char = chars[i]!;
+    const isCombining = /[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E\u0300-\u036F]/.test(char);
+    
+    if (i > 0 && !isCombining) {
+      flushCluster();
+    }
+
     let g = font.charToGlyph(char);
+    let isFb = false;
     if ((!g || g.index === 0) && fallbackFont) {
       const fbG = fallbackFont.charToGlyph(char);
-      if (fbG && fbG.index !== 0) g = fbG;
+      if (fbG && fbG.index !== 0) {
+        g = fbG;
+        isFb = true;
+      }
     }
-    const glyphPoly = pathCommandsToPolygons(g.getPath(0, 0, textSize).commands);
+    const activeScale = isFb ? (textSize / fallbackFont.unitsPerEm) : (textSize / font.unitsPerEm);
 
-    // Centre this character on X, drop it by i steps on Y.
-    const cb = bboxOf(glyphPoly);
-    const cx = (cb.minX + cb.maxX) / 2 || 0;
-    const cy = -i * vstep;
-    for (const p of glyphPoly) for (const pt of p) { pt[0] = pt[0]! - cx; pt[1] = pt[1]! + cy; }
-    contours.push(...glyphPoly);
+    let yOffset = 0;
+    if (/[\u0E48-\u0E4C]/.test(char) && previousWasUpperVowel) {
+      const bounds = g.getBoundingBox();
+      const charBottomPx = bounds.y1 * activeScale;
+      const paddingPx = textSize * 0.02;
+      const shiftPx = previousUpperVowelTopPx - charBottomPx + paddingPx;
+      if (shiftPx > 0) yOffset -= shiftPx;
+    }
+    if (/[\u0E38\u0E39]/.test(char) && previousWasDescender) {
+      const bounds = g.getBoundingBox();
+      const charTopPx = bounds.y2 * activeScale;
+      const paddingPx = textSize * 0.02;
+      const shiftPx = charTopPx - previousDescenderBottomPx + paddingPx;
+      if (shiftPx > 0) yOffset += shiftPx;
+    }
+
+    const path = g.getPath(clusterX, yOffset, textSize);
+    clusterContours.push(...pathCommandsToPolygons(path.commands));
+    
+    let adv = (g.advanceWidth || 0) * activeScale;
+    if (i < chars.length - 1 && !isFb) {
+      const nextChar = chars[i + 1]!;
+      const nextG = font.charToGlyph(nextChar);
+      if (nextG && nextG.index !== 0) {
+        adv += font.getKerningValue ? font.getKerningValue(g, nextG) * (textSize / font.unitsPerEm) : 0;
+      }
+    }
+    clusterX += adv;
+
+    if (/[\u0E31\u0E34-\u0E37\u0E4D]/.test(char)) {
+      previousWasUpperVowel = true;
+      previousUpperVowelTopPx = g.getBoundingBox().y2 * activeScale;
+    } else if (!/[\u0E48-\u0E4C]/.test(char)) {
+      previousWasUpperVowel = false;
+    }
+
+    if (/[\u0E0E\u0E0F\u0E10]/.test(char)) {
+      previousWasDescender = true;
+      previousDescenderBottomPx = g.getBoundingBox().y1 * activeScale;
+    } else if (!/[\u0E38\u0E39]/.test(char)) {
+      previousWasDescender = false;
+    }
   }
+  flushCluster();
 
   const box0 = bboxOf(contours);
   const cy = (box0.minY + box0.maxY) / 2;

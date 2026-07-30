@@ -40,7 +40,7 @@ const fontUrls = (import.meta as any).glob('./fonts/*.ttf', { eager: true, impor
 const curatedFonts = FONTS.filter((f) => f.curated);
 
 const state = {
-  name: 'Name',
+  name: 'ชื่อ',
   secondLine: '',
   font: 'luckiest-guy',
   layout: 'horizontal' as Layout,
@@ -58,7 +58,7 @@ const state = {
   ringThickness: 2.2,
   ringPosX: 0,
   ringPosY: 0,
-  ringAngle: 180,
+  ringAngle: 0,
   haloWidth: 1.2,
   haloThickness: 0.8,
   plate: '#1d2027',
@@ -94,7 +94,7 @@ const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('Missing #app');
 
 const nameInput = el('input', { className: 'nk-name-input', attrs: { type: 'text', maxlength: '18', value: state.name, 'aria-label': 'Name' } });
-const secondInput = el('input', { className: 'nk-second-input', attrs: { type: 'text', maxlength: '18', placeholder: 'Optional second line', 'aria-label': 'Second line', value: state.secondLine } });
+const secondInput = el('input', { className: 'nk-second-input', attrs: { type: 'text', maxlength: '18', placeholder: 'ข้อความบรรทัดที่สอง (ถ้ามี)', 'aria-label': 'Second line', value: state.secondLine } });
 
 const FA_ICONS = [
   { name: 'Smile', char: '\uf118' },
@@ -169,7 +169,7 @@ const emojiGrid = el('div', { className: 'nk-emoji-grid', attrs: { style: 'displ
 
 const emojiToggle = el('button', { 
   className: 'vl-btn vl-btn--secondary nk-emoji-toggle',
-  text: '✨ Insert Symbol'
+  text: '✨ แทรกสัญลักษณ์'
 });
 emojiToggle.addEventListener('click', () => {
   const isHidden = emojiGrid.style.display === 'none';
@@ -178,7 +178,7 @@ emojiToggle.addEventListener('click', () => {
 
 const fontGrid = el('div', { className: 'nk-font-grid' });
 const stage = el('section', { className: 'nk-stage' });
-const statusEl = el('div', { className: 'nk-status show', text: 'Loading worker...' });
+const statusEl = el('div', { className: 'nk-status show', text: 'กำลังโหลด...' });
 
 const fontCache = new Map<string, any>();
 const fontUrlsClean = Object.entries(fontUrls).reduce((acc, [k, v]) => {
@@ -245,7 +245,7 @@ async function runRebuild() {
   if (!needsRebuild) return;
   needsRebuild = false;
   isWorkerBusy = true;
-  showStatus('Generating 3D model...');
+  showStatus('กำลังสร้างโมเดล 3D...');
 
   try {
     const [font, fallbackFont] = await Promise.all([
@@ -320,8 +320,8 @@ function colorField(label: string, value: string, onInput: (value: string) => vo
 // Controls & Dynamic Visibility
 // ---------------------------------------------------------------------------
 const ringAngleSlider = sliderRow({
-  label: 'Tab rotation', min: 0, max: 360, step: 5, value: state.ringAngle, unit: '°',
-  help: 'Rotate the direction of the loop tab (90° = perpendicular top, 180° = left).',
+  label: 'หมุนห่วง', min: -180, max: 180, step: 5, value: state.ringAngle, unit: '°',
+  help: 'ปรับองศาห่วงของพวงกุญแจ',
   onInput: (v) => { state.ringAngle = v; triggerRebuild(); }
 });
 
@@ -338,8 +338,9 @@ const holeDpad = dpad({
     triggerRebuild();
   },
   onRotate: (deltaDeg) => {
-    let next = ((state.ringAngle ?? 180) + deltaDeg) % 360;
-    if (next < 0) next += 360;
+    let next = ((state.ringAngle ?? 0) + deltaDeg);
+    if (next > 180) next -= 360;
+    if (next < -180) next += 360;
     state.ringAngle = next;
     holeDpad.setReadout(`X: ${state.ringPosX.toFixed(1)} mm, Y: ${state.ringPosY.toFixed(1)} mm`);
     triggerRebuild();
@@ -347,14 +348,14 @@ const holeDpad = dpad({
   onReset: () => {
     state.ringPosX = 0;
     state.ringPosY = 0;
-    state.ringAngle = 180;
+    state.ringAngle = 0;
     holeDpad.setReadout(`X: 0.0 mm, Y: 0.0 mm`);
     triggerRebuild();
   }
 });
 
 const line2ScaleSlider = sliderRow({
-  label: 'Subtitle scale',
+  label: 'ขนาดบรรทัดที่สอง',
   min: 0.3,
   max: 1.5,
   step: 0.1,
@@ -365,78 +366,78 @@ const line2ScaleSlider = sliderRow({
 const line2AlignControl = segmentedControl<'left' | 'center' | 'right'>({
   value: state.line2Align,
   options: [
-    { value: 'left', label: 'Left' },
-    { value: 'center', label: 'Center' },
-    { value: 'right', label: 'Right' },
+    { value: 'left', label: 'ซ้าย' },
+    { value: 'center', label: 'กลาง' },
+    { value: 'right', label: 'ขวา' },
   ],
   onChange: (v) => { state.line2Align = v; triggerRebuild(); }
 });
 
 const haloWidthSlider = sliderRow({
-  label: 'Halo outline width',
+  label: 'ความหนาขอบสี',
   min: 0.2,
   max: 4.0,
   step: 0.1,
   value: state.haloWidth,
   unit: 'mm',
-  help: 'Width of the coloured outline that hugs each letter (3-colour schemes).',
+  help: 'ความหนาของเส้นขอบสีรอบตัวอักษร',
   onInput: (v) => { state.haloWidth = v; triggerRebuild(); }
 });
 
 const haloThicknessSlider = sliderRow({
-  label: 'Halo thickness',
+  label: 'ความสูงขอบสี',
   min: 0.2,
   max: 2.0,
   step: 0.1,
   value: state.haloThickness,
   unit: 'mm',
-  help: 'Height of the coloured halo band (raised style). Also sets the 2nd no-AMS pause layer.',
+  help: 'ความสูงของขอบสี',
   onInput: (v) => { state.haloThickness = v; refreshNoAmsReadout(); triggerRebuild(); }
 });
 
 // --- Typography ---
 const boldnessSlider = sliderRow({
-  label: 'Boldness',
+  label: 'ความหนาตัวอักษร',
   min: -0.3, max: 0.7, step: 0.05, value: state.boldness, unit: 'mm',
-  help: 'Fattens (or thins) the letter strokes.',
+  help: 'ปรับความหนาของตัวอักษร',
   onInput: (v) => { state.boldness = v; triggerRebuild(); },
 });
 
 const letterSpacingSlider = sliderRow({
-  label: 'Letter spacing',
+  label: 'ระยะห่างตัวอักษร',
   min: -0.08, max: 0.4, step: 0.02, value: state.letterSpacing,
   format: (v) => `${v > 0 ? '+' : ''}${v.toFixed(2)}`,
-  help: 'Squash letters together or spread them apart.',
+  help: 'ปรับระยะห่างระหว่างตัวอักษร',
   onInput: (v) => { state.letterSpacing = v; triggerRebuild(); },
 });
 
 const lineSpacingSlider = sliderRow({
-  label: 'Line spacing',
+  label: 'ระยะห่างบรรทัด',
   min: 0.5, max: 1.8, step: 0.05, value: state.lineSpacing,
   format: (v) => `${Math.round(v * 100)}%`,
-  help: 'Gap between the first and second line.',
+  help: 'ระยะห่างระหว่างบรรทัดแรกและบรรทัดที่สอง',
   onInput: (v) => { state.lineSpacing = v; triggerRebuild(); },
 });
 
 // --- Edge finish ---
 const chamferSlider = sliderRow({
-  label: 'Chamfer size',
+  label: 'ลบมุมขอบ (Chamfer)',
   min: 0.15, max: 1.0, step: 0.05, value: state.chamfer, unit: 'mm',
-  help: 'How deep the bevel cuts into the top edges.',
+  help: 'ขนาดการลบมุมที่ขอบของพวงกุญแจ',
   onInput: (v) => { state.chamfer = v; triggerRebuild(); },
 });
 const chamferToggle = toggleSwitch({
-  label: 'Chamfer edges',
+  label: 'ลบมุมขอบ',
   checked: state.chamferOn,
-  help: 'Bevels the top edges of the plate and letters for a softer, more finished look.',
+  help: 'ลบมุมขอบด้านบนของพวงกุญแจให้ดูมนขึ้น',
   onChange: (val) => { state.chamferOn = val; updateControlsVisibility(); triggerRebuild(); },
 });
 
 // Edge smoothing lives up top (not in Advanced): it's the fix when a font's letters
 // come out visually disconnected — raise it to fuse them into one solid plate.
 const smoothingSlider = sliderRow({
-  label: 'Edge smoothing', min: 0.0, max: 4.0, step: 0.5, value: state.smoothing, unit: 'mm',
-  help: 'Fills tight gaps between letters and rounds the plate outline. If your letters look disconnected or the plate breaks into pieces, raise this until it’s one solid shape.',
+  label: 'ความเรียบเนียนของขอบ', min: 0.0, max: 4.0, step: 0.5, value: state.smoothing, unit: 'mm',
+  help: 'ช่วยอุดช่องโหว่ระหว่างตัวอักษร หากตัวอักษรดูขาดจากกัน ให้เพิ่มค่านี้จนกว่าชิ้นงานจะติดกัน',
   onInput: (v) => { state.smoothing = v; triggerRebuild(); },
 });
 
@@ -451,34 +452,34 @@ function refreshNoAmsReadout() {
     layerHeight: state.layerHeight,
   });
   if (state.printMode !== 'noams') {
-    noAmsReadout.textContent = 'Each colour prints on its own extruder automatically.';
+    noAmsReadout.textContent = 'เครื่องจะสลับสีให้อัตโนมัติในแต่ละเลเยอร์';
   } else if (pauses.length === 0) {
-    noAmsReadout.textContent = 'Add a second colour (raised style) to use manual swaps.';
+    noAmsReadout.textContent = 'หากต้องการให้เครื่องหยุดเพื่อสลับสีเอง ต้องเลือกมากกว่า 1 สี';
   } else {
     noAmsReadout.textContent =
-      'Pause & swap filament at: ' + pauses.map((p) => `${p.z.toFixed(1)} mm → ${p.label}`).join(', ') + '.';
+      'เครื่องจะหยุดรอให้คุณเปลี่ยนสีเส้นพลาสติกที่ความสูง: ' + pauses.map((p) => `${p.z.toFixed(1)} mm → ${p.label}`).join(', ') + '.';
   }
 }
 const printModeControl = segmentedControl<'ams' | 'noams'>({
   value: state.printMode,
   options: [
-    { value: 'ams', label: 'AMS / auto' },
-    { value: 'noams', label: 'Manual swap' },
+    { value: 'ams', label: 'พิมพ์อัตโนมัติ (AMS)' },
+    { value: 'noams', label: 'เปลี่ยนสีเอง (Manual)' },
   ],
   onChange: (v) => { state.printMode = v; updateControlsVisibility(); refreshNoAmsReadout(); triggerRebuild(); },
 });
 
-const plateColorField = colorField('Plate', state.plate, (value) => {
+const plateColorField = colorField('แผ่นฐาน', state.plate, (value) => {
   state.plate = value;
   if (viewer) viewer.setPartColor('plate', value);
   triggerRebuild();
 });
-const haloColorField = colorField('Halo', state.halo, (value) => {
+const haloColorField = colorField('ขอบ', state.halo, (value) => {
   state.halo = value;
   if (viewer) viewer.setPartColor('halo', value);
   triggerRebuild();
 });
-const textColorField = colorField('Text', state.text, (value) => {
+const textColorField = colorField('ข้อความ', state.text, (value) => {
   state.text = value;
   if (viewer) viewer.setPartColor('text', value);
   triggerRebuild();
@@ -675,9 +676,9 @@ async function handleExport(formatId: string) {
     if (!lastParts.length) throw new Error('No 3D geometry generated yet.');
     const fn = `${state.name.trim().replace(/[^a-z0-9]+/gi, '-').toLowerCase() || 'name'}-keychain.3mf`;
     downloadThreeMF(lastParts, fn);
-    openLicenseModal({ badge: '✓ 3MF Export started' });
+    toast('✓ ส่งออก 3MF สำเร็จ', { kind: 'ok' });
   } else if (formatId === 'stl') {
-    toast('STL multi-part export is zipped in 3MF, download 3MF for Orca/Bambu separate plates.', { kind: 'warn' });
+    toast('ไฟล์ STL ถูกบีบอัดรวมไว้ในไฟล์ 3MF แล้ว หากต้องการแยกแผ่น ให้เปิดไฟล์ 3MF ในโปรแกรม Slicer ของคุณ', { kind: 'warn' });
   }
 }
 
@@ -694,14 +695,14 @@ secondInput.addEventListener('input', () => {
 
 const browseFontsBtn = el('button', {
   className: 'nk-browse-fonts',
-  text: `Browse all ${FONTS.length} fonts →`,
+  text: `ดูฟอนต์ทั้งหมด (${FONTS.length} ฟอนต์) →`,
   attrs: { type: 'button' },
 });
 browseFontsBtn.addEventListener('click', openFontBrowser);
 
 const importFontBtn = el('button', {
   className: 'nk-browse-fonts',
-  text: `Import custom font (.ttf/.otf/.zip)`,
+  text: `นำเข้าฟอนต์ของคุณเอง (.ttf/.otf/.zip)`,
   attrs: { type: 'button', style: 'margin-top: 8px;' },
 });
 const fileInput = el('input', {
@@ -786,25 +787,25 @@ fileInput.addEventListener('change', async (e) => {
 
 // Advanced tuning.
 const advanced = el('div', { className: 'vl-section nk-advanced' }, [
-  el('p', { className: 'vl-label', text: 'Advanced (Fine-tuning)' }),
+  el('p', { className: 'vl-label', text: 'ขั้นสูง (ปรับละเอียด)' }),
   el('div', { className: 'nk-advanced__body' }, [
     sliderRow({
-      label: 'Text thickness', min: 0.6, max: 4.0, step: 0.2, value: state.textThickness, unit: 'mm',
+      label: 'ความสูงตัวอักษร', min: 0.6, max: 4.0, step: 0.2, value: state.textThickness, unit: 'mm',
       onInput: (v) => { state.textThickness = v; triggerRebuild(); },
     }),
     sliderRow({
-      label: 'Border outline width', min: 0.5, max: 6.0, step: 0.1, value: state.outlineWidth, unit: 'mm',
-      help: 'How much plate sticks out around the letters (the coloured border of the keychain).',
+      label: 'ความกว้างของขอบ', min: 0.5, max: 6.0, step: 0.1, value: state.outlineWidth, unit: 'mm',
+      help: 'ขนาดความกว้างของแผ่นฐานที่จะยื่นออกมาจากตัวอักษร',
       onInput: (v) => { state.outlineWidth = v; triggerRebuild(); },
     }),
     sliderRow({
-      label: 'Plate thickness', min: 1.0, max: 4.0, step: 0.2, value: state.baseThickness, unit: 'mm',
-      help: 'Overall thickness of the backing plate.',
+      label: 'ความหนาของแผ่นฐาน', min: 1.0, max: 4.0, step: 0.2, value: state.baseThickness, unit: 'mm',
+      help: 'ความหนารวมของแผ่นฐานด้านหลังตัวอักษร',
       onInput: (v) => { state.baseThickness = v; refreshNoAmsReadout(); triggerRebuild(); },
     }),
     sliderRow({
-      label: 'Loop thickness', min: 1.0, max: 6.0, step: 0.2, value: state.ringThickness, unit: 'mm',
-      help: 'How chunky the keyring loop is (material around the hole).',
+      label: 'ความหนาของห่วง', min: 1.0, max: 6.0, step: 0.2, value: state.ringThickness, unit: 'mm',
+      help: 'ขนาดความหนาของเนื้อพลาสติกรอบๆ รูพวงกุญแจ',
       onInput: (v) => { state.ringThickness = v; triggerRebuild(); },
     }),
     haloWidthSlider,
@@ -820,13 +821,13 @@ const qualityCard = qualityCallout({
 
 const controlsScroll = el('div', { className: 'vl-panel__scroll' }, [
   generatorHeader({
-    title: 'Name Keychain Generator',
-    description: 'Make a personalized plate-style name keychain with live font and colour preview.',
+    title: 'เครื่องมือสร้างพวงกุญแจชื่อ',
+    description: 'ออกแบบพวงกุญแจชื่อของคุณเอง พร้อมดูตัวอย่างสีและฟอนต์แบบเรียลไทม์',
   }),
   ...(qualityCard ? [qualityCard] : []),
   // Text
   el('div', { className: 'vl-section' }, [
-    el('p', { className: 'vl-label', text: 'Text' }),
+    el('p', { className: 'vl-label', text: 'ข้อความ' }),
     nameInput,
     secondInput,
     emojiToggle,
@@ -836,26 +837,26 @@ const controlsScroll = el('div', { className: 'vl-panel__scroll' }, [
 
   // Layout & style
   el('div', { className: 'vl-section' }, [
-    el('p', { className: 'vl-label', text: 'Layout & style' }),
+    el('p', { className: 'vl-label', text: 'รูปแบบและสไตล์' }),
     segmentedControl<Layout>({
-      label: 'Layout',
-      help: 'Letters in a row (Horizontal) or stacked in a column under the ring (Vertical).',
+      label: 'รูปแบบการจัดวาง',
+      help: 'แนวนอน (เรียงต่อกัน) หรือ แนวตั้ง (เรียงซ้อนกัน)',
       value: state.layout,
-      options: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' }],
+      options: [{ value: 'horizontal', label: 'แนวนอน' }, { value: 'vertical', label: 'แนวตั้ง' }],
       onChange: (value) => { state.layout = value; updateControlsVisibility(); triggerRebuild(); }
     }),
     segmentedControl<LetterStyle>({
-      label: 'Letter style',
-      help: 'Raised = letters stand up off the plate. Engraved = letters are inlaid flush into the plate.',
+      label: 'สไตล์ตัวอักษร',
+      help: 'นูน = ตัวอักษรนูนขึ้นมาจากแผ่นฐาน, ฝัง = ตัวอักษรฝังลงไปในแผ่นฐาน',
       value: state.style,
-      options: [{ value: 'raised', label: 'Raised' }, { value: 'engraved', label: 'Engraved' }],
+      options: [{ value: 'raised', label: 'ตัวนูน' }, { value: 'engraved', label: 'ตัวฝัง' }],
       onChange: (value) => { state.style = value; updateControlsVisibility(); triggerRebuild(); }
     }),
     segmentedControl<'outline' | 'rectangle'>({
-      label: 'Plate shape',
-      help: 'Outline hugs the letters like a sticker; Rectangle is a plain rounded rectangle behind them.',
+      label: 'รูปทรงแผ่นฐาน',
+      help: 'เข้ารูป = ตัดขอบตามรูปทรงตัวอักษร, สี่เหลี่ยม = สี่เหลี่ยมขอบมน',
       value: state.plateShape,
-      options: [{ value: 'outline', label: 'Outline' }, { value: 'rectangle', label: 'Rectangle' }],
+      options: [{ value: 'outline', label: 'เข้ารูป' }, { value: 'rectangle', label: 'สี่เหลี่ยม' }],
       onChange: (value) => { state.plateShape = value; triggerRebuild(); }
     }),
     smoothingSlider,
@@ -865,7 +866,7 @@ const controlsScroll = el('div', { className: 'vl-panel__scroll' }, [
 
   // Typography
   el('div', { className: 'vl-section' }, [
-    el('p', { className: 'vl-label', text: 'Typography' }),
+    el('p', { className: 'vl-label', text: 'ตั้งค่าตัวอักษร' }),
     boldnessSlider,
     letterSpacingSlider,
     lineSpacingSlider,
@@ -874,15 +875,15 @@ const controlsScroll = el('div', { className: 'vl-panel__scroll' }, [
 
   // Colours
   el('div', { className: 'vl-section' }, [
-    el('p', { className: 'vl-label', text: 'Colours' }),
+    el('p', { className: 'vl-label', text: 'สี' }),
     selectField({
-      label: 'Colour scheme',
-      help: 'Single = one filament. 2 colours adds a separate name colour. 3 colours adds a coloured outline (halo) around the name.',
+      label: 'รูปแบบสี',
+      help: 'สีเดียว = ใช้พลาสติกสีเดียว, 2 สี = เพิ่มสีตัวอักษร, 3 สี = เพิ่มเส้นขอบรอบตัวอักษร',
       value: state.colorScheme,
       options: [
-        { value: 'single', label: 'Single colour' },
-        { value: 'plate-text', label: '2 colours (Plate + Name)' },
-        { value: 'plate-halo-text', label: '3 colours (Plate + Name + Outline)' },
+        { value: 'single', label: 'สีเดียว' },
+        { value: 'plate-text', label: '2 สี (แผ่นฐาน + ตัวอักษร)' },
+        { value: 'plate-halo-text', label: '3 สี (แผ่นฐาน + ตัวอักษร + ขอบ)' },
       ],
       onChange: (value) => {
         state.colorScheme = value as 'single' | 'plate-text' | 'plate-halo-text';
@@ -900,26 +901,26 @@ const controlsScroll = el('div', { className: 'vl-panel__scroll' }, [
 
   // Size & keyring
   el('div', { className: 'vl-section' }, [
-    el('p', { className: 'vl-label', text: 'Size & keyring' }),
+    el('p', { className: 'vl-label', text: 'ขนาด & พวงกุญแจ' }),
     sliderRow({
-      label: 'Text size', min: 10, max: 28, value: state.size, unit: 'mm',
+      label: 'ขนาดตัวอักษร', min: 10, max: 28, value: state.size, unit: 'mm',
       onInput: (value) => { state.size = value; triggerRebuild(); }
     }),
     segmentedControl<'loop' | 'corner'>({
-      label: 'Keyring',
-      help: 'Loop Tab adds a protruding tab with a hole; Corner Hole punches the hole into the top corner of the name.',
+      label: 'รูปแบบห่วง',
+      help: 'ห่วงยื่น = สร้างห่วงยื่นออกมาด้านข้าง, เจาะรู = เจาะรูที่มุมของพวงกุญแจ',
       value: state.ringStyle,
-      options: [{ value: 'loop', label: 'Loop Tab' }, { value: 'corner', label: 'Corner Hole' }],
+      options: [{ value: 'loop', label: 'ห่วงยื่น' }, { value: 'corner', label: 'เจาะรู' }],
       onChange: (val) => { state.ringStyle = val; triggerRebuild(); }
     }),
     sliderRow({
-      label: 'Hole diameter', min: 2.0, max: 8.0, step: 0.5, value: state.holeDia, unit: 'mm',
-      help: 'Diameter of the keyring hole. Match your split ring or clip.',
+      label: 'ขนาดรูห่วง', min: 2.0, max: 8.0, step: 0.5, value: state.holeDia, unit: 'mm',
+      help: 'ขนาดเส้นผ่านศูนย์กลางของรูห่วง',
       onInput: (v) => { state.holeDia = v; triggerRebuild(); }
     }),
     ringAngleSlider,
     el('div', { className: 'nk-nudge' }, [
-      el('span', { className: 'vl-hint', text: 'Nudge loop position' }),
+      el('span', { className: 'vl-hint', text: 'ปรับตำแหน่งห่วง' }),
       holeDpad.root,
     ]),
   ]),
@@ -931,11 +932,11 @@ const controlsScroll = el('div', { className: 'vl-panel__scroll' }, [
   el('div', { className: 'vl-section nk-reset-section' }, [
     el('button', {
       className: 'vl-btn vl-btn--secondary nk-reset-btn',
-      text: 'Reset all settings',
+      text: 'คืนค่าเริ่มต้นทั้งหมด',
       attrs: { type: 'button' },
       on: {
         click: () => {
-          if (window.confirm('Reset all settings to their defaults? Your current design will be cleared.')) {
+          if (window.confirm('ต้องการคืนค่าเริ่มต้นทั้งหมดหรือไม่? การออกแบบปัจจุบันจะถูกลบ')) {
             window.location.href = window.location.pathname;
           }
         },
@@ -951,7 +952,7 @@ const controls = el('aside', { className: 'vl-panel vl-panel--left' }, [
 // Right column = pick the font (the "source" of the look), then export.
 const controlsRightScroll = el('div', { className: 'vl-panel__scroll nk-font-section-scroll' }, [
   el('div', { className: 'vl-section nk-font-section' }, [
-    el('p', { className: 'vl-label', text: 'Font' }),
+    el('p', { className: 'vl-label', text: 'ฟอนต์' }),
     fontGrid,
     browseFontsBtn,
     importFontBtn,
@@ -969,7 +970,7 @@ const controlsRightExport = sidebarFooter({
     a.download = `${state.name.trim().replace(/[^a-z0-9]+/gi, '-').toLowerCase() || 'keychain'}-project.json`;
     a.click();
     URL.revokeObjectURL(a.href);
-    toast('Project saved', { kind: 'ok' });
+    toast('บันทึกโปรเจกต์สำเร็จ', { kind: 'ok' });
   },
   onLoad: (file: File) => {
     const reader = new FileReader();
@@ -983,22 +984,22 @@ const controlsRightExport = sidebarFooter({
         updateControlsVisibility();
         renderFontGrid();
         triggerRebuild();
-        toast('Project loaded', { kind: 'ok' });
+        toast('โหลดโปรเจกต์สำเร็จ', { kind: 'ok' });
       } catch {
-        toast('Invalid project file', { kind: 'error' });
+        toast('ไฟล์โปรเจกต์ไม่ถูกต้อง', { kind: 'error' });
       }
     };
     reader.readAsText(file);
   },
   onHelp: () => {
     dialog({
-      title: 'Name Keychain Generator — Help',
+      title: 'คำแนะนำการใช้งาน',
       content: el('div', {}, [
-        el('p', { text: 'Type a name in the Text section, pick a font from the right panel, and customise the style, colours, and keyring options.' }),
-        el('p', { text: 'When you\'re happy with the preview, click Export 3MF to download a print-ready file. Open the 3MF in your slicer (Bambu Studio, Orca, PrusaSlicer) and assign filament colours.' }),
-        el('p', { text: 'Use Save / Load project to keep your settings as a JSON file and resume later.' }),
+        el('p', { text: 'พิมพ์ชื่อในหัวข้อ "ข้อความ" เลือกฟอนต์ที่คุณชอบจากแผงด้านขวา และปรับแต่งสไตล์ สี หรือขนาดของพวงกุญแจได้ตามต้องการ' }),
+        el('p', { text: 'เมื่อคุณพอใจกับรูปแบบแล้ว ให้กดปุ่ม ส่งออก (Export) เพื่อดาวน์โหลดไฟล์ 3MF นำไฟล์ 3MF นี้ไปเปิดในโปรแกรม Slicer (เช่น Bambu Studio, Orca, PrusaSlicer) เพื่อสั่งพิมพ์ได้เลย' }),
+        el('p', { text: 'คุณสามารถกด บันทึกโปรเจกต์ เพื่อเก็บการตั้งค่าไว้ทำต่อในครั้งหน้าได้' }),
       ]),
-      actions: [{ label: 'Got it', primary: true }],
+      actions: [{ label: 'เข้าใจแล้ว', primary: true }],
     });
   },
   themeStorageKey: 'name-keychain-theme',
@@ -1011,9 +1012,9 @@ const controlsRight = el('aside', { className: 'vl-panel vl-panel--right' }, [
 
 stage.className = 'vl-stage nk-stage';
 stage.append(
-  el('p', { className: 'vl-stage__label', text: 'Live 3D Preview' }),
+  el('p', { className: 'vl-stage__label', text: 'ตัวอย่าง 3D แบบเรียลไทม์' }),
   statusEl,
-  el('p', { className: 'vl-stage__hint', text: 'Hold left click to rotate, right click to pan, scroll to zoom.' })
+  el('p', { className: 'vl-stage__hint', text: 'คลิกซ้ายค้างเพื่อหมุน, คลิกขวาเพื่อเลื่อน, เลื่อนลูกกลิ้งเมาส์เพื่อซูม' })
 );
 
 app.append(el('main', { className: 'vl-app', attrs: { style: 'position: relative;' } }, [

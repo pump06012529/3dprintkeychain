@@ -117,6 +117,18 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "bai-jamjuree",
+    "label": "Bai Jamjuree",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "bakbak-one",
     "label": "Bakbak One",
     "category": "Display",
@@ -310,12 +322,48 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "charm",
+    "label": "Charm",
+    "category": "Script",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "charmonman",
+    "label": "Charmonman",
+    "category": "Script",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "chewy",
     "label": "Chewy",
     "category": "Comic",
     "curated": false,
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "id": "chonburi",
+    "label": "Chonburi",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
     ]
   },
   {
@@ -502,6 +550,18 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "fahkwang",
+    "label": "Fahkwang",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "faster-one",
     "label": "Faster One",
     "category": "Tech",
@@ -681,6 +741,18 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "itim",
+    "label": "Itim",
+    "category": "Handwriting",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "jolly-lodger",
     "label": "Jolly Lodger",
     "category": "Spooky",
@@ -737,6 +809,18 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "k2d",
+    "label": "K2D",
+    "category": "Comic",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "kalam",
     "label": "Kalam",
     "category": "Handwriting",
@@ -767,6 +851,42 @@ export const FONTS: FontChoice[] = [
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "kodchasan",
+    "label": "Kodchasan",
+    "category": "Handwriting",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "koho",
+    "label": "KoHo",
+    "category": "Comic",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "krub",
+    "label": "Krub",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
     ]
   },
   {
@@ -818,6 +938,18 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "maitree",
+    "label": "Maitree",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "major-mono-display",
     "label": "Major Mono Display",
     "category": "Mono",
@@ -825,6 +957,18 @@ export const FONTS: FontChoice[] = [
     "subsets": [
       "latin",
       "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "mali",
+    "label": "Mali",
+    "category": "Handwriting",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
       "vietnamese"
     ]
   },
@@ -867,6 +1011,18 @@ export const FONTS: FontChoice[] = [
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "mitr",
+    "label": "Mitr",
+    "category": "Clean",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
     ]
   },
   {
@@ -931,6 +1087,18 @@ export const FONTS: FontChoice[] = [
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "niramit",
+    "label": "Niramit",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
     ]
   },
   {
@@ -1077,6 +1245,19 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "pattaya",
+    "label": "Pattaya",
+    "category": "Script",
+    "curated": true,
+    "subsets": [
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "patua-one",
     "label": "Patua One",
     "category": "Slab",
@@ -1160,6 +1341,30 @@ export const FONTS: FontChoice[] = [
       "greek",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "pridi",
+    "label": "Pridi",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "prompt",
+    "label": "Prompt",
+    "category": "Clean",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
     ]
   },
   {
@@ -1360,6 +1565,18 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "sarabun",
+    "label": "Sarabun",
+    "category": "Clean",
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "satisfy",
     "label": "Satisfy",
     "category": "Script",
@@ -1462,7 +1679,19 @@ export const FONTS: FontChoice[] = [
     "id": "sriracha",
     "label": "Sriracha",
     "category": "Handwriting",
-    "curated": false,
+    "curated": true,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "srisakdi",
+    "label": "Srisakdi",
+    "category": "Display",
+    "curated": true,
     "subsets": [
       "latin",
       "latin-ext",
@@ -1491,6 +1720,18 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "taviraj",
+    "label": "Taviraj",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "teko",
     "label": "Teko",
     "category": "Clean",
@@ -1499,6 +1740,18 @@ export const FONTS: FontChoice[] = [
       "devanagari",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "thasadith",
+    "label": "Thasadith",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
     ]
   },
   {
@@ -1519,6 +1772,18 @@ export const FONTS: FontChoice[] = [
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "trirong",
+    "label": "Trirong",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
     ]
   },
   {

@@ -64,6 +64,12 @@ jobs:
           cp -r apps/keycap-generator/dist apps/hub/dist/SVG-keycap-generator
           cp -r apps/keycap-generator/dist apps/hub/dist/keycap
 
+      - name: Build Image Keychain
+        run: pnpm --filter image-keychain build
+
+      - name: Copy Image Keychain to Hub Dist
+        run: cp -r apps/image-keychain/dist apps/hub/dist/Image-Keychain
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

@@ -182,6 +182,31 @@ const MAP = {
   'jua': ['Jua', 'Comic'],
   'do-hyeon': ['Do Hyeon', 'Clean'],
   'black-han-sans': ['Black Han Sans', 'Clean'],
+
+  // ----- Thai Fonts -----
+  'prompt': ['Prompt', 'Clean', true],
+  'sarabun': ['Sarabun', 'Clean', true],
+  'mali': ['Mali', 'Handwriting', true],
+  'itim': ['Itim', 'Handwriting', true],
+  'sriracha': ['Sriracha', 'Handwriting', true],
+  'kodchasan': ['Kodchasan', 'Handwriting', true],
+  'k2d': ['K2D', 'Comic', true],
+  'koho': ['KoHo', 'Comic', true],
+  'srisakdi': ['Srisakdi', 'Display', true],
+  'charm': ['Charm', 'Script', true],
+  'charmonman': ['Charmonman', 'Script', true],
+  'niramit': ['Niramit', 'Clean'],
+  'mitr': ['Mitr', 'Clean', true],
+  'chonburi': ['Chonburi', 'Display'],
+  'pattaya': ['Pattaya', 'Script', true],
+  'pridi': ['Pridi', 'Serif'],
+  'krub': ['Krub', 'Clean'],
+  'bai-jamjuree': ['Bai Jamjuree', 'Clean'],
+  'fahkwang': ['Fahkwang', 'Display'],
+  'thasadith': ['Thasadith', 'Clean'],
+  'taviraj': ['Taviraj', 'Serif'],
+  'trirong': ['Trirong', 'Serif'],
+  'maitree': ['Maitree', 'Serif'],
 };
 
 async function fetchTtfUrl(slug) {

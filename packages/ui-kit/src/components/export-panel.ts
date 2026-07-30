@@ -25,16 +25,16 @@ export function exportPanel(opts: ExportPanelOptions): HTMLElement {
   for (const format of opts.formats) {
     const btn = el('button', {
       className: 'vl-btn vl-btn--primary',
-      text: format.label.startsWith('Download') || format.label.startsWith('Export')
+      text: format.label.startsWith('ดาวน์โหลด') || format.label.startsWith('ส่งออก') || format.label.startsWith('Download') || format.label.startsWith('Export')
         ? format.label
-        : `Download ${format.label}`,
+        : `ส่งออก ${format.label}`,
       on: {
         click: async () => {
           setBusy(true);
           try {
             await opts.onExport(format.id);
           } catch (err) {
-            toast(err instanceof Error ? err.message : 'Export failed', { kind: 'error' });
+            toast(err instanceof Error ? err.message : 'การส่งออกล้มเหลว', { kind: 'error' });
           } finally {
             setBusy(false);
           }

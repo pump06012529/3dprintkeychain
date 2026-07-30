@@ -1,6 +1,6 @@
 # Bundled fonts
 
-All 152 fonts in this folder are from [Google Fonts](https://fonts.google.com). Each is
+All 174 fonts in this folder are from [Google Fonts](https://fonts.google.com). Each is
 licensed under the **SIL Open Font License 1.1** ([`OFL.txt`](OFL.txt)) or the
 **Apache License 2.0** (https://www.apache.org/licenses/LICENSE-2.0), as stated on its
 Google Fonts specimen page linked below. Both licenses permit embedding and bundling in
@@ -20,6 +20,7 @@ redistributed on its own — they ship only as part of this generator.
 | Archivo Black | Clean | https://fonts.google.com/specimen/Archivo+Black |
 | Arvo | Slab | https://fonts.google.com/specimen/Arvo |
 | Audiowide | Tech | https://fonts.google.com/specimen/Audiowide |
+| Bai Jamjuree | Clean | https://fonts.google.com/specimen/Bai+Jamjuree |
 | Bakbak One | Display | https://fonts.google.com/specimen/Bakbak+One |
 | Baloo 2 | Comic | https://fonts.google.com/specimen/Baloo+2 |
 | Bangers | Comic | https://fonts.google.com/specimen/Bangers |
@@ -38,7 +39,10 @@ redistributed on its own — they ship only as part of this generator.
 | Caveat | Handwriting | https://fonts.google.com/specimen/Caveat |
 | Chakra Petch | Tech | https://fonts.google.com/specimen/Chakra+Petch |
 | Changa One | Display | https://fonts.google.com/specimen/Changa+One |
+| Charm | Script | https://fonts.google.com/specimen/Charm |
+| Charmonman | Script | https://fonts.google.com/specimen/Charmonman |
 | Chewy | Comic | https://fonts.google.com/specimen/Chewy |
+| Chonburi | Display | https://fonts.google.com/specimen/Chonburi |
 | Cinzel | Serif | https://fonts.google.com/specimen/Cinzel |
 | Cinzel Decorative | Serif | https://fonts.google.com/specimen/Cinzel+Decorative |
 | Comfortaa | Comic | https://fonts.google.com/specimen/Comfortaa |
@@ -57,6 +61,7 @@ redistributed on its own — they ship only as part of this generator.
 | Eater | Spooky | https://fonts.google.com/specimen/Eater |
 | Electrolize | Tech | https://fonts.google.com/specimen/Electrolize |
 | Ewert | Spooky | https://fonts.google.com/specimen/Ewert |
+| Fahkwang | Display | https://fonts.google.com/specimen/Fahkwang |
 | Faster One | Tech | https://fonts.google.com/specimen/Faster+One |
 | Fjalla One | Clean | https://fonts.google.com/specimen/Fjalla+One |
 | Fredoka | Comic | https://fonts.google.com/specimen/Fredoka |
@@ -74,29 +79,38 @@ redistributed on its own — they ship only as part of this generator.
 | Henny Penny | Spooky | https://fonts.google.com/specimen/Henny+Penny |
 | Iceland | Tech | https://fonts.google.com/specimen/Iceland |
 | Indie Flower | Handwriting | https://fonts.google.com/specimen/Indie+Flower |
+| Itim | Handwriting | https://fonts.google.com/specimen/Itim |
 | Jolly Lodger | Spooky | https://fonts.google.com/specimen/Jolly+Lodger |
 | Josefin Sans | Clean | https://fonts.google.com/specimen/Josefin+Sans |
 | Josefin Slab | Slab | https://fonts.google.com/specimen/Josefin+Slab |
 | Jua | Comic | https://fonts.google.com/specimen/Jua |
 | Jura | Tech | https://fonts.google.com/specimen/Jura |
+| K2D | Comic | https://fonts.google.com/specimen/K2D |
 | Kalam | Handwriting | https://fonts.google.com/specimen/Kalam |
 | Kanit | Clean | https://fonts.google.com/specimen/Kanit |
 | Kaushan Script | Script | https://fonts.google.com/specimen/Kaushan+Script |
+| Kodchasan | Handwriting | https://fonts.google.com/specimen/Kodchasan |
+| KoHo | Comic | https://fonts.google.com/specimen/KoHo |
+| Krub | Clean | https://fonts.google.com/specimen/Krub |
 | Lilita One | Comic | https://fonts.google.com/specimen/Lilita+One |
 | Lobster | Script | https://fonts.google.com/specimen/Lobster |
 | Lora | Serif | https://fonts.google.com/specimen/Lora |
 | Luckiest Guy | Comic | https://fonts.google.com/specimen/Luckiest+Guy |
+| Maitree | Serif | https://fonts.google.com/specimen/Maitree |
 | Major Mono Display | Mono | https://fonts.google.com/specimen/Major+Mono+Display |
+| Mali | Handwriting | https://fonts.google.com/specimen/Mali |
 | Marcellus | Serif | https://fonts.google.com/specimen/Marcellus |
 | Marck Script | Script | https://fonts.google.com/specimen/Marck+Script |
 | Metal Mania | Spooky | https://fonts.google.com/specimen/Metal+Mania |
 | Michroma | Tech | https://fonts.google.com/specimen/Michroma |
+| Mitr | Clean | https://fonts.google.com/specimen/Mitr |
 | Modak | Comic | https://fonts.google.com/specimen/Modak |
 | Monoton | Tech | https://fonts.google.com/specimen/Monoton |
 | Montserrat | Clean | https://fonts.google.com/specimen/Montserrat |
 | Neucha | Handwriting | https://fonts.google.com/specimen/Neucha |
 | New Rocker | Spooky | https://fonts.google.com/specimen/New+Rocker |
 | Niconne | Script | https://fonts.google.com/specimen/Niconne |
+| Niramit | Clean | https://fonts.google.com/specimen/Niramit |
 | Norican | Script | https://fonts.google.com/specimen/Norican |
 | Nosifer | Spooky | https://fonts.google.com/specimen/Nosifer |
 | Nova Mono | Mono | https://fonts.google.com/specimen/Nova+Mono |
@@ -110,6 +124,7 @@ redistributed on its own — they ship only as part of this generator.
 | Parisienne | Script | https://fonts.google.com/specimen/Parisienne |
 | Passion One | Display | https://fonts.google.com/specimen/Passion+One |
 | Patrick Hand | Handwriting | https://fonts.google.com/specimen/Patrick+Hand |
+| Pattaya | Script | https://fonts.google.com/specimen/Pattaya |
 | Patua One | Slab | https://fonts.google.com/specimen/Patua+One |
 | Paytone One | Display | https://fonts.google.com/specimen/Paytone+One |
 | Permanent Marker | Handwriting | https://fonts.google.com/specimen/Permanent+Marker |
@@ -118,6 +133,8 @@ redistributed on its own — they ship only as part of this generator.
 | Playfair Display | Serif | https://fonts.google.com/specimen/Playfair+Display |
 | Poppins | Clean | https://fonts.google.com/specimen/Poppins |
 | Press Start 2P | Pixel | https://fonts.google.com/specimen/Press+Start+2P |
+| Pridi | Serif | https://fonts.google.com/specimen/Pridi |
+| Prompt | Clean | https://fonts.google.com/specimen/Prompt |
 | Quantico | Tech | https://fonts.google.com/specimen/Quantico |
 | Quicksand | Comic | https://fonts.google.com/specimen/Quicksand |
 | Racing Sans One | Display | https://fonts.google.com/specimen/Racing+Sans+One |
@@ -136,6 +153,7 @@ redistributed on its own — they ship only as part of this generator.
 | Sacramento | Script | https://fonts.google.com/specimen/Sacramento |
 | Sanchez | Slab | https://fonts.google.com/specimen/Sanchez |
 | Sansita Swashed | Serif | https://fonts.google.com/specimen/Sansita+Swashed |
+| Sarabun | Clean | https://fonts.google.com/specimen/Sarabun |
 | Satisfy | Script | https://fonts.google.com/specimen/Satisfy |
 | Schoolbell | Handwriting | https://fonts.google.com/specimen/Schoolbell |
 | Share Tech Mono | Mono | https://fonts.google.com/specimen/Share+Tech+Mono |
@@ -147,11 +165,15 @@ redistributed on its own — they ship only as part of this generator.
 | Special Elite | Handwriting | https://fonts.google.com/specimen/Special+Elite |
 | Squada One | Display | https://fonts.google.com/specimen/Squada+One |
 | Sriracha | Handwriting | https://fonts.google.com/specimen/Sriracha |
+| Srisakdi | Display | https://fonts.google.com/specimen/Srisakdi |
 | Staatliches | Clean | https://fonts.google.com/specimen/Staatliches |
 | Syncopate | Tech | https://fonts.google.com/specimen/Syncopate |
+| Taviraj | Serif | https://fonts.google.com/specimen/Taviraj |
 | Teko | Clean | https://fonts.google.com/specimen/Teko |
+| Thasadith | Clean | https://fonts.google.com/specimen/Thasadith |
 | Titan One | Display | https://fonts.google.com/specimen/Titan+One |
 | Titillium Web | Clean | https://fonts.google.com/specimen/Titillium+Web |
+| Trirong | Serif | https://fonts.google.com/specimen/Trirong |
 | Turret Road | Tech | https://fonts.google.com/specimen/Turret+Road |
 | Ultra | Slab | https://fonts.google.com/specimen/Ultra |
 | Vollkorn | Serif | https://fonts.google.com/specimen/Vollkorn |
