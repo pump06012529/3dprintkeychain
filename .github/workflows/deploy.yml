@@ -33,7 +33,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -65,7 +65,7 @@ jobs:
           cp -r apps/keycap-generator/dist apps/hub/dist/keycap
 
       - name: Build Image Keychain
-        run: pnpm --filter image-keychain build
+        run: pnpm --filter image-keychain exec vite build
 
       - name: Copy Image Keychain to Hub Dist
         run: cp -r apps/image-keychain/dist apps/hub/dist/Image-Keychain
