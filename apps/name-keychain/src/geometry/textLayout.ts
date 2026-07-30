@@ -288,8 +288,8 @@ export function getVerticalContours(
     const cx = (cb.minX + cb.maxX) / 2 || 0;
     for (const p of clusterContours) {
       for (const pt of p) {
-        pt[0] -= cx;
-        pt[1] += currentY;
+        pt[0]! -= cx;
+        pt[1]! += currentY;
       }
     }
     contours.push(...clusterContours);
