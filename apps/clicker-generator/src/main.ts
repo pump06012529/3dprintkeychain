@@ -45,8 +45,7 @@ if (oldTopbar) {
     oldTopbar.remove();
   } else {
     oldTopbar.replaceWith(topbarLinks({
-      githubUrl: BRAND.urls.github,
-      boostUrl: BRAND.urls.makerworld,
+      homeUrl: '../',
     }));
   }
 }

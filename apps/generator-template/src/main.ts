@@ -89,7 +89,7 @@ const footer = sidebarFooter({
 // 5. ASSEMBLE — the shell wires it all into the standard 3-column layout.
 // ---------------------------------------------------------------------------
 const shell = appShell({
-  topbar: topbarLinks({ githubUrl: BRAND.urls.github, themeToggle: false }),
+  topbar: topbarLinks({ homeUrl: '../', themeToggle: false }),
   left: {
     scroll: [
       generatorHeader({ title: 'My Generator', description: 'One-line description of what it makes.' }),

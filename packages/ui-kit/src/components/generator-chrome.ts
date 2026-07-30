@@ -1,4 +1,3 @@
-import { BRAND } from '@vostok/brand';
 import { el } from '../dom';
 import { ICONS, svgEl } from '../icons';
 import { themeToggleButton } from './theme';
@@ -7,21 +6,6 @@ import { themeToggleButton } from './theme';
    (name + description + "Made by Vostok Labs"), an optional dismissable quality
    callout, and the Save / Load / Help / Light-mode action block under the export
    button. Modelled on the shipped clicker app, sized on the ui-kit token scale. */
-
-// The Vostok mark, inlined so it inherits currentColor (works in light & dark).
-const VOSTOK_MARK = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 568.55431 524.21602" fill="none" stroke="currentColor" stroke-width="20" class="vl-credit-logo" aria-hidden="true">
-  <path d="M385.471,8.276 h171.043 l-194.874,507.665 h-165.99 l82.995,-229.373 z"/>
-  <path d="M255.292,225.733 l-82.995,229.373 l-23.352,-60.835 l82.995,-229.373 z"/>
-  <path d="M208.588,104.064 l-82.995,229.373 l-23.352,-60.835 l82.995,-229.373 z"/>
-  <path d="M152.519,8.276 l-73.63,203.492 l-23.352,-60.835 l51.618,-142.657 z"/>
-  <path d="M61.79,8.276 l-29.606,81.823 l-23.352,-60.835 l7.594,-20.988 z"/>
-</svg>`;
-
-function parseSvg(raw: string): Element {
-  const tpl = document.createElement('template');
-  tpl.innerHTML = raw.trim();
-  return tpl.content.firstElementChild!;
-}
 
 export interface GeneratorHeaderOptions {
   /** Generator name, e.g. "Name Keychain Generator". */
