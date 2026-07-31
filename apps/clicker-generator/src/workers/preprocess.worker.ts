@@ -1,5 +1,5 @@
 import { processImage } from '../image/pipeline';
-import type { RegionSet } from '../types';
+
 
 self.onmessage = (e: MessageEvent) => {
   const msg = e.data;

@@ -6,7 +6,7 @@ import { createStore } from './store/store';
 import { createViewer } from './viewer/viewer';
 import { createUi, type UiState } from './ui/ui';
 import { loadFileToImage, type RgbaImage } from './image/decode';
-import { processImage } from './image/pipeline';
+
 import { runWizard } from './ui/wizard';
 import { downloadThreeMF } from './export/threemfExport';
 import { buildObjMtl, objToArrayBuffer } from './export/objExport';
