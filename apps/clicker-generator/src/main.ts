@@ -398,7 +398,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
   },
   onTextChange: (text) => {
     currentText = text;
-    debouncedReprocess(); // live rebuild as you type
+    debouncedTextReprocess(); // live rebuild as you type with longer delay to prevent keyboard freeze
   },
   onFontSelect: (fontId) => {
     currentFontId = fontId;
@@ -1089,6 +1089,7 @@ function runRebuild() {
 // the real geometry without flashing the loading overlay on every step.
 const debouncedQuietRebuild = debounce(triggerQuietRebuild, 160);
 const debouncedReprocess = debounce(reprocess, 220);
+const debouncedTextReprocess = debounce(reprocess, 800);
 
 function hexToRgb(hex: string): RGB {
   return [
