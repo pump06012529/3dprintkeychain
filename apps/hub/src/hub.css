@@ -319,37 +319,23 @@
   border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
 }
 
-/* Thumbnail area */
-.hub-card__thumb {
-  position: relative;
-  aspect-ratio: var(--hub-thumb-ratio);
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--accent) 10%, var(--panel-2)) 0%,
-    color-mix(in srgb, var(--accent-2) 8%, var(--panel-2)) 100%
-  );
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.hub-card__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
-}
-.hub-card:hover .hub-card__thumb img { transform: scale(1.04); }
-
-/* Placeholder when no image */
-.hub-card__thumb-placeholder {
-  width: 100%;
-  height: 100%;
+/* Icon area (emoji) */
+.hub-card__icon {
+  font-size: 52px;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 42px;
-  opacity: 0.4;
+  padding: 28px 20px 20px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 8%, var(--panel-2)) 0%,
+    color-mix(in srgb, var(--accent-2) 8%, var(--panel-2)) 100%
+  );
+  border-bottom: 1.5px solid var(--line);
+  transition: transform 0.3s ease;
 }
+.hub-card:hover .hub-card__icon { transform: scale(1.12); }
 
 /* Status badge */
 .hub-card__badge {

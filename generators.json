@@ -1,31 +1,32 @@
 {
-  "$comment": "Registry of every tool. The hub renders its cards from this and CI builds from this. route: 'mw' (scad listing on MakerWorld) | 'app' (own-site app) | 'both'. external: true = lives outside this monorepo.",
+  "$comment": "Registry of every tool. The hub renders its cards from this. route: 'app' (own-site web app) | 'both' (web app + MakerWorld listing).",
   "generators": [
     {
       "id": "clicker",
       "name": "Image to Clicker",
-      "route": "both",
+      "route": "app",
       "status": "live",
       "appUrl": "Clicker-Generator/",
-      "mwUrl": "https://makerworld.com/en/models/2980346",
+      "icon": "🖱️",
       "blurb": "Turn any image, logo, or custom text into a clicker fidget."
     },
     {
       "id": "keycap",
       "name": "Custom Keycap Generator",
-      "route": "both",
+      "route": "app",
       "status": "live",
       "appUrl": "SVG-keycap-generator/",
-      "mwUrl": "https://makerworld.com/en/models/2959969",
+      "icon": "⌨️",
       "blurb": "Custom keycaps with icons, logos, or letters."
     },
     {
       "id": "name-keychain",
       "name": "Name Keychain Generator",
-      "route": "both",
+      "route": "app",
       "status": "live",
       "appUrl": "Name-Keychain/",
-      "blurb": "Personalized plate-style name keychains with live font preview, pixel & script styles, multi-language, 1 to 3 colour layers, and AMS & no-AMS printing."
+      "icon": "🔑",
+      "blurb": "Personalized plate-style name keychains with live font preview, pixel & script styles, multi-language support."
     },
     {
       "id": "image-keychain",
@@ -33,81 +34,9 @@
       "route": "app",
       "status": "live",
       "appUrl": "Image-Keychain/",
+      "icon": "🖼️",
       "blurb": "Turn any SVG or PNG image into a custom 3D printable keychain with generated backplates and holes."
-    },
-    {
-      "id": "large-box",
-      "name": "Large Customizable Box",
-      "route": "mw",
-      "status": "live",
-      "mwUrl": "https://makerworld.com/en/models/2300059",
-      "blurb": "Large customizable print-in-place box. No hardware/screws required."
-    },
-    {
-      "id": "rugged-box",
-      "name": "Customizable Rugged Box",
-      "route": "mw",
-      "status": "live",
-      "mwUrl": "https://makerworld.com/en/models/1642041",
-      "blurb": "Super customizable rugged box. Print in place, no extra hardware."
-    },
-    {
-      "id": "washer-spacer",
-      "name": "Washer & Spacer Generator",
-      "route": "mw",
-      "status": "live",
-      "mwUrl": "https://makerworld.com/en/models/1669724",
-      "blurb": "Customizable washer and spacer generator. Set ID, OD, and thickness."
-    },
-    {
-      "id": "headphone-hook",
-      "name": "Desk Headphone Hook",
-      "route": "mw",
-      "status": "live",
-      "mwUrl": "https://makerworld.com/en/models/2483947",
-      "blurb": "Adjustable desk headphone hook. Parametric to fit any desk thickness."
-    },
-    {
-      "id": "edge-mount-dock",
-      "name": "Edge Mount Device Dock",
-      "route": "mw",
-      "status": "live",
-      "mwUrl": "https://makerworld.com/en/models/1684531",
-      "blurb": "Customizable edge mount dock for devices. Customize to fit your phone, Kindle, or tablet."
-    },
-    {
-      "id": "powerstrip-holder",
-      "name": "Screw-On Power Strip Holder",
-      "route": "mw",
-      "status": "live",
-      "mwUrl": "https://makerworld.com/en/models/1732918",
-      "blurb": "Customizable screw-on power strip holder. Mount strip securely under desks."
     }
   ],
-  "sellerTools": [
-    {
-      "id": "profit-calc",
-      "name": "Profit Calculator",
-      "status": "coming-soon",
-      "blurb": "3D print pricing: material, time, margin, all in one."
-    },
-    {
-      "id": "photo-render",
-      "name": "Product Photo Tool",
-      "status": "coming-soon",
-      "blurb": "Upload your model, get store-ready product shots."
-    },
-    {
-      "id": "listing-copy",
-      "name": "Listing Copy Helper",
-      "status": "coming-soon",
-      "blurb": "Generate Etsy & MakerWorld titles, tags, and descriptions."
-    },
-    {
-      "id": "review-qr",
-      "name": "Review QR Cards",
-      "status": "coming-soon",
-      "blurb": "\"Scan to leave a review\" cards to include with shipments."
-    }
-  ]
+  "sellerTools": []
 }
