@@ -254,6 +254,8 @@ const imageColorField = colorField('รูปภาพ', state.image, (value) =>
   triggerRebuild();
 });
 
+const paletteContainer = el('div', { className: 'nk-palette', attrs: { style: 'margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;' } });
+
 function updateControlsVisibility() {
   const haloVisible = state.colorScheme === 'plate-halo-image';
   haloColorField.classList.toggle('hidden', !haloVisible);
@@ -263,8 +265,6 @@ function updateControlsVisibility() {
   paletteContainer.classList.toggle('hidden', state.colorScheme === 'single' || !isMultiColor);
 }
 updateControlsVisibility();
-
-const paletteContainer = el('div', { className: 'nk-palette', attrs: { style: 'margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;' } });
 
 function updatePaletteUI() {
   paletteContainer.innerHTML = '';
