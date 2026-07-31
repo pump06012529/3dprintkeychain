@@ -16,7 +16,6 @@ import {
   generatorHeader,
   qualityCallout,
   sidebarFooter,
-  selectField,
   appShell,
   globalControlResets
 } from '@vostok/ui-kit';
