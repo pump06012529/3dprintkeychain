@@ -285,9 +285,7 @@ export function buildProfiles(wasm: any, textContours: number[][][], params: Bui
 
   let haloCS: any = null;
   if (hasHalo) {
-    // Prevent halo from wrapping the ring tab by subtracting the entire tab radius
-    const ringBlocker = keep(CrossSection.circle(lugOuter, 32).translate([holeX, holeY]));
-    haloCS = keep(glyphsCS.offset(params.haloWidth, 'Round', 2.0, 16).subtract(ringBlocker));
+    haloCS = keep(glyphsCS.offset(params.haloWidth, 'Round', 2.0, 16).subtract(holeCS));
   }
 
   return {
