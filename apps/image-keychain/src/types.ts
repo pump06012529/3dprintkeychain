@@ -19,6 +19,7 @@ export interface BuildParams {
   ringAngle?: number;
   haloWidth: number; // halo_width
   haloThickness: number; // halo_thickness
+  colorBleed: number;
   colorScheme: 'single' | 'plate-image' | 'plate-halo-image';
   plateColor: string;
   haloColor: string;

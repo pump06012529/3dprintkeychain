@@ -82,7 +82,7 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
     if (bolded.area() > 0.1) glyphsCS = bolded;
   }
   
-  const gapOffset = 0.12;
+  const gapOffset = params.colorBleed;
   glyphsCS = keep(glyphsCS.offset(gapOffset, 'Round', 1.0, 12));
   const emptyText = glyphsCS.area() < 0.1;
 
@@ -102,7 +102,7 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
     
     // Gap mitigation: grow the section before subtracting placed2D, 
     // ensuring identical boundaries between adjacent colors (no gaps).
-    const gapOffset = 0.15;
+    const gapOffset = params.colorBleed;
     cs = keep(cs.offset(gapOffset, 'Round', 1.0, 12));
     
     if (placed2D) {

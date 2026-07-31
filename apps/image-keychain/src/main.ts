@@ -24,7 +24,7 @@ import { noAmsPauses } from './geometry/noAms';
 
 const state = {
   size: 50, // width in mm
-  style: 'raised' as 'raised' | 'engraved',
+  style: 'engraved' as 'raised' | 'engraved',
   plateShape: 'outline' as 'outline' | 'rectangle',
   baseThickness: 2.0,
   imageThickness: 1.6,
@@ -53,6 +53,7 @@ const state = {
   imageSmoothing: 0.5,
   colorCount: 4,
   removeBg: true,
+  colorBleed: 0.15,
 };
 
 let uploadedFile: File | null = null;
@@ -326,6 +327,7 @@ removeBgCheckbox.addEventListener('change', () => {
 const sizeSlider = sliderRow({ label: 'ความกว้าง', min: 20, max: 200, value: state.size, unit: 'mm', onInput: (v) => { state.size = v; triggerRebuild(); } });
 const outlineSlider = sliderRow({ label: 'ความกว้างแผ่นหลัง', min: 0, max: 10, step: 0.1, value: state.outlineWidth, unit: 'mm', onInput: (v) => { state.outlineWidth = v; triggerRebuild(); } });
 const boldnessSlider = sliderRow({ label: 'ความหนารูปภาพ', min: -2.0, max: 2.0, step: 0.1, value: state.boldness, unit: 'mm', onInput: (v) => { state.boldness = v; triggerRebuild(); } });
+const colorBleedSlider = sliderRow({ label: 'ความกว้างรอยต่อสี', min: 0.0, max: 0.5, step: 0.01, value: state.colorBleed, unit: 'mm', onInput: (v) => { state.colorBleed = v; triggerRebuild(); } });
 
 const settings = el('div', { className: 'vl-section' }, [
   el('h4', { text: 'เลือกรูปภาพ' }),
@@ -338,6 +340,7 @@ const settings = el('div', { className: 'vl-section' }, [
   sizeSlider,
   outlineSlider,
   boldnessSlider,
+  colorBleedSlider,
   segmentedControl({
     label: 'รูปแบบ', value: state.style,
     options: [{ value: 'raised', label: 'นูน' }, { value: 'engraved', label: 'สลักลึก' }],
