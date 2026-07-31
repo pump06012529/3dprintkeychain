@@ -1200,57 +1200,6 @@ export function createUi(
     if ((e.target as HTMLElement).closest('.help-tip')) hideTip();
   });
 
-  // --- Welcome / intro modal ---
-  // Shown on every load (even on refresh) and re-openable via the header "?" button.
-  function showWelcome() {
-    // Avoid stacking duplicates if the help button is clicked repeatedly.
-    if (document.querySelector('.welcome-overlay')) return;
-    const wm = document.createElement('div');
-    wm.className = 'welcome-overlay';
-    wm.innerHTML = `
-      <div class="welcome-card">
-        <h2>Welcome to Clicker Generator 👋</h2>
-        <p>Turn any image, SVG, icon, or text into a multi-color 3D printable clicker, ready for Bambu Studio or PrusaSlicer.</p>
-        <div class="welcome-steps">
-          <div class="welcome-step">
-            <div class="welcome-step-num">1</div>
-            <div class="welcome-step-text">
-              <strong>Import your design</strong>
-              <span>Drop an image or choose a sample, upload an SVG, pick a Lucide icon, or type custom text.</span>
-            </div>
-          </div>
-          <div class="welcome-step">
-            <div class="welcome-step-num">2</div>
-            <div class="welcome-step-text">
-              <strong>Configure the clicker</strong>
-              <span>Pick colors &amp; filaments, choose a shape, adjust the size and depth.</span>
-            </div>
-          </div>
-          <div class="welcome-step">
-            <div class="welcome-step-num">3</div>
-            <div class="welcome-step-text">
-              <strong>Export &amp; print</strong>
-              <span>Download the 3MF file and load it directly into your slicer. Each color is a separate part.</span>
-            </div>
-          </div>
-        </div>
-        <div class="welcome-foot">
-          <button class="primary" id="welcomeClose" style="min-width:150px">Get started →</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(wm);
-    const close = () => {
-      wm.remove();
-      showUpdate();
-    };
-    wm.querySelector('#welcomeClose')!.addEventListener('click', close);
-    // Also dismiss on backdrop click.
-    wm.addEventListener('click', (e) => {
-      if (e.target === wm) close();
-    });
-  }
-
   // --- "What's new" update notification ---
   // Shown once after the welcome modal, before the tutorial. Its "Don't show
   // again" flag is independent of the tutorial / welcome dismissal keys.
@@ -1561,7 +1510,7 @@ export function createUi(
 
   // Always greet on load. The footer's Help button re-opens the tutorial prompt
   // (wired via the sidebarFooter onHelp callback above).
-  showWelcome();
+  showUpdate();
 
   function getFilamentNameAndHex(rgb: RGB): [string, string] {
     let bestHex = rgbHex(rgb);
