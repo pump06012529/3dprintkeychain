@@ -28,21 +28,20 @@ function buildNav(): HTMLElement {
 // CARDS
 // ---------------------------------------------------------------------------
 function buildCards(): HTMLElement {
-  const grid = el('div', { className: 'hub-grid' });
+  const grid = el('div', { className: 'hub-card-grid' });
   for (const gen of registry.generators) {
     if (gen.status === 'live') {
       grid.append(generatorCard(gen));
     }
   }
   return el('main', { className: 'hub-main hub-container' }, [
-    el('h1', { className: 'hub-main__title' }, [
-      document.createTextNode('Free 3D Print '),
-      Object.assign(document.createElement('em'), { textContent: 'Generators' }),
+    el('div', { className: 'hub-main__header' }, [
+      el('h1', { className: 'hub-main__title', text: 'Edu Labs 3D' }),
+      el('p', {
+        className: 'hub-main__sub',
+        text: 'เครื่องมือสร้างโมเดล 3D ฟรีเพื่อการศึกษา',
+      }),
     ]),
-    el('p', {
-      className: 'hub-main__sub',
-      text: 'ฟรีเพื่อการศึกษา · ปรับแต่ง ดาวน์โหลด พิมพ์ได้ทันที',
-    }),
     grid,
   ]);
 }
