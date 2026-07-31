@@ -1,41 +1,41 @@
 {
-  "$comment": "Registry of every tool. The hub renders its cards from this. route: 'app' (own-site web app) | 'both' (web app + MakerWorld listing).",
+  "$comment": "Registry of every tool. The hub renders its cards from this.",
   "generators": [
     {
       "id": "clicker",
-      "name": "Image to Clicker",
+      "name": "สร้างของเล่น Clicker",
       "route": "app",
       "status": "live",
       "appUrl": "Clicker-Generator/",
       "icon": "🖱️",
-      "blurb": "Turn any image, logo, or custom text into a clicker fidget."
+      "blurb": "เปลี่ยนรูปภาพ โลโก้ หรือข้อความ ให้เป็นของเล่นกดเล่น (Clicker Fidget) แบบ 3 มิติ"
     },
     {
       "id": "keycap",
-      "name": "Custom Keycap Generator",
+      "name": "สร้างปุ่มคีย์บอร์ด",
       "route": "app",
       "status": "live",
       "appUrl": "SVG-keycap-generator/",
       "icon": "⌨️",
-      "blurb": "Custom keycaps with icons, logos, or letters."
+      "blurb": "ออกแบบปุ่มคีย์บอร์ด (Keycap) ของคุณเอง ใส่ไอคอน โลโก้ หรือตัวอักษรได้ตามใจชอบ"
     },
     {
       "id": "name-keychain",
-      "name": "Name Keychain Generator",
+      "name": "สร้างพวงกุญแจชื่อ",
       "route": "app",
       "status": "live",
       "appUrl": "Name-Keychain/",
       "icon": "🔑",
-      "blurb": "Personalized plate-style name keychains with live font preview, pixel & script styles, multi-language support."
+      "blurb": "ออกแบบพวงกุญแจชื่อของคุณเอง มีฟอนต์น่ารักๆ ให้เลือกมากมาย ปรับสีได้ พิมพ์ง่าย"
     },
     {
       "id": "image-keychain",
-      "name": "Image Keychain Generator",
+      "name": "สร้างพวงกุญแจจากรูป",
       "route": "app",
       "status": "live",
       "appUrl": "Image-Keychain/",
       "icon": "🖼️",
-      "blurb": "Turn any SVG or PNG image into a custom 3D printable keychain with generated backplates and holes."
+      "blurb": "เปลี่ยนรูปภาพให้เป็นพวงกุญแจ 3 มิติ เจาะรูให้อัตโนมัติ พร้อมพิมพ์ทันที"
     }
   ],
   "sellerTools": []
