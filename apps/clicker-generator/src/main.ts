@@ -812,7 +812,7 @@ worker.onmessage = (e: MessageEvent<GeometryResponse>) => {
         resetHistory();
       }
       isWorkerBusy = false;
-      if (needsRebuild) triggerRebuild();
+      if (needsRebuild || needsQuietRebuild) triggerRebuild();
       break;
     }
     case 'error':
@@ -820,7 +820,7 @@ worker.onmessage = (e: MessageEvent<GeometryResponse>) => {
       console.error('[geometry worker]', msg.message);
       isInitialLoad = false;
       isWorkerBusy = false;
-      if (needsRebuild) triggerRebuild();
+      if (needsRebuild || needsQuietRebuild) triggerRebuild();
       break;
   }
 };
@@ -979,7 +979,7 @@ function reprocess() {
     store.set({ building: false, status: 'No outline found.' });
     return;
   }
-  rebuild();
+  triggerRebuild();
 }
 
 function rebuild(quiet = false) {
@@ -1058,6 +1058,7 @@ function debounce(fn: () => void, ms: number) {
 
 let isWorkerBusy = false;
 let needsRebuild = false;
+let needsQuietRebuild = false;
 let rebuildTimeout: number | undefined;
 
 function triggerRebuild() {
@@ -1067,17 +1068,26 @@ function triggerRebuild() {
   rebuildTimeout = window.setTimeout(runRebuild, 80);
 }
 
+function triggerQuietRebuild() {
+  needsQuietRebuild = true;
+  if (isWorkerBusy) return;
+  if (rebuildTimeout) clearTimeout(rebuildTimeout);
+  rebuildTimeout = window.setTimeout(runRebuild, 80);
+}
+
 function runRebuild() {
-  if (!needsRebuild) return;
+  if (!needsRebuild && !needsQuietRebuild) return;
+  const quiet = needsQuietRebuild && !needsRebuild;
   needsRebuild = false;
+  needsQuietRebuild = false;
   isWorkerBusy = true;
-  store.set({ building: true });
-  rebuild();
+  if (!quiet) store.set({ building: true });
+  rebuild(quiet);
 }
 
 // Quiet rebuild used by live edit modes (extrude / edges) so the preview reflects
 // the real geometry without flashing the loading overlay on every step.
-const debouncedQuietRebuild = debounce(() => rebuild(true), 160);
+const debouncedQuietRebuild = debounce(triggerQuietRebuild, 160);
 const debouncedReprocess = debounce(reprocess, 220);
 
 function hexToRgb(hex: string): RGB {
