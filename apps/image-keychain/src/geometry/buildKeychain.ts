@@ -97,8 +97,14 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
       if (bolded.area() > 0.1) cs = bolded;
     }
     
+    // Convert normalized coords to mm
+    cs = keep(cs.scale([params.imageWidth, params.imageHeight]));
+    
+    // Gap mitigation: grow the section before subtracting placed2D, 
+    // ensuring identical boundaries between adjacent colors (no gaps).
+    const gapOffset = 0.15;
     cs = keep(cs.offset(gapOffset, 'Round', 1.0, 12));
-
+    
     if (placed2D) {
       cs = keep(cs.subtract(placed2D));
     }
