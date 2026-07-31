@@ -161,6 +161,7 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
     plateNoHole: plateCS,
     haloCS,
     textCS: glyphsCS,
+    inlaysCS: placed2D,
     regionProfiles,
     emptyText,
     isRaised,
@@ -229,7 +230,7 @@ export function buildKeychain(
       // Engraved: base plate with a recess, flush-filled with coloured inlays.
       let baseSolid = bevelExtrude(p.plateNoHole, p.baseT, chamBase, keep);
       const cutDepth = Math.min(params.imageThickness, p.baseT * 0.6);
-      const recessCS = p.hasHalo && p.haloCS ? keep(p.haloCS.add(p.textCS)) : p.textCS;
+      const recessCS = p.hasHalo && p.haloCS ? keep(p.haloCS.add(p.inlaysCS ?? p.textCS)) : (p.inlaysCS ?? p.textCS);
       const recessCut = keep(recessCS.extrude(cutDepth + 1).translate([0, 0, p.baseT - cutDepth]));
       let engraved = keep(baseSolid.subtract(recessCut));
       engraved = holeCut(engraved, 0, p.baseT);
