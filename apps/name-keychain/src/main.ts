@@ -593,12 +593,27 @@ function selectFont(id: string) {
 function openFontBrowser() {
   let search = '';
   let cat = 'All';
+  let lang = 'All';
   const categories = ['All', ...Array.from(new Set(FONTS.map((f) => f.category))).sort()];
 
   const searchInput = el('input', {
     className: 'nk-fb__search',
     attrs: { type: 'search', placeholder: `Search ${FONTS.length} fonts…`, 'aria-label': 'Search fonts' },
   }) as HTMLInputElement;
+  
+  const langSelect = el('select', {
+    className: 'nk-fb__lang',
+    attrs: { style: 'padding: 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); margin-left: 8px;' }
+  }, [
+    el('option', { attrs: { value: 'All' }, text: 'ทุกภาษา' }),
+    el('option', { attrs: { value: 'Thai' }, text: 'เฉพาะภาษาไทย' }),
+    el('option', { attrs: { value: 'English' }, text: 'เฉพาะภาษาอังกฤษ' })
+  ]) as HTMLSelectElement;
+
+  const headerRow = el('div', { attrs: { style: 'display: flex; gap: 8px; margin-bottom: 12px;' } }, [searchInput, langSelect]);
+  searchInput.style.flex = '1';
+  searchInput.style.marginBottom = '0';
+
   const chips = el('div', { className: 'nk-fb__chips' });
   const list = el('div', { className: 'nk-fb__list' });
 
@@ -623,10 +638,13 @@ function openFontBrowser() {
     io.disconnect();
     list.replaceChildren();
     const q = search.trim().toLowerCase();
-    const matches = FONTS.filter((f) =>
-      (cat === 'All' || f.category === cat) &&
-      (!q || f.label.toLowerCase().includes(q) || f.category.toLowerCase().includes(q)),
-    );
+    const matches = FONTS.filter((f) => {
+      const matchCat = cat === 'All' || f.category === cat;
+      const matchSearch = !q || f.label.toLowerCase().includes(q) || f.category.toLowerCase().includes(q);
+      const isThai = f.subsets.includes('thai');
+      const matchLang = lang === 'All' || (lang === 'Thai' && isThai) || (lang === 'English' && !isThai);
+      return matchCat && matchSearch && matchLang;
+    });
     if (!matches.length) {
       list.append(el('p', { className: 'nk-fb__empty', text: `ไม่พบฟอนต์ที่ตรงกับ “${search.trim()}”` }));
       return;
@@ -664,8 +682,9 @@ function openFontBrowser() {
     chips.append(chip);
   }
   searchInput.addEventListener('input', () => { search = searchInput.value; render(); });
+  langSelect.addEventListener('change', () => { lang = langSelect.value; render(); });
 
-  const content = el('div', { className: 'nk-fontmodal' }, [searchInput, chips, list]);
+  const content = el('div', { className: 'nk-fontmodal' }, [headerRow, chips, list]);
   const handle = dialog({ title: 'Choose a font', content });
   render();
   searchInput.focus();

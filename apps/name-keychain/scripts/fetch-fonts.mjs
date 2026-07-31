@@ -1,7 +1,4 @@
-// Downloads a curated, print-friendly set of Google Fonts (Latin-subset TTF) into
-// apps/name-keychain/src/fonts/, then regenerates the font registry + @font-face CSS.
-// Idempotent: skips fonts already present. Re-runnable.
-import { writeFile, readFile, readdir, access } from 'node:fs/promises';
+import { writeFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,208 +6,30 @@ import { fileURLToPath } from 'node:url';
 const APP = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const FONTS_DIR = path.join(APP, 'src', 'fonts');
 
-// slug: [Label, Category, curated?]  — curated=true shows as an instant front card.
-// Categories used by the modal filter: Display, Comic, Script, Handwriting,
-// Slab, Serif, Tech, Pixel, Mono, Spooky, Clean.
-const MAP = {
-  // ----- existing curated 24 (front cards) -----
-  'pacifico': ['Pacifico', 'Script', true],
-  'luckiest-guy': ['Luckiest Guy', 'Comic', true],
-  'creepster': ['Creepster', 'Spooky', true],
-  'press-start-2p': ['Press Start 2P', 'Pixel', true],
-  'dancing-script': ['Dancing Script', 'Script', true],
-  'bungee': ['Bungee', 'Display', true],
-  'lobster': ['Lobster', 'Script', true],
-  'permanent-marker': ['Permanent Marker', 'Handwriting', true],
-  'vt323': ['VT323', 'Pixel', true],
-  'bangers': ['Bangers', 'Comic', true],
-  'sigmar-one': ['Sigmar One', 'Display', true],
-  'kalam': ['Kalam', 'Handwriting', true],
-  'amatic-sc': ['Amatic SC', 'Handwriting', false],
-  'righteous': ['Righteous', 'Tech', true],
-  'anton': ['Anton', 'Clean', true],
-  'russo-one': ['Russo One', 'Tech', true],
-  'bebas-neue': ['Bebas Neue', 'Clean', true],
-  'oswald': ['Oswald', 'Clean', true],
-  'playfair-display': ['Playfair Display', 'Serif', true],
-  'audiowide': ['Audiowide', 'Tech', true],
-  'orbitron': ['Orbitron', 'Tech', true],
-  'chakra-petch': ['Chakra Petch', 'Tech', true],
-  'arvo': ['Arvo', 'Slab', true],
+const CURATED = new Set([
+  'pacifico', 'luckiest-guy', 'creepster', 'press-start-2p',
+  'dancing-script', 'bungee', 'lobster', 'permanent-marker',
+  'vt323', 'bangers', 'sigmar-one', 'kalam', 'righteous',
+  'anton', 'russo-one', 'bebas-neue', 'oswald', 'playfair-display',
+  'audiowide', 'orbitron', 'chakra-petch', 'arvo', 'prompt',
+  'mali', 'sriracha', 'chonburi', 'itim'
+]);
 
-  // ----- Display / bold impact -----
-  'titan-one': ['Titan One', 'Display'],
-  'alfa-slab-one': ['Alfa Slab One', 'Slab'],
-  'lilita-one': ['Lilita One', 'Comic'],
-  'fredoka': ['Fredoka', 'Comic'],
-  'baloo-2': ['Baloo 2', 'Comic'],
-  'paytone-one': ['Paytone One', 'Display'],
-  'fugaz-one': ['Fugaz One', 'Display'],
-  'passion-one': ['Passion One', 'Display'],
-  'bowlby-one': ['Bowlby One', 'Display'],
-  'bowlby-one-sc': ['Bowlby One SC', 'Display'],
-  'ultra': ['Ultra', 'Slab'],
-  'bevan': ['Bevan', 'Slab'],
-  'bree-serif': ['Bree Serif', 'Serif'],
-  'patua-one': ['Patua One', 'Slab'],
-  'changa-one': ['Changa One', 'Display'],
-  'concert-one': ['Concert One', 'Comic'],
-  'squada-one': ['Squada One', 'Display'],
-  'staatliches': ['Staatliches', 'Clean'],
-  'teko': ['Teko', 'Clean'],
-  'fjalla-one': ['Fjalla One', 'Clean'],
-  'archivo-black': ['Archivo Black', 'Clean'],
-  'black-ops-one': ['Black Ops One', 'Tech'],
-  'racing-sans-one': ['Racing Sans One', 'Display'],
-  'kanit': ['Kanit', 'Clean'],
-  'rowdies': ['Rowdies', 'Display'],
-  'rubik-mono-one': ['Rubik Mono One', 'Tech'],
-  'bakbak-one': ['Bakbak One', 'Display'],
-  'shrikhand': ['Shrikhand', 'Display'],
-  'ranchers': ['Ranchers', 'Comic'],
-  'modak': ['Modak', 'Comic'],
-  'boogaloo': ['Boogaloo', 'Comic'],
-  'chewy': ['Chewy', 'Comic'],
-  'sniglet': ['Sniglet', 'Comic'],
-  'grandstander': ['Grandstander', 'Comic'],
-
-  // ----- Script -----
-  'great-vibes': ['Great Vibes', 'Script'],
-  'satisfy': ['Satisfy', 'Script'],
-  'cookie': ['Cookie', 'Script'],
-  'sacramento': ['Sacramento', 'Script'],
-  'yellowtail': ['Yellowtail', 'Script'],
-  'courgette': ['Courgette', 'Script'],
-  'kaushan-script': ['Kaushan Script', 'Script'],
-  'damion': ['Damion', 'Script'],
-  'allura': ['Allura', 'Script'],
-  'marck-script': ['Marck Script', 'Script'],
-  'parisienne': ['Parisienne', 'Script'],
-  'niconne': ['Niconne', 'Script'],
-  'alex-brush': ['Alex Brush', 'Script'],
-  'norican': ['Norican', 'Script'],
-  'rochester': ['Rochester', 'Script'],
-
-  // ----- Handwriting -----
-  'caveat': ['Caveat', 'Handwriting'],
-  'gochi-hand': ['Gochi Hand', 'Handwriting'],
-  'patrick-hand': ['Patrick Hand', 'Handwriting'],
-  'architects-daughter': ['Architects Daughter', 'Handwriting'],
-  'gloria-hallelujah': ['Gloria Hallelujah', 'Handwriting'],
-  'coming-soon': ['Coming Soon', 'Handwriting'],
-  'pangolin': ['Pangolin', 'Handwriting'],
-  'handlee': ['Handlee', 'Handwriting'],
-  'neucha': ['Neucha', 'Handwriting'],
-  'sriracha': ['Sriracha', 'Handwriting'],
-  'schoolbell': ['Schoolbell', 'Handwriting'],
-  'indie-flower': ['Indie Flower', 'Handwriting'],
-  'gaegu': ['Gaegu', 'Handwriting'],
-  'special-elite': ['Special Elite', 'Handwriting'],
-
-  // ----- Slab / Serif -----
-  'roboto-slab': ['Roboto Slab', 'Slab'],
-  'zilla-slab': ['Zilla Slab', 'Slab'],
-  'rokkitt': ['Rokkitt', 'Slab'],
-  'josefin-slab': ['Josefin Slab', 'Slab'],
-  'crete-round': ['Crete Round', 'Slab'],
-  'sanchez': ['Sanchez', 'Slab'],
-  'bitter': ['Bitter', 'Slab'],
-  'rye': ['Rye', 'Slab'],
-  'domine': ['Domine', 'Serif'],
-  'lora': ['Lora', 'Serif'],
-  'abril-fatface': ['Abril Fatface', 'Serif'],
-  'yeseva-one': ['Yeseva One', 'Serif'],
-  'cinzel': ['Cinzel', 'Serif'],
-  'cinzel-decorative': ['Cinzel Decorative', 'Serif'],
-  'marcellus': ['Marcellus', 'Serif'],
-  'vollkorn': ['Vollkorn', 'Serif'],
-  'sansita-swashed': ['Sansita Swashed', 'Serif'],
-
-  // ----- Tech / Retro -----
-  'monoton': ['Monoton', 'Tech'],
-  'wallpoet': ['Wallpoet', 'Tech'],
-  'faster-one': ['Faster One', 'Tech'],
-  'michroma': ['Michroma', 'Tech'],
-  'iceland': ['Iceland', 'Tech'],
-  'turret-road': ['Turret Road', 'Tech'],
-  'zen-dots': ['Zen Dots', 'Tech'],
-  'syncopate': ['Syncopate', 'Tech'],
-  'jura': ['Jura', 'Tech'],
-  'oxanium': ['Oxanium', 'Tech'],
-  'quantico': ['Quantico', 'Tech'],
-  'aldrich': ['Aldrich', 'Tech'],
-  'gruppo': ['Gruppo', 'Tech'],
-  'nova-square': ['Nova Square', 'Tech'],
-  'rajdhani': ['Rajdhani', 'Tech'],
-  'electrolize': ['Electrolize', 'Tech'],
-  'bungee-inline': ['Bungee Inline', 'Tech'],
-  'bungee-shade': ['Bungee Shade', 'Tech'],
-  'shojumaru': ['Shojumaru', 'Tech'],
-
-  // ----- Pixel / Mono -----
-  'silkscreen': ['Silkscreen', 'Pixel'],
-  'pixelify-sans': ['Pixelify Sans', 'Pixel'],
-  'handjet': ['Handjet', 'Pixel'],
-  'dotgothic16': ['DotGothic16', 'Pixel'],
-  'major-mono-display': ['Major Mono Display', 'Mono'],
-  'nova-mono': ['Nova Mono', 'Mono'],
-  'cutive-mono': ['Cutive Mono', 'Mono'],
-  'space-mono': ['Space Mono', 'Mono'],
-  'share-tech-mono': ['Share Tech Mono', 'Mono'],
-
-  // ----- Spooky / Themed -----
-  'nosifer': ['Nosifer', 'Spooky'],
-  'butcherman': ['Butcherman', 'Spooky'],
-  'eater': ['Eater', 'Spooky'],
-  'frijole': ['Frijole', 'Spooky'],
-  'metal-mania': ['Metal Mania', 'Spooky'],
-  'pirata-one': ['Pirata One', 'Spooky'],
-  'ewert': ['Ewert', 'Spooky'],
-  'griffy': ['Griffy', 'Spooky'],
-  'henny-penny': ['Henny Penny', 'Spooky'],
-  'jolly-lodger': ['Jolly Lodger', 'Spooky'],
-  'new-rocker': ['New Rocker', 'Spooky'],
-  'rubik-glitch': ['Rubik Glitch', 'Spooky'],
-
-  // ----- Clean sans / rounded -----
-  'montserrat': ['Montserrat', 'Clean'],
-  'poppins': ['Poppins', 'Clean'],
-  'nunito': ['Nunito', 'Clean'],
-  'rubik': ['Rubik', 'Clean'],
-  'titillium-web': ['Titillium Web', 'Clean'],
-  'barlow-condensed': ['Barlow Condensed', 'Clean'],
-  'josefin-sans': ['Josefin Sans', 'Clean'],
-  'comfortaa': ['Comfortaa', 'Comic'],
-  'quicksand': ['Quicksand', 'Comic'],
-  'jua': ['Jua', 'Comic'],
-  'do-hyeon': ['Do Hyeon', 'Clean'],
-  'black-han-sans': ['Black Han Sans', 'Clean'],
-
-  // ----- Thai Fonts -----
-  'prompt': ['Prompt', 'Clean', true],
-  'sarabun': ['Sarabun', 'Clean', true],
-  'mali': ['Mali', 'Handwriting', true],
-  'itim': ['Itim', 'Handwriting', true],
-  'sriracha': ['Sriracha', 'Handwriting', true],
-  'kodchasan': ['Kodchasan', 'Handwriting', true],
-  'k2d': ['K2D', 'Comic', true],
-  'koho': ['KoHo', 'Comic', true],
-  'srisakdi': ['Srisakdi', 'Display', true],
-  'charm': ['Charm', 'Script', true],
-  'charmonman': ['Charmonman', 'Script', true],
-  'niramit': ['Niramit', 'Clean'],
-  'mitr': ['Mitr', 'Clean', true],
-  'chonburi': ['Chonburi', 'Display'],
-  'pattaya': ['Pattaya', 'Script', true],
-  'pridi': ['Pridi', 'Serif'],
-  'krub': ['Krub', 'Clean'],
-  'bai-jamjuree': ['Bai Jamjuree', 'Clean'],
-  'fahkwang': ['Fahkwang', 'Display'],
-  'thasadith': ['Thasadith', 'Clean'],
-  'taviraj': ['Taviraj', 'Serif'],
-  'trirong': ['Trirong', 'Serif'],
-  'maitree': ['Maitree', 'Serif'],
-};
+function getMappedCategory(f) {
+  if (CURATED.has(f.id)) {
+    if (f.id === 'press-start-2p' || f.id === 'vt323') return 'Pixel';
+    if (f.id === 'creepster') return 'Spooky';
+    if (f.id === 'bangers' || f.id === 'luckiest-guy') return 'Comic';
+    if (['audiowide', 'orbitron', 'chakra-petch', 'righteous', 'russo-one'].includes(f.id)) return 'Tech';
+  }
+  const c = f.category;
+  if (c === 'sans-serif') return 'Clean';
+  if (c === 'serif') return 'Serif';
+  if (c === 'display') return 'Display';
+  if (c === 'handwriting') return 'Handwriting';
+  if (c === 'monospace') return 'Mono';
+  return 'Display';
+}
 
 async function fetchTtfUrl(slug) {
   const metaResp = await fetch(`https://gwfh.mranftl.com/api/fonts/${slug}`);
@@ -227,25 +46,24 @@ async function fetchTtfUrl(slug) {
   return { url: reg.ttf, subsets: meta.subsets || ['latin'] };
 }
 
-async function download(slug) {
+async function download(item) {
+  const { slug, label, category, curated, subsets } = item;
   const dest = path.join(FONTS_DIR, `${slug}.ttf`);
-  let cachedSubsets = ['latin'];
   try {
-    const { url, subsets } = await fetchTtfUrl(slug);
-    cachedSubsets = subsets;
-    if (existsSync(dest)) return { slug, status: 'exists', subsets };
+    const { url, subsets: fetchedSubsets } = await fetchTtfUrl(slug);
+    if (existsSync(dest)) return { ...item, status: 'exists', subsets: fetchedSubsets };
     const r = await fetch(url);
     if (!r.ok) throw new Error(`ttf HTTP ${r.status}`);
     const buf = Buffer.from(await r.arrayBuffer());
     if (buf.length < 1000) throw new Error(`too small (${buf.length}b)`);
     await writeFile(dest, buf);
-    return { slug, status: 'ok', bytes: buf.length, subsets };
+    return { ...item, status: 'ok', bytes: buf.length, subsets: fetchedSubsets };
   } catch (e) {
-    return { slug, status: 'FAIL', error: e.message };
+    return { ...item, status: 'FAIL', error: e.message };
   }
 }
 
-async function pool(items, worker, concurrency = 6) {
+async function pool(items, worker, concurrency = 10) {
   const results = [];
   let i = 0;
   async function run() {
@@ -258,9 +76,35 @@ async function pool(items, worker, concurrency = 6) {
   return results;
 }
 
-const slugs = Object.keys(MAP);
-console.log(`Downloading ${slugs.length} fonts (skipping existing)...`);
-const results = await pool(slugs, download, 6);
+// 1. Fetch full list
+console.log('Fetching Google Fonts list...');
+const listRes = await fetch('https://gwfh.mranftl.com/api/fonts');
+const list = await listRes.json();
+
+// 2. Select 500 fonts
+const thaiFonts = list.filter(f => f.subsets.includes('thai'));
+const remaining = list.filter(f => !f.subsets.includes('thai'));
+remaining.sort((a, b) => a.popularity - b.popularity);
+const topEnglish = remaining.slice(0, 500 - thaiFonts.length);
+
+const selected = [...thaiFonts, ...topEnglish];
+for (const c of CURATED) {
+  if (!selected.find(f => f.id === c)) {
+    const f = list.find(f => f.id === c);
+    if (f) selected.push(f);
+  }
+}
+
+const itemsToDownload = selected.map(f => ({
+  slug: f.id,
+  label: f.family,
+  category: getMappedCategory(f),
+  curated: CURATED.has(f.id),
+  subsets: f.subsets
+}));
+
+console.log(`Downloading ${itemsToDownload.length} fonts (skipping existing)...`);
+const results = await pool(itemsToDownload, download, 10);
 
 const ok = results.filter((r) => r.status === 'ok');
 const exists = results.filter((r) => r.status === 'exists');
@@ -268,26 +112,16 @@ const failed = results.filter((r) => r.status === 'FAIL');
 console.log(`\nDownloaded: ${ok.length} new, ${exists.length} already present, ${failed.length} failed.`);
 if (failed.length) console.log('FAILED:', failed.map((f) => `${f.slug} (${f.error})`).join(', '));
 
-// Fallback is now handled manually (icon-fallback.ttf)
-
-// Map subsets back to MAP for all successful results
-for (const r of results) {
-  if (r.status === 'ok' || r.status === 'exists') {
-    if (MAP[r.slug]) MAP[r.slug][3] = r.subsets;
-  }
-}
-
-// Regenerate registry + CSS from files actually present.
+const validResults = results.filter(r => r.status === 'ok' || r.status === 'exists');
 const files = (await readdir(FONTS_DIR)).filter((f) => f.endsWith('.ttf') && f !== 'icon-fallback.ttf');
 const present = new Set(files.map((f) => f.replace('.ttf', '')));
 
-const rows = Object.entries(MAP)
-  .filter(([slug]) => present.has(slug))
-  .map(([slug, [label, category, curated, subsets]]) => ({ id: slug, label, category, curated: !!curated, subsets: subsets || ['latin'] }));
+const rows = validResults
+  .filter(r => present.has(r.slug))
+  .map(r => ({ id: r.slug, label: r.label, category: r.category, curated: r.curated, subsets: r.subsets }));
 
-// Any ttf on disk not in MAP: include with a guessed label + 'Display'.
 for (const slug of present) {
-  if (!MAP[slug]) {
+  if (!rows.find(r => r.id === slug)) {
     const label = slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
     rows.push({ id: slug, label, category: 'Display', curated: false, subsets: ['latin'] });
   }
@@ -304,23 +138,9 @@ const css = `/* AUTO-GENERATED by scripts/fetch-fonts.mjs — do not edit by han
   rows.map((r) => `@font-face { font-family: NK-${r.id}; src: url('./fonts/${r.id}.ttf'); font-display: swap; }`).join('\n') + '\n';
 await writeFile(path.join(APP, 'src', 'generated-fonts.css'), css);
 
-// Regenerate attribution/CREDITS for the full set. Google Fonts are each licensed
-// under OFL-1.1 or Apache-2.0 (shown on the linked specimen page); both permit
-// bundling/embedding in commercial products as long as the license text is retained.
 const specimen = (label) => `https://fonts.google.com/specimen/${label.replace(/ /g, '+')}`;
-const credits = `# Bundled fonts
-
-All ${rows.length} fonts in this folder are from [Google Fonts](https://fonts.google.com). Each is
-licensed under the **SIL Open Font License 1.1** ([\`OFL.txt\`](OFL.txt)) or the
-**Apache License 2.0** (https://www.apache.org/licenses/LICENSE-2.0), as stated on its
-Google Fonts specimen page linked below. Both licenses permit embedding and bundling in
-commercial software. Each font remains © its respective authors; no font is sold or
-redistributed on its own — they ship only as part of this generator.
-
-| Font | Category | Google Fonts page (license) |
-| --- | --- | --- |
-${rows.map((r) => `| ${r.label} | ${r.category} | ${specimen(r.label)} |`).join('\n')}
-`;
+const credits = `# Bundled fonts\n\nAll ${rows.length} fonts in this folder are from [Google Fonts](https://fonts.google.com). Each is licensed under OFL-1.1 or Apache-2.0.\n\n| Font | Category | Google Fonts page (license) |\n| --- | --- | --- |\n` +
+  rows.map((r) => `| ${r.label} | ${r.category} | ${specimen(r.label)} |`).join('\n') + '\n';
 await writeFile(path.join(FONTS_DIR, 'CREDITS.md'), credits);
 
 console.log(`\nRegistry: ${rows.length} fonts (${rows.filter((r) => r.curated).length} curated front cards).`);

@@ -2,9 +2,89 @@
 export interface FontChoice { id: string; label: string; category: string; curated: boolean; subsets: string[]; }
 export const FONTS: FontChoice[] = [
   {
+    "id": "abeezee",
+    "label": "ABeeZee",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "abel",
+    "label": "Abel",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "aboreto",
+    "label": "Aboreto",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "abril-fatface",
     "label": "Abril Fatface",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "aclonica",
+    "label": "Aclonica",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "acme",
+    "label": "Acme",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "adamina",
+    "label": "Adamina",
     "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "advent-pro",
+    "label": "Advent Pro",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "albert-sans",
+    "label": "Albert Sans",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -14,18 +94,84 @@ export const FONTS: FontChoice[] = [
   {
     "id": "aldrich",
     "label": "Aldrich",
-    "category": "Tech",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin"
     ]
   },
   {
-    "id": "alex-brush",
-    "label": "Alex Brush",
-    "category": "Script",
+    "id": "alegreya",
+    "label": "Alegreya",
+    "category": "Serif",
     "curated": false,
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "alegreya-sans",
+    "label": "Alegreya Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "alegreya-sc",
+    "label": "Alegreya SC",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "aleo",
+    "label": "Aleo",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "alex-brush",
+    "label": "Alex Brush",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "alexandria",
+    "label": "Alexandria",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -34,7 +180,7 @@ export const FONTS: FontChoice[] = [
   {
     "id": "alfa-slab-one",
     "label": "Alfa Slab One",
-    "category": "Slab",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin",
@@ -43,11 +189,58 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "allura",
-    "label": "Allura",
-    "category": "Script",
+    "id": "alice",
+    "label": "Alice",
+    "category": "Serif",
     "curated": false,
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "alike",
+    "label": "Alike",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "id": "allura",
+    "label": "Allura",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "almarai",
+    "label": "Almarai",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin"
+    ]
+  },
+  {
+    "id": "alumni-sans",
+    "label": "Alumni Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -67,6 +260,103 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "amiko",
+    "label": "Amiko",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "amiri",
+    "label": "Amiri",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "amita",
+    "label": "Amita",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "andika",
+    "label": "Andika",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "anek-telugu",
+    "label": "Anek Telugu",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "telugu"
+    ]
+  },
+  {
+    "id": "angkor",
+    "label": "Angkor",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "khmer",
+      "latin"
+    ]
+  },
+  {
+    "id": "anonymous-pro",
+    "label": "Anonymous Pro",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "antic",
+    "label": "Antic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "antic-slab",
+    "label": "Antic Slab",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "id": "anton",
     "label": "Anton",
     "category": "Clean",
@@ -75,6 +365,48 @@ export const FONTS: FontChoice[] = [
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "id": "antonio",
+    "label": "Antonio",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "anuphan",
+    "label": "Anuphan",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "anybody",
+    "label": "Anybody",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "arapey",
+    "label": "Arapey",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -88,6 +420,17 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "archivo",
+    "label": "Archivo",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "archivo-black",
     "label": "Archivo Black",
     "category": "Clean",
@@ -98,12 +441,96 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "archivo-narrow",
+    "label": "Archivo Narrow",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "arimo",
+    "label": "Arimo",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "arsenal",
+    "label": "Arsenal",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "arvo",
     "label": "Arvo",
-    "category": "Slab",
+    "category": "Serif",
     "curated": true,
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "id": "asap",
+    "label": "Asap",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "assistant",
+    "label": "Assistant",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "athiti",
+    "label": "Athiti",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "atkinson-hyperlegible",
+    "label": "Atkinson Hyperlegible",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -112,6 +539,36 @@ export const FONTS: FontChoice[] = [
     "category": "Tech",
     "curated": true,
     "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "average",
+    "label": "Average",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "averia-serif-libre",
+    "label": "Averia Serif Libre",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "bagel-fat-one",
+    "label": "Bagel Fat One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "korean",
       "latin",
       "latin-ext"
     ]
@@ -142,10 +599,34 @@ export const FONTS: FontChoice[] = [
   {
     "id": "baloo-2",
     "label": "Baloo 2",
-    "category": "Comic",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "devanagari",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "baloo-da-2",
+    "label": "Baloo Da 2",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "bengali",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "baloo-tamma-2",
+    "label": "Baloo Tamma 2",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "kannada",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -163,8 +644,51 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "barlow",
+    "label": "Barlow",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "barlow-condensed",
     "label": "Barlow Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "barlow-semi-condensed",
+    "label": "Barlow Semi Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "baskervville",
+    "label": "Baskervville",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "be-vietnam-pro",
+    "label": "Be Vietnam Pro",
     "category": "Clean",
     "curated": false,
     "subsets": [
@@ -184,20 +708,78 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "bevan",
-    "label": "Bevan",
-    "category": "Slab",
+    "id": "bellefair",
+    "label": "Bellefair",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "belleza",
+    "label": "Belleza",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "bentham",
+    "label": "Bentham",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "besley",
+    "label": "Besley",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "bevan",
+    "label": "Bevan",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "bigshot-one",
+    "label": "Bigshot One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "bilbo-swash-caps",
+    "label": "Bilbo Swash Caps",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
     "id": "bitter",
     "label": "Bitter",
-    "category": "Slab",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "cyrillic",
@@ -208,19 +790,31 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "black-han-sans",
-    "label": "Black Han Sans",
+    "id": "biz-udpgothic",
+    "label": "BIZ UDPGothic",
     "category": "Clean",
     "curated": false,
     "subsets": [
-      "korean",
+      "cyrillic",
+      "greek-ext",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "black-han-sans",
+    "label": "Black Han Sans",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
       "latin"
     ]
   },
   {
     "id": "black-ops-one",
     "label": "Black Ops One",
-    "category": "Tech",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "cyrillic-ext",
@@ -230,9 +824,41 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "bodoni-moda",
+    "label": "Bodoni Moda",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "id": "bokor",
+    "label": "Bokor",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "khmer",
+      "latin"
+    ]
+  },
+  {
+    "id": "boldonse",
+    "label": "Boldonse",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "boogaloo",
     "label": "Boogaloo",
-    "category": "Comic",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
@@ -249,8 +875,17 @@ export const FONTS: FontChoice[] = [
   },
   {
     "id": "bowlby-one-sc",
-    "label": "Bowlby One SC",
+    "label": "Bowlby One Sc",
     "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "bree-serif",
+    "label": "Bree Serif",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "latin",
@@ -258,8 +893,19 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "bree-serif",
-    "label": "Bree Serif",
+    "id": "bricolage-grotesque",
+    "label": "Bricolage Grotesque",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "buenard",
+    "label": "Buenard",
     "category": "Serif",
     "curated": false,
     "subsets": [
@@ -281,18 +927,34 @@ export const FONTS: FontChoice[] = [
   {
     "id": "bungee-inline",
     "label": "Bungee Inline",
-    "category": "Tech",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin"
     ]
   },
   {
     "id": "bungee-shade",
     "label": "Bungee Shade",
-    "category": "Tech",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "butcherman",
+    "label": "Butcherman",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "cabin",
+    "label": "Cabin",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -301,13 +963,127 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "butcherman",
-    "label": "Butcherman",
-    "category": "Spooky",
+    "id": "cabin-condensed",
+    "label": "Cabin Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "cairo",
+    "label": "Cairo",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "calistoga",
+    "label": "Calistoga",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "calligraffitti",
+    "label": "Calligraffitti",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "cantarell",
+    "label": "Cantarell",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "cantata-one",
+    "label": "Cantata One",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "caprasimo",
+    "label": "Caprasimo",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "cardo",
+    "label": "Cardo",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "gothic",
+      "greek",
+      "greek-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "old-italic",
+      "runic"
+    ]
+  },
+  {
+    "id": "carlito",
+    "label": "Carlito",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "castoro",
+    "label": "Castoro",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "catamaran",
+    "label": "Catamaran",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "tamil"
     ]
   },
   {
@@ -335,6 +1111,17 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "changa",
+    "label": "Changa",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "changa-one",
     "label": "Changa One",
     "category": "Display",
@@ -346,8 +1133,8 @@ export const FONTS: FontChoice[] = [
   {
     "id": "charm",
     "label": "Charm",
-    "category": "Script",
-    "curated": true,
+    "category": "Handwriting",
+    "curated": false,
     "subsets": [
       "latin",
       "latin-ext",
@@ -358,8 +1145,8 @@ export const FONTS: FontChoice[] = [
   {
     "id": "charmonman",
     "label": "Charmonman",
-    "category": "Script",
-    "curated": true,
+    "category": "Handwriting",
+    "curated": false,
     "subsets": [
       "latin",
       "latin-ext",
@@ -368,19 +1155,54 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "chelsea-market",
+    "label": "Chelsea Market",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "chewy",
     "label": "Chewy",
-    "category": "Comic",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
     ]
   },
   {
+    "id": "chiron-goround-tc",
+    "label": "Chiron GoRound TC",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "chinese-traditional",
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "chivo",
+    "label": "Chivo",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "chonburi",
     "label": "Chonburi",
     "category": "Display",
-    "curated": false,
+    "curated": true,
     "subsets": [
       "latin",
       "latin-ext",
@@ -401,7 +1223,17 @@ export const FONTS: FontChoice[] = [
   {
     "id": "cinzel-decorative",
     "label": "Cinzel Decorative",
-    "category": "Serif",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "coda",
+    "label": "Coda",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin",
@@ -411,7 +1243,7 @@ export const FONTS: FontChoice[] = [
   {
     "id": "comfortaa",
     "label": "Comfortaa",
-    "category": "Comic",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "cyrillic",
@@ -425,16 +1257,30 @@ export const FONTS: FontChoice[] = [
   {
     "id": "coming-soon",
     "label": "Coming Soon",
-    "category": "Handwriting",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
     ]
   },
   {
+    "id": "commissioner",
+    "label": "Commissioner",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "concert-one",
     "label": "Concert One",
-    "category": "Comic",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin",
@@ -444,20 +1290,78 @@ export const FONTS: FontChoice[] = [
   {
     "id": "cookie",
     "label": "Cookie",
-    "category": "Script",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
       "latin"
     ]
   },
   {
+    "id": "cormorant",
+    "label": "Cormorant",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "cormorant-garamond",
+    "label": "Cormorant Garamond",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "cormorant-infant",
+    "label": "Cormorant Infant",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "courgette",
     "label": "Courgette",
-    "category": "Script",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "courier-prime",
+    "label": "Courier Prime",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "crafty-girls",
+    "label": "Crafty Girls",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -472,37 +1376,70 @@ export const FONTS: FontChoice[] = [
   {
     "id": "crete-round",
     "label": "Crete Round",
-    "category": "Slab",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "crimson-pro",
+    "label": "Crimson Pro",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "crimson-text",
+    "label": "Crimson Text",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "cuprum",
+    "label": "Cuprum",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
     "id": "cutive-mono",
     "label": "Cutive Mono",
-    "category": "Mono",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
     "id": "damion",
     "label": "Damion",
-    "category": "Script",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
     "id": "dancing-script",
     "label": "Dancing Script",
-    "category": "Script",
+    "category": "Handwriting",
     "curated": true,
     "subsets": [
       "latin",
@@ -511,12 +1448,74 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "do-hyeon",
-    "label": "Do Hyeon",
+    "id": "david-libre",
+    "label": "David Libre",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "delius-unicase",
+    "label": "Delius Unicase",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "dm-mono",
+    "label": "DM Mono",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "dm-sans",
+    "label": "DM Sans",
     "category": "Clean",
     "curated": false,
     "subsets": [
-      "korean",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "dm-serif-display",
+    "label": "DM Serif Display",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "dm-serif-text",
+    "label": "DM Serif Text",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "do-hyeon",
+    "label": "Do Hyeon",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
       "latin"
     ]
   },
@@ -531,9 +1530,30 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "doppio-one",
+    "label": "Doppio One",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "dosis",
+    "label": "Dosis",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "dotgothic16",
     "label": "DotGothic16",
-    "category": "Pixel",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "cyrillic",
@@ -545,9 +1565,36 @@ export const FONTS: FontChoice[] = [
   {
     "id": "eater",
     "label": "Eater",
-    "category": "Spooky",
+    "category": "Display",
     "curated": false,
     "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "eb-garamond",
+    "label": "EB Garamond",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "eczar",
+    "label": "Eczar",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "greek",
+      "greek-ext",
       "latin",
       "latin-ext"
     ]
@@ -555,16 +1602,27 @@ export const FONTS: FontChoice[] = [
   {
     "id": "electrolize",
     "label": "Electrolize",
-    "category": "Tech",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin"
     ]
   },
   {
-    "id": "ewert",
-    "label": "Ewert",
-    "category": "Spooky",
+    "id": "encode-sans",
+    "label": "Encode Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "enriqueta",
+    "label": "Enriqueta",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "latin",
@@ -572,9 +1630,53 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "epilogue",
+    "label": "Epilogue",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "ewert",
+    "label": "Ewert",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "exo",
+    "label": "Exo",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "exo-2",
+    "label": "Exo 2",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "fahkwang",
     "label": "Fahkwang",
-    "category": "Display",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -586,11 +1688,90 @@ export const FONTS: FontChoice[] = [
   {
     "id": "faster-one",
     "label": "Faster One",
-    "category": "Tech",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "fasthand",
+    "label": "Fasthand",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "khmer",
+      "latin"
+    ]
+  },
+  {
+    "id": "figtree",
+    "label": "Figtree",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "fira-code",
+    "label": "Fira Code",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "symbols2"
+    ]
+  },
+  {
+    "id": "fira-mono",
+    "label": "Fira Mono",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "symbols2"
+    ]
+  },
+  {
+    "id": "fira-sans",
+    "label": "Fira Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "fira-sans-condensed",
+    "label": "Fira Sans Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -606,9 +1787,63 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "fjord-one",
+    "label": "Fjord One",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "forum",
+    "label": "Forum",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "francois-one",
+    "label": "Francois One",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "frank-ruhl-libre",
+    "label": "Frank Ruhl Libre",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "fraunces",
+    "label": "Fraunces",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "fredoka",
     "label": "Fredoka",
-    "category": "Comic",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "hebrew",
@@ -619,7 +1854,7 @@ export const FONTS: FontChoice[] = [
   {
     "id": "frijole",
     "label": "Frijole",
-    "category": "Spooky",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
@@ -635,23 +1870,112 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "gaegu",
-    "label": "Gaegu",
+    "id": "funnel-display",
+    "label": "Funnel Display",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "funnel-sans",
+    "label": "Funnel Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "fuzzy-bubbles",
+    "label": "Fuzzy Bubbles",
     "category": "Handwriting",
     "curated": false,
     "subsets": [
-      "korean",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "gaegu",
+    "label": "Gaegu",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
       "latin"
+    ]
+  },
+  {
+    "id": "galada",
+    "label": "Galada",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "bengali",
+      "latin"
+    ]
+  },
+  {
+    "id": "geist",
+    "label": "Geist",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "geist-mono",
+    "label": "Geist Mono",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "symbols2",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "geo",
+    "label": "Geo",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "geologica",
+    "label": "Geologica",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
     "id": "gloria-hallelujah",
     "label": "Gloria Hallelujah",
-    "category": "Handwriting",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
@@ -664,20 +1988,118 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "grandstander",
-    "label": "Grandstander",
-    "category": "Comic",
+    "id": "golos-text",
+    "label": "Golos Text",
+    "category": "Clean",
     "curated": false,
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "google-sans",
+    "label": "Google Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "armenian",
+      "bengali",
+      "canadian-aboriginal",
+      "cyrillic",
+      "cyrillic-ext",
+      "devanagari",
+      "ethiopic",
+      "georgian",
+      "greek",
+      "greek-ext",
+      "gujarati",
+      "gurmukhi",
+      "hebrew",
+      "khmer",
+      "lao",
+      "latin",
+      "latin-ext",
+      "malayalam",
+      "oriya",
+      "sinhala",
+      "symbols",
+      "tamil",
+      "telugu",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "google-sans-flex",
+    "label": "Google Sans Flex",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "canadian-aboriginal",
+      "cherokee",
+      "latin",
+      "latin-ext",
+      "math",
+      "nushu",
+      "symbols",
+      "syriac",
+      "tifinagh",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "gothic-a1",
+    "label": "Gothic A1",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "korean",
       "latin",
       "latin-ext",
       "vietnamese"
     ]
   },
   {
+    "id": "gotu",
+    "label": "Gotu",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "grandstander",
+    "label": "Grandstander",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "gravitas-one",
+    "label": "Gravitas One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "id": "great-vibes",
     "label": "Great Vibes",
-    "category": "Script",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
       "cyrillic",
@@ -691,17 +2113,35 @@ export const FONTS: FontChoice[] = [
   {
     "id": "griffy",
     "label": "Griffy",
-    "category": "Spooky",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
     "id": "gruppo",
     "label": "Gruppo",
-    "category": "Tech",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "gurajada",
+    "label": "Gurajada",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "telugu"
+    ]
+  },
+  {
+    "id": "hammersmith-one",
+    "label": "Hammersmith One",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -711,18 +2151,10 @@ export const FONTS: FontChoice[] = [
   {
     "id": "handjet",
     "label": "Handjet",
-    "category": "Pixel",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "arabic",
-      "armenian",
-      "cyrillic",
-      "cyrillic-ext",
-      "greek",
-      "hebrew",
-      "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin"
     ]
   },
   {
@@ -735,9 +2167,206 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "hanken-grotesk",
+    "label": "Hanken Grotesk",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "heebo",
+    "label": "Heebo",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "id": "henny-penny",
     "label": "Henny Penny",
-    "category": "Spooky",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "hind",
+    "label": "Hind",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "hind-guntur",
+    "label": "Hind Guntur",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "telugu"
+    ]
+  },
+  {
+    "id": "hind-madurai",
+    "label": "Hind Madurai",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "tamil"
+    ]
+  },
+  {
+    "id": "hind-siliguri",
+    "label": "Hind Siliguri",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "bengali",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "host-grotesk",
+    "label": "Host Grotesk",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "hurricane",
+    "label": "Hurricane",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "ibarra-real-nova",
+    "label": "Ibarra Real Nova",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "ibm-plex-mono",
+    "label": "IBM Plex Mono",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "ibm-plex-sans",
+    "label": "IBM Plex Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "ibm-plex-sans-arabic",
+    "label": "IBM Plex Sans Arabic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "ibm-plex-sans-condensed",
+    "label": "IBM Plex Sans Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "ibm-plex-sans-thai",
+    "label": "IBM Plex Sans Thai",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "thai"
+    ]
+  },
+  {
+    "id": "ibm-plex-sans-thai-looped",
+    "label": "IBM Plex Sans Thai Looped",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "thai"
+    ]
+  },
+  {
+    "id": "ibm-plex-serif",
+    "label": "IBM Plex Serif",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "iceberg",
+    "label": "Iceberg",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
@@ -746,10 +2375,50 @@ export const FONTS: FontChoice[] = [
   {
     "id": "iceland",
     "label": "Iceland",
-    "category": "Tech",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "id": "im-fell-dw-pica",
+    "label": "IM Fell DW Pica",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "im-fell-english-sc",
+    "label": "IM Fell English SC",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "inclusive-sans",
+    "label": "Inclusive Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "inconsolata",
+    "label": "Inconsolata",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -760,6 +2429,75 @@ export const FONTS: FontChoice[] = [
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "inria-sans",
+    "label": "Inria Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "instrument-sans",
+    "label": "Instrument Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "instrument-serif",
+    "label": "Instrument Serif",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "inter",
+    "label": "Inter",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "inter-tight",
+    "label": "Inter Tight",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "irish-grover",
+    "label": "Irish Grover",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -775,11 +2513,35 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "jolly-lodger",
-    "label": "Jolly Lodger",
-    "category": "Spooky",
+    "id": "jetbrains-mono",
+    "label": "JetBrains Mono",
+    "category": "Mono",
     "curated": false,
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "jolly-lodger",
+    "label": "Jolly Lodger",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "jomhuria",
+    "label": "Jomhuria",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "arabic",
       "latin",
       "latin-ext"
     ]
@@ -798,26 +2560,57 @@ export const FONTS: FontChoice[] = [
   {
     "id": "josefin-slab",
     "label": "Josefin Slab",
-    "category": "Slab",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "id": "jost",
+    "label": "Jost",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
     "id": "jua",
     "label": "Jua",
-    "category": "Comic",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "korean",
       "latin"
+    ]
+  },
+  {
+    "id": "judson",
+    "label": "Judson",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "julius-sans-one",
+    "label": "Julius Sans One",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
     "id": "jura",
     "label": "Jura",
-    "category": "Tech",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "cyrillic",
@@ -833,13 +2626,23 @@ export const FONTS: FontChoice[] = [
   {
     "id": "k2d",
     "label": "K2D",
-    "category": "Comic",
-    "curated": true,
+    "category": "Clean",
+    "curated": false,
     "subsets": [
       "latin",
       "latin-ext",
       "thai",
       "vietnamese"
+    ]
+  },
+  {
+    "id": "kadwa",
+    "label": "Kadwa",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin"
     ]
   },
   {
@@ -866,9 +2669,9 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "kaushan-script",
-    "label": "Kaushan Script",
-    "category": "Script",
+    "id": "karla",
+    "label": "Karla",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -876,10 +2679,42 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "kaushan-script",
+    "label": "Kaushan Script",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "kelly-slab",
+    "label": "Kelly Slab",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "khand",
+    "label": "Khand",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "kodchasan",
     "label": "Kodchasan",
-    "category": "Handwriting",
-    "curated": true,
+    "category": "Clean",
+    "curated": false,
     "subsets": [
       "latin",
       "latin-ext",
@@ -890,13 +2725,34 @@ export const FONTS: FontChoice[] = [
   {
     "id": "koho",
     "label": "KoHo",
-    "category": "Comic",
-    "curated": true,
+    "category": "Clean",
+    "curated": false,
     "subsets": [
       "latin",
       "latin-ext",
       "thai",
       "vietnamese"
+    ]
+  },
+  {
+    "id": "kosugi-maru",
+    "label": "Kosugi Maru",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "kranky",
+    "label": "Kranky",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -912,9 +2768,44 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "lilita-one",
-    "label": "Lilita One",
-    "category": "Comic",
+    "id": "kumbh-sans",
+    "label": "Kumbh Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "id": "laila",
+    "label": "Laila",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "lalezar",
+    "label": "Lalezar",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "lato",
+    "label": "Lato",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -922,9 +2813,165 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "league-gothic",
+    "label": "League Gothic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "league-spartan",
+    "label": "League Spartan",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "lexend",
+    "label": "Lexend",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "lexend-deca",
+    "label": "Lexend Deca",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "lexend-giga",
+    "label": "Lexend Giga",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "lexend-peta",
+    "label": "Lexend Peta",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "libre-barcode-39",
+    "label": "Libre Barcode 39",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "libre-barcode-39-text",
+    "label": "Libre Barcode 39 Text",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "libre-baskerville",
+    "label": "Libre Baskerville",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "libre-franklin",
+    "label": "Libre Franklin",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "lilita-one",
+    "label": "Lilita One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "line-seed-jp",
+    "label": "LINE Seed JP",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "greek-ext",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "literata",
+    "label": "Literata",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "livvic",
+    "label": "Livvic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "lobster",
     "label": "Lobster",
-    "category": "Script",
+    "category": "Display",
     "curated": true,
     "subsets": [
       "cyrillic",
@@ -932,6 +2979,15 @@ export const FONTS: FontChoice[] = [
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "id": "lobster-two",
+    "label": "Lobster Two",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -960,6 +3016,77 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "lusitana",
+    "label": "Lusitana",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "lustria",
+    "label": "Lustria",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "m-plus-1p",
+    "label": "M PLUS 1p",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "hebrew",
+      "japanese",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "m-plus-rounded-1c",
+    "label": "M PLUS Rounded 1c",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "hebrew",
+      "japanese",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "macondo",
+    "label": "Macondo",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "magra",
+    "label": "Magra",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "maitree",
     "label": "Maitree",
     "category": "Serif",
@@ -974,12 +3101,10 @@ export const FONTS: FontChoice[] = [
   {
     "id": "major-mono-display",
     "label": "Major Mono Display",
-    "category": "Mono",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin"
     ]
   },
   {
@@ -991,6 +3116,42 @@ export const FONTS: FontChoice[] = [
       "latin",
       "latin-ext",
       "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "mandali",
+    "label": "Mandali",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "telugu"
+    ]
+  },
+  {
+    "id": "manrope",
+    "label": "Manrope",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "mansalva",
+    "label": "Mansalva",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "greek",
+      "latin",
+      "latin-ext",
       "vietnamese"
     ]
   },
@@ -1007,50 +3168,16 @@ export const FONTS: FontChoice[] = [
   {
     "id": "marck-script",
     "label": "Marck Script",
-    "category": "Script",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "cyrillic",
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
-    "id": "metal-mania",
-    "label": "Metal Mania",
-    "category": "Spooky",
-    "curated": false,
-    "subsets": [
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
-    "id": "michroma",
-    "label": "Michroma",
-    "category": "Tech",
-    "curated": false,
-    "subsets": [
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
-    "id": "mitr",
-    "label": "Mitr",
-    "category": "Clean",
-    "curated": true,
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "thai",
-      "vietnamese"
-    ]
-  },
-  {
-    "id": "modak",
-    "label": "Modak",
-    "category": "Comic",
+    "id": "martel",
+    "label": "Martel",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "devanagari",
@@ -1059,13 +3186,233 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "monoton",
-    "label": "Monoton",
-    "category": "Tech",
+    "id": "martian-mono",
+    "label": "Martian Mono",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "marvel",
+    "label": "Marvel",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "material-icons",
+    "label": "Material Icons",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "material-icons-outlined",
+    "label": "Material Icons Outlined",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "material-icons-round",
+    "label": "Material Icons Round",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "material-icons-sharp",
+    "label": "Material Icons Sharp",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "material-icons-two-tone",
+    "label": "Material Icons Two Tone",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "material-symbols-outlined",
+    "label": "Material Symbols Outlined",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "material-symbols-rounded",
+    "label": "Material Symbols Rounded",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "material-symbols-sharp",
+    "label": "Material Symbols Sharp",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "maven-pro",
+    "label": "Maven Pro",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "medievalsharp",
+    "label": "MedievalSharp",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "merienda",
+    "label": "Merienda",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "merriweather",
+    "label": "Merriweather",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "merriweather-sans",
+    "label": "Merriweather Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "metal-mania",
+    "label": "Metal Mania",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "michroma",
+    "label": "Michroma",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "miriam-libre",
+    "label": "Miriam Libre",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "mitr",
+    "label": "Mitr",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "mochiy-pop-one",
+    "label": "Mochiy Pop One",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "japanese",
+      "latin"
+    ]
+  },
+  {
+    "id": "modak",
+    "label": "Modak",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "modern-antiqua",
+    "label": "Modern Antiqua",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "monoton",
+    "label": "Monoton",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -1082,6 +3429,139 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "montserrat-alternates",
+    "label": "Montserrat Alternates",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "mooli",
+    "label": "Mooli",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "mr-de-haviland",
+    "label": "Mr De Haviland",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "mukta",
+    "label": "Mukta",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "mukta-malar",
+    "label": "Mukta Malar",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "tamil"
+    ]
+  },
+  {
+    "id": "mulish",
+    "label": "Mulish",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "murecho",
+    "label": "Murecho",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "museomoderno",
+    "label": "MuseoModerno",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "nanum-gothic",
+    "label": "Nanum Gothic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "korean",
+      "latin"
+    ]
+  },
+  {
+    "id": "nanum-gothic-coding",
+    "label": "Nanum Gothic Coding",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "korean",
+      "latin"
+    ]
+  },
+  {
+    "id": "nanum-myeongjo",
+    "label": "Nanum Myeongjo",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "korean",
+      "latin"
+    ]
+  },
+  {
+    "id": "nerko-one",
+    "label": "Nerko One",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "neucha",
     "label": "Neucha",
     "category": "Handwriting",
@@ -1094,21 +3574,45 @@ export const FONTS: FontChoice[] = [
   {
     "id": "new-rocker",
     "label": "New Rocker",
-    "category": "Spooky",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "news-cycle",
+    "label": "News Cycle",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "newsreader",
+    "label": "Newsreader",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
     "id": "niconne",
     "label": "Niconne",
-    "category": "Script",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
@@ -1126,42 +3630,486 @@ export const FONTS: FontChoice[] = [
   {
     "id": "norican",
     "label": "Norican",
-    "category": "Script",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
     "id": "nosifer",
     "label": "Nosifer",
-    "category": "Spooky",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "nothing-you-could-do",
+    "label": "Nothing You Could Do",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "noticia-text",
+    "label": "Noticia Text",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-color-emoji",
+    "label": "Noto Color Emoji",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "emoji"
+    ]
+  },
+  {
+    "id": "noto-emoji",
+    "label": "Noto Emoji",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "emoji"
+    ]
+  },
+  {
+    "id": "noto-kufi-arabic",
+    "label": "Noto Kufi Arabic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "id": "noto-naskh-arabic",
+    "label": "Noto Naskh Arabic",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "id": "noto-nastaliq-urdu",
+    "label": "Noto Nastaliq Urdu",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "noto-sans",
+    "label": "Noto Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "devanagari",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-sans-arabic",
+    "label": "Noto Sans Arabic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "id": "noto-sans-bengali",
+    "label": "Noto Sans Bengali",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "bengali",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "noto-sans-devanagari",
+    "label": "Noto Sans Devanagari",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "noto-sans-display",
+    "label": "Noto Sans Display",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-sans-georgian",
+    "label": "Noto Sans Georgian",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic-ext",
+      "georgian",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "id": "noto-sans-gujarati",
+    "label": "Noto Sans Gujarati",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "gujarati",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "id": "noto-sans-gurmukhi",
+    "label": "Noto Sans Gurmukhi",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "gurmukhi",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "noto-sans-hebrew",
+    "label": "Noto Sans Hebrew",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic-ext",
+      "greek-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "noto-sans-jp",
+    "label": "Noto Sans JP",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-sans-khmer",
+    "label": "Noto Sans Khmer",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "khmer",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "noto-sans-kr",
+    "label": "Noto Sans KR",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "korean",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-sans-lao",
+    "label": "Noto Sans Lao",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "lao",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "noto-sans-mono",
+    "label": "Noto Sans Mono",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-sans-myanmar",
+    "label": "Noto Sans Myanmar",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "myanmar"
+    ]
+  },
+  {
+    "id": "noto-sans-sc",
+    "label": "Noto Sans SC",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "chinese-simplified",
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-sans-symbols",
+    "label": "Noto Sans Symbols",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "symbols"
+    ]
+  },
+  {
+    "id": "noto-sans-tamil",
+    "label": "Noto Sans Tamil",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "tamil"
+    ]
+  },
+  {
+    "id": "noto-sans-tc",
+    "label": "Noto Sans TC",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "chinese-traditional",
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-sans-telugu",
+    "label": "Noto Sans Telugu",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "telugu"
+    ]
+  },
+  {
+    "id": "noto-sans-thai",
+    "label": "Noto Sans Thai",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai"
+    ]
+  },
+  {
+    "id": "noto-sans-thai-looped",
+    "label": "Noto Sans Thai Looped",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai"
+    ]
+  },
+  {
+    "id": "noto-serif",
+    "label": "Noto Serif",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-serif-devanagari",
+    "label": "Noto Serif Devanagari",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "noto-serif-georgian",
+    "label": "Noto Serif Georgian",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "georgian",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "noto-serif-jp",
+    "label": "Noto Serif JP",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-serif-kr",
+    "label": "Noto Serif KR",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "korean",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-serif-sc",
+    "label": "Noto Serif SC",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "chinese-simplified",
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-serif-tc",
+    "label": "Noto Serif TC",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "chinese-traditional",
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "noto-serif-thai",
+    "label": "Noto Serif Thai",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "thai"
     ]
   },
   {
     "id": "nova-mono",
     "label": "Nova Mono",
-    "category": "Mono",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "greek",
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
     "id": "nova-square",
     "label": "Nova Square",
-    "category": "Tech",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
@@ -1175,6 +4123,84 @@ export const FONTS: FontChoice[] = [
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "id": "nunito-sans",
+    "label": "Nunito Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "old-standard-tt",
+    "label": "Old Standard TT",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "oleo-script",
+    "label": "Oleo Script",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "onest",
+    "label": "Onest",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "open-sans",
+    "label": "Open Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "oranienbaum",
+    "label": "Oranienbaum",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -1200,9 +4226,62 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "outfit",
+    "label": "Outfit",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "overlock",
+    "label": "Overlock",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "overpass",
+    "label": "Overpass",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "oxanium",
     "label": "Oxanium",
-    "category": "Tech",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "oxygen",
+    "label": "Oxygen",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "oxygen-mono",
+    "label": "Oxygen Mono",
+    "category": "Mono",
     "curated": false,
     "subsets": [
       "latin",
@@ -1212,7 +4291,7 @@ export const FONTS: FontChoice[] = [
   {
     "id": "pacifico",
     "label": "Pacifico",
-    "category": "Script",
+    "category": "Handwriting",
     "curated": true,
     "subsets": [
       "cyrillic",
@@ -1225,20 +4304,16 @@ export const FONTS: FontChoice[] = [
   {
     "id": "pangolin",
     "label": "Pangolin",
-    "category": "Handwriting",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "cyrillic",
-      "cyrillic-ext",
-      "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin"
     ]
   },
   {
     "id": "parisienne",
     "label": "Parisienne",
-    "category": "Script",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
       "latin",
@@ -1256,6 +4331,17 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "pathway-extreme",
+    "label": "Pathway Extreme",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "patrick-hand",
     "label": "Patrick Hand",
     "category": "Handwriting",
@@ -1269,8 +4355,8 @@ export const FONTS: FontChoice[] = [
   {
     "id": "pattaya",
     "label": "Pattaya",
-    "category": "Script",
-    "curated": true,
+    "category": "Clean",
+    "curated": false,
     "subsets": [
       "cyrillic",
       "latin",
@@ -1282,7 +4368,7 @@ export const FONTS: FontChoice[] = [
   {
     "id": "patua-one",
     "label": "Patua One",
-    "category": "Slab",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
@@ -1291,7 +4377,7 @@ export const FONTS: FontChoice[] = [
   {
     "id": "paytone-one",
     "label": "Paytone One",
-    "category": "Display",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -1309,9 +4395,9 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "pirata-one",
-    "label": "Pirata One",
-    "category": "Spooky",
+    "id": "petit-formal-script",
+    "label": "Petit Formal Script",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
       "latin",
@@ -1319,14 +4405,76 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "pixelify-sans",
-    "label": "Pixelify Sans",
-    "category": "Pixel",
+    "id": "philosopher",
+    "label": "Philosopher",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "cyrillic",
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "piazzolla",
+    "label": "Piazzolla",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "pirata-one",
+    "label": "Pirata One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "pixelify-sans",
+    "label": "Pixelify Sans",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "play",
+    "label": "Play",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "playfair",
+    "label": "Playfair",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -1342,6 +4490,77 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "playpen-sans",
+    "label": "Playpen Sans",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "emoji",
+      "greek",
+      "latin",
+      "latin-ext",
+      "math",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "playpen-sans-thai",
+    "label": "Playpen Sans Thai",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "emoji",
+      "latin",
+      "latin-ext",
+      "math",
+      "thai"
+    ]
+  },
+  {
+    "id": "plus-jakarta-sans",
+    "label": "Plus Jakarta Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "poetsen-one",
+    "label": "Poetsen One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "poller-one",
+    "label": "Poller One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "poltawski-nowy",
+    "label": "Poltawski Nowy",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "poppins",
     "label": "Poppins",
     "category": "Clean",
@@ -1350,6 +4569,18 @@ export const FONTS: FontChoice[] = [
       "devanagari",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "prata",
+    "label": "Prata",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "vietnamese"
     ]
   },
   {
@@ -1390,18 +4621,134 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "protest-strike",
+    "label": "Protest Strike",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "pt-mono",
+    "label": "PT Mono",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "pt-sans",
+    "label": "PT Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "pt-sans-caption",
+    "label": "PT Sans Caption",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "pt-sans-narrow",
+    "label": "PT Sans Narrow",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "pt-serif",
+    "label": "PT Serif",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "public-sans",
+    "label": "Public Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "quantico",
     "label": "Quantico",
-    "category": "Tech",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
     ]
   },
   {
+    "id": "quattrocento",
+    "label": "Quattrocento",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "questrial",
+    "label": "Questrial",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "quicksand",
     "label": "Quicksand",
-    "category": "Comic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "qwigley",
+    "label": "Qwigley",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
       "latin",
@@ -1415,14 +4762,13 @@ export const FONTS: FontChoice[] = [
     "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
     "id": "rajdhani",
     "label": "Rajdhani",
-    "category": "Tech",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "devanagari",
@@ -1431,9 +4777,114 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "raleway",
+    "label": "Raleway",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "ramabhadra",
+    "label": "Ramabhadra",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "telugu"
+    ]
+  },
+  {
+    "id": "rammetto-one",
+    "label": "Rammetto One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "ranchers",
     "label": "Ranchers",
-    "category": "Comic",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "readex-pro",
+    "label": "Readex Pro",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "red-hat-display",
+    "label": "Red Hat Display",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "red-hat-text",
+    "label": "Red Hat Text",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "red-rose",
+    "label": "Red Rose",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "reddit-sans-condensed",
+    "label": "Reddit Sans Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "reenie-beanie",
+    "label": "Reenie Beanie",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "rethink-sans",
+    "label": "Rethink Sans",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -1451,9 +4902,82 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "roboto",
+    "label": "Roboto",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "roboto-condensed",
+    "label": "Roboto Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "roboto-flex",
+    "label": "Roboto Flex",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "roboto-mono",
+    "label": "Roboto Mono",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "roboto-serif",
+    "label": "Roboto Serif",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "roboto-slab",
     "label": "Roboto Slab",
-    "category": "Slab",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "cyrillic",
@@ -1468,21 +4992,39 @@ export const FONTS: FontChoice[] = [
   {
     "id": "rochester",
     "label": "Rochester",
-    "category": "Script",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
     ]
   },
   {
-    "id": "rokkitt",
-    "label": "Rokkitt",
-    "category": "Slab",
+    "id": "rock-salt",
+    "label": "Rock Salt",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "rocknroll-one",
+    "label": "RocknRoll One",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "japanese",
       "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "rokkitt",
+    "label": "Rokkitt",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -1511,9 +5053,22 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "rubik-dirt",
+    "label": "Rubik Dirt",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "rubik-glitch",
     "label": "Rubik Glitch",
-    "category": "Spooky",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "cyrillic",
@@ -1526,7 +5081,7 @@ export const FONTS: FontChoice[] = [
   {
     "id": "rubik-mono-one",
     "label": "Rubik Mono One",
-    "category": "Tech",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "cyrillic",
@@ -1548,17 +5103,16 @@ export const FONTS: FontChoice[] = [
   {
     "id": "rye",
     "label": "Rye",
-    "category": "Slab",
+    "category": "Display",
     "curated": false,
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
     "id": "sacramento",
     "label": "Sacramento",
-    "category": "Script",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
       "latin",
@@ -1566,19 +5120,9 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "sanchez",
-    "label": "Sanchez",
-    "category": "Slab",
-    "curated": false,
-    "subsets": [
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
-    "id": "sansita-swashed",
-    "label": "Sansita Swashed",
-    "category": "Serif",
+    "id": "saira",
+    "label": "Saira",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -1587,10 +5131,50 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "saira-condensed",
+    "label": "Saira Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "saira-semi-condensed",
+    "label": "Saira Semi Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "sanchez",
+    "label": "Sanchez",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "sansita-swashed",
+    "label": "Sansita Swashed",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "id": "sarabun",
     "label": "Sarabun",
     "category": "Clean",
-    "curated": true,
+    "curated": false,
     "subsets": [
       "latin",
       "latin-ext",
@@ -1599,18 +5183,113 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "sarina",
+    "label": "Sarina",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "sarpanch",
+    "label": "Sarpanch",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "satisfy",
     "label": "Satisfy",
-    "category": "Script",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
       "latin"
     ]
   },
   {
+    "id": "sawarabi-gothic",
+    "label": "Sawarabi Gothic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "sawarabi-mincho",
+    "label": "Sawarabi Mincho",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "braille",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "schibsted-grotesk",
+    "label": "Schibsted Grotesk",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "schoolbell",
     "label": "Schoolbell",
     "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "seaweed-script",
+    "label": "Seaweed Script",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "sen",
+    "label": "Sen",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "shadows-into-light",
+    "label": "Shadows Into Light",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "share-tech",
+    "label": "Share Tech",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin"
@@ -1626,13 +5305,23 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "shojumaru",
-    "label": "Shojumaru",
-    "category": "Tech",
+    "id": "shippori-mincho",
+    "label": "Shippori Mincho",
+    "category": "Serif",
     "curated": false,
     "subsets": [
+      "japanese",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "shojumaru",
+    "label": "Shojumaru",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -1658,9 +5347,31 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "signika",
+    "label": "Signika",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "signika-negative",
+    "label": "Signika Negative",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "silkscreen",
     "label": "Silkscreen",
-    "category": "Pixel",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin",
@@ -1668,13 +5379,162 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "sniglet",
-    "label": "Sniglet",
-    "category": "Comic",
+    "id": "slabo-13px",
+    "label": "Slabo 13px",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "slabo-27px",
+    "label": "Slabo 27px",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "smooch-sans",
+    "label": "Smooch Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "sniglet",
+    "label": "Sniglet",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "sofia-sans",
+    "label": "Sofia Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "sofia-sans-condensed",
+    "label": "Sofia Sans Condensed",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "solway",
+    "label": "Solway",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "sometype-mono",
+    "label": "Sometype Mono",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "song-myung",
+    "label": "Song Myung",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "korean"
+    ]
+  },
+  {
+    "id": "sora",
+    "label": "Sora",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "source-code-pro",
+    "label": "Source Code Pro",
+    "category": "Mono",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "source-sans-3",
+    "label": "Source Sans 3",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "source-serif-4",
+    "label": "Source Serif 4",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "space-grotesk",
+    "label": "Space Grotesk",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -1691,7 +5551,50 @@ export const FONTS: FontChoice[] = [
   {
     "id": "special-elite",
     "label": "Special Elite",
-    "category": "Handwriting",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "special-gothic-condensed-one",
+    "label": "Special Gothic Condensed One",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "special-gothic-expanded-one",
+    "label": "Special Gothic Expanded One",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "spectral",
+    "label": "Spectral",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "spinnaker",
+    "label": "Spinnaker",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -1723,7 +5626,7 @@ export const FONTS: FontChoice[] = [
     "id": "srisakdi",
     "label": "Srisakdi",
     "category": "Display",
-    "curated": true,
+    "curated": false,
     "subsets": [
       "latin",
       "latin-ext",
@@ -1734,21 +5637,74 @@ export const FONTS: FontChoice[] = [
   {
     "id": "staatliches",
     "label": "Staatliches",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "stick-no-bills",
+    "label": "Stick No Bills",
     "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "sinhala"
+    ]
+  },
+  {
+    "id": "stix-two-text",
+    "label": "STIX Two Text",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
     "id": "syncopate",
     "label": "Syncopate",
-    "category": "Tech",
+    "category": "Display",
     "curated": false,
     "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "syne",
+    "label": "Syne",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "greek",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "tajawal",
+    "label": "Tajawal",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "arabic",
+      "latin"
+    ]
+  },
+  {
+    "id": "tangerine",
+    "label": "Tangerine",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -1764,12 +5720,48 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "teachers",
+    "label": "Teachers",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "greek-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "teko",
     "label": "Teko",
     "category": "Clean",
     "curated": false,
     "subsets": [
       "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "tektur",
+    "label": "Tektur",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "tenor-sans",
+    "label": "Tenor Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
       "latin",
       "latin-ext"
     ]
@@ -1783,6 +5775,32 @@ export const FONTS: FontChoice[] = [
       "latin",
       "latin-ext",
       "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "the-girl-next-door",
+    "label": "The Girl Next Door",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "tinos",
+    "label": "Tinos",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
       "vietnamese"
     ]
   },
@@ -1807,6 +5825,18 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "train-one",
+    "label": "Train One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "id": "trirong",
     "label": "Trirong",
     "category": "Serif",
@@ -1821,9 +5851,22 @@ export const FONTS: FontChoice[] = [
   {
     "id": "turret-road",
     "label": "Turret Road",
-    "category": "Tech",
+    "category": "Display",
     "curated": false,
     "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "ubuntu",
+    "label": "Ubuntu",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
       "latin",
       "latin-ext"
     ]
@@ -1831,11 +5874,93 @@ export const FONTS: FontChoice[] = [
   {
     "id": "ultra",
     "label": "Ultra",
-    "category": "Slab",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "id": "unbounded",
+    "label": "Unbounded",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "unifrakturcook",
+    "label": "UnifrakturCook",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "unifrakturmaguntia",
+    "label": "UnifrakturMaguntia",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "unna",
+    "label": "Unna",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "urbanist",
+    "label": "Urbanist",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "varela-round",
+    "label": "Varela Round",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "viga",
+    "label": "Viga",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "volkhov",
+    "label": "Volkhov",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin"
     ]
   },
   {
@@ -1853,6 +5978,17 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "voltaire",
+    "label": "Voltaire",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "vt323",
     "label": "VT323",
     "category": "Pixel",
@@ -1864,18 +6000,29 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "vujahday-script",
+    "label": "Vujahday Script",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "wallpoet",
     "label": "Wallpoet",
-    "category": "Tech",
+    "category": "Display",
     "curated": false,
     "subsets": [
       "latin"
     ]
   },
   {
-    "id": "yellowtail",
-    "label": "Yellowtail",
-    "category": "Script",
+    "id": "wendy-one",
+    "label": "Wendy One",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "latin",
@@ -1883,9 +6030,9 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
-    "id": "yeseva-one",
-    "label": "Yeseva One",
-    "category": "Serif",
+    "id": "wix-madefor-display",
+    "label": "Wix Madefor Display",
+    "category": "Clean",
     "curated": false,
     "subsets": [
       "cyrillic",
@@ -1896,9 +6043,155 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "work-sans",
+    "label": "Work Sans",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "yanone-kaffeesatz",
+    "label": "Yanone Kaffeesatz",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "yantramanav",
+    "label": "Yantramanav",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "yellowtail",
+    "label": "Yellowtail",
+    "category": "Handwriting",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "yeseva-one",
+    "label": "Yeseva One",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "young-serif",
+    "label": "Young Serif",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "yusei-magic",
+    "label": "Yusei Magic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "zcool-xiaowei",
+    "label": "ZCOOL XiaoWei",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "chinese-simplified",
+      "latin"
+    ]
+  },
+  {
     "id": "zen-dots",
     "label": "Zen Dots",
-    "category": "Tech",
+    "category": "Display",
+    "curated": false,
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "id": "zen-kaku-gothic-antique",
+    "label": "Zen Kaku Gothic Antique",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "zen-kaku-gothic-new",
+    "label": "Zen Kaku Gothic New",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "zen-maru-gothic",
+    "label": "Zen Maru Gothic",
+    "category": "Clean",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "zen-old-mincho",
+    "label": "Zen Old Mincho",
+    "category": "Serif",
+    "curated": false,
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "id": "zeyada",
+    "label": "Zeyada",
+    "category": "Handwriting",
     "curated": false,
     "subsets": [
       "latin",
@@ -1908,7 +6201,7 @@ export const FONTS: FontChoice[] = [
   {
     "id": "zilla-slab",
     "label": "Zilla Slab",
-    "category": "Slab",
+    "category": "Serif",
     "curated": false,
     "subsets": [
       "latin",

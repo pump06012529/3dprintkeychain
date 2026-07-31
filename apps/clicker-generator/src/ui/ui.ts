@@ -578,7 +578,14 @@ export function createUi(
           <textarea id="letterText" rows="2" maxlength="30" autocomplete="off" spellcheck="false" style="width: 100%; resize: vertical; min-height: 48px;">ข้อความ</textarea>
         </div>
         <div class="field">
-          <label>ฟอนต์</label>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <label style="margin:0;">ฟอนต์</label>
+            <select id="fontLangFilter" style="padding: 2px 4px; font-size: 12px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text);">
+              <option value="All">ทุกภาษา</option>
+              <option value="Thai">เฉพาะภาษาไทย</option>
+              <option value="English">เฉพาะภาษาอังกฤษ</option>
+            </select>
+          </div>
           <div id="fontGrid" class="font-grid"></div>
           <label class="upload">
             + นำเข้าฟอนต์ของคุณเอง
@@ -848,7 +855,35 @@ export function createUi(
   const letterText = $<HTMLTextAreaElement>('letterText');
   const fontGrid = $('fontGrid');
   const fontUpload = $<HTMLInputElement>('fontUpload');
+  const fontLangFilter = $<HTMLSelectElement>('fontLangFilter');
   let selectedFontBtn: HTMLElement | null = null;
+  const allFontBtns: { btn: HTMLElement; font: FontOption }[] = [];
+
+  const fontIo = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      const btn = entry.target as HTMLElement;
+      if (btn.dataset.fontFamily) {
+        btn.style.fontFamily = btn.dataset.fontFamily;
+        fontIo.unobserve(btn);
+      }
+    }
+  }, { root: fontGrid, rootMargin: '150px' });
+
+  fontLangFilter.addEventListener('change', () => {
+    const filter = fontLangFilter.value;
+    for (const { btn, font } of allFontBtns) {
+      if (filter === 'All') {
+        btn.style.display = '';
+      } else if (filter === 'Thai') {
+        const isThai = font.subsets?.includes('thai');
+        btn.style.display = isThai ? '' : 'none';
+      } else if (filter === 'English') {
+        const isThai = font.subsets?.includes('thai');
+        btn.style.display = !isThai ? '' : 'none';
+      }
+    }
+  });
 
   letterText.addEventListener('input', () => {
     cb.onTextChange(letterText.value);
@@ -864,7 +899,8 @@ export function createUi(
     btn.type = 'button';
     btn.className = 'font-grid-btn';
     btn.textContent = font.name;
-    btn.style.fontFamily = `"${font.id.replace('bundled-', '')}", "${font.name}", sans-serif`;
+    btn.dataset.fontFamily = `"${font.id.replace('bundled-', '')}", "${font.name}", sans-serif`;
+    fontIo.observe(btn);
     
     btn.addEventListener('click', () => {
       if (selectedFontBtn) selectedFontBtn.classList.remove('active');
@@ -872,7 +908,16 @@ export function createUi(
       selectedFontBtn = btn;
       cb.onFontSelect(font.id);
     });
+    
+    const filter = fontLangFilter.value;
+    if (filter === 'Thai' && !font.subsets?.includes('thai')) {
+      btn.style.display = 'none';
+    } else if (filter === 'English' && font.subsets?.includes('thai')) {
+      btn.style.display = 'none';
+    }
+
     fontGrid.appendChild(btn);
+    allFontBtns.push({ btn, font });
   }
 
   FONT_OPTIONS.forEach(addFontOption);
