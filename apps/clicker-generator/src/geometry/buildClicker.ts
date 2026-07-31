@@ -646,13 +646,6 @@ export function buildClicker(
     const px = p[0] + tangent[0] * (kc.offsetMm ?? 0);
     const py = p[1] + tangent[1] * (kc.offsetMm ?? 0);
 
-    // Apply the body's own edge ('clickerBase') bevel to a keychain add-on footprint
-    // so it reads as one piece with the body, not a bolt-on.
-    const bodyEdge = params.edgeSettings?.find(
-      (s) => (s.target === 'clickerBase' || s.target === 'baseTop') && s.style !== 'none' && s.radius >= 0.05,
-    );
-
-
     // Loop style: a disc tab with a ring hole, built in a local frame (+Y outward)
     // then rotated to the requested angle and moved onto the body edge point.
     // The loop center is placed a full radius beyond the edge so the ENTIRE circle
