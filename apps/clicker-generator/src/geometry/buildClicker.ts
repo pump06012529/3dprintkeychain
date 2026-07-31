@@ -794,7 +794,7 @@ export function buildClicker(
     name: string,
   ): ClickerPart {
     const creasedSolid = track(solid.calculateNormals(0, 35));
-    const mesh = track(creasedSolid.getMesh());
+    const mesh = creasedSolid.getMesh();
     return {
       kind,
       group,
