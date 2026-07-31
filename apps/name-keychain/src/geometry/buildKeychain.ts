@@ -113,6 +113,21 @@ function fillHoles(CrossSection: any, cs: any, keep: Keep): any {
 }
 
 /**
+ * Drop microscopic isolated outer shells (e.g. font anchor artifacts) 
+ * that can cause stray halos or bumps in the plate.
+ */
+function dropTiny(CrossSection: any, cs: any, minArea: number, keep: Keep): any {
+  const polys = cs.toPolygons() as number[][][];
+  const filtered = polys.filter((p) => {
+    const a = signedArea(p);
+    return a < 0 || a > minArea; // keep holes (a < 0) and large shells
+  });
+  if (filtered.length === polys.length) return cs;
+  if (filtered.length === 0) return keep(CrossSection.circle(0.01, 3));
+  return keep(new CrossSection(filtered, 'NonZero'));
+}
+
+/**
  * Build the 2D cross-sections that make up the keychain. Kept separate from the
  * 3D extrusion so it can be rendered/inspected headless. Everything it allocates
  * is registered with the caller's `keep` scope.
@@ -143,6 +158,10 @@ export function buildProfiles(wasm: any, textContours: number[][][], params: Bui
   } else {
     glyphsCS = keep(new CrossSection(textContours, 'NonZero'));
   }
+  
+  // Filter out microscopic font artifacts (e.g. 1-unit anchor dots)
+  glyphsCS = dropTiny(CrossSection, glyphsCS, 0.05, keep);
+
   if (Math.abs(params.boldness) > 0.02) {
     const bolded = keep(glyphsCS.offset(params.boldness, 'Round', 2.0, 12));
     if (bolded.area() > 0.1) glyphsCS = bolded;
@@ -266,7 +285,9 @@ export function buildProfiles(wasm: any, textContours: number[][][], params: Bui
 
   let haloCS: any = null;
   if (hasHalo) {
-    haloCS = keep(glyphsCS.offset(params.haloWidth, 'Round', 2.0, 16).subtract(holeCS));
+    // Prevent halo from wrapping the ring tab by subtracting the entire tab radius
+    const ringBlocker = keep(CrossSection.circle(lugOuter, 32).translate([holeX, holeY]));
+    haloCS = keep(glyphsCS.offset(params.haloWidth, 'Round', 2.0, 16).subtract(ringBlocker));
   }
 
   return {
