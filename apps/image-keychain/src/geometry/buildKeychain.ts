@@ -159,7 +159,7 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
     return keep(rect.subtract(outerSpace));
   };
 
-  let plateBodySrc = removeHoles(glyphsCS);
+  let plateBodySrc = glyphsCS;
   if (params.plateShape === 'rectangle') {
     plateBodySrc = keep(CrossSection.square([gBox.maxX - gBox.minX, gBox.maxY - gBox.minY], true).translate([(gBox.minX + gBox.maxX)/2, (gBox.minY + gBox.maxY)/2]));
   }
@@ -167,15 +167,17 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
   
   const smoothR = Math.max(0.1, params.smoothing);
   let plateCS = keep(plateSrc.offset(plateMargin + smoothR, 'Round', 2.0, 24));
+  plateCS = removeHoles(plateCS); // Fill any holes trapped by the offset
   plateCS = keep(plateCS.offset(-smoothR, 'Round', 2.0, 24));
 
   let haloCS: any = null;
   if (hasHalo) {
     let bodyCS = keep(plateBodySrc.offset(plateMargin + smoothR, 'Round', 2.0, 24));
+    bodyCS = removeHoles(bodyCS); // Fill holes here too
     bodyCS = keep(bodyCS.offset(-smoothR, 'Round', 2.0, 24));
     haloCS = keep(bodyCS.offset(-params.haloWidth, 'Round', 1.0, 12));
-    // Ensure halo doesn't fill internal holes by subtracting the solid plateBodySrc
-    haloCS = keep(haloCS.subtract(plateBodySrc));
+    // Ensure halo doesn't fill internal holes by subtracting the solid bodyCS
+    haloCS = keep(haloCS.subtract(removeHoles(plateBodySrc)));
   }
 
   return {
