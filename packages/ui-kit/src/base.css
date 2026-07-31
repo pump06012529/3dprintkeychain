@@ -1,23 +1,26 @@
-/* Base primitives, ported from the clicker's shipped CSS. All classes vl- prefixed.
-   Sidebar sections are FLAT with hairline separators, never boxed cards. */
+/* ==========================================================
+   Base Primitives — Kawaii Pastel Edition
+   All classes prefixed vl-
+   ========================================================== */
 
-/* Section = the real sidebar pattern: border-top hairline, vertical padding, no box. */
-.vl-section { border-top: 1px solid var(--line); padding: 22px 0; }
+/* ---------- Section ---------- */
+.vl-section { border-top: 1px solid var(--line); padding: 20px 0; }
 .vl-section:first-of-type { border-top: none; padding-top: 4px; }
 
-/* Uppercase section label (clicker .label). */
+/* ---------- Label ---------- */
 .vl-label {
   display: block;
   font-family: var(--font-display);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--muted);
+  letter-spacing: 0.8px;
+  color: var(--accent);
   margin-bottom: 8px;
 }
 
-.vl-hint { color: var(--muted); font-size: 14px; line-height: 1.4; margin: 0; }
+/* ---------- Text utilities ---------- */
+.vl-hint { color: var(--muted); font-size: 14px; line-height: 1.45; margin: 0; }
 .vl-hint a, .vl-link {
   color: var(--accent);
   text-decoration: none;
@@ -26,71 +29,97 @@
   padding: 0;
   font: inherit;
   cursor: pointer;
+  font-weight: 600;
 }
 .vl-hint a:hover, .vl-link:hover { text-decoration: underline; }
 
-/* Buttons, clicker's exact treatments. */
+/* ---------- Buttons ---------- */
 .vl-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  font: inherit;
-  font-size: 15px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 600;
   color: var(--text);
   background: var(--panel-2);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--line);
   border-radius: var(--radius-btn);
-  padding: 10px 15px;
+  padding: 9px 16px;
   cursor: pointer;
   text-decoration: none;
-  transition: border-color 0.12s, color 0.12s, background 0.12s;
+  transition: border-color 0.18s, color 0.18s, background 0.18s, box-shadow 0.18s, transform 0.12s;
 }
-.vl-btn:hover { border-color: var(--accent); }
-.vl-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.vl-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+.vl-btn:active { transform: translateY(0); box-shadow: none; }
+.vl-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
 .vl-btn svg { flex: 0 0 auto; }
 
+/* Primary: pastel purple gradient */
 .vl-btn--primary {
   border: none;
   border-radius: var(--radius-btn-primary);
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent-2) 60%, var(--accent)) 100%);
   color: var(--accent-text);
-  font-weight: 600;
-  padding: 11px 16px;
+  font-weight: 700;
+  padding: 11px 18px;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 30%, transparent);
 }
-.vl-btn--primary:hover { filter: brightness(1.07); border: none; }
-.vl-btn--primary:disabled { filter: none; }
+.vl-btn--primary:hover {
+  filter: brightness(1.08);
+  border: none;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 45%, transparent);
+  transform: translateY(-2px);
+}
+.vl-btn--primary:active { filter: brightness(0.97); transform: translateY(0); }
+.vl-btn--primary:disabled { filter: none; transform: none; box-shadow: none; }
 
+/* Secondary: transparent with accent outline */
 .vl-btn--secondary {
   background: transparent;
+  border-color: var(--accent);
+  color: var(--accent);
   border-radius: var(--radius-btn-primary);
-  font-weight: 600;
+  font-weight: 700;
 }
-.vl-btn--secondary:hover { border-color: var(--accent); color: var(--accent); }
+.vl-btn--secondary:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  box-shadow: var(--shadow-sm);
+}
 
-/* Ghost: quiet, no fill, for low-emphasis actions (theme toggle, etc.). */
+/* Ghost: quiet */
 .vl-btn--ghost {
   background: transparent;
   border-color: transparent;
   color: var(--muted);
 }
-.vl-btn--ghost:hover { background: var(--panel-2); border-color: var(--line); color: var(--text); }
+.vl-btn--ghost:hover {
+  background: var(--panel-2);
+  border-color: var(--line);
+  color: var(--text);
+  transform: none;
+  box-shadow: none;
+}
 
-/* Icon-only square button (history bars, steppers, compact toolbars). */
-.vl-btn--icon { padding: 0; width: 38px; height: 38px; }
+/* Icon-only square */
+.vl-btn--icon { padding: 0; width: 38px; height: 38px; border-radius: var(--radius-btn); }
 .vl-btn--icon svg { width: 18px; height: 18px; }
 
-/* Full-width action (the app's big Export button). */
-.vl-btn--block { width: 100%; padding: 14px; font-size: var(--fs-base); }
+/* Full-width block */
+.vl-btn--block { width: 100%; padding: 13px; font-size: var(--fs-base); }
 
-/* Horizontal action cluster: wraps, even gaps, buttons keep their intrinsic
-   width. This is the container that keeps sibling buttons the same height. */
+/* ---------- Layout helpers ---------- */
 .vl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-
 .vl-btn-row { display: flex; gap: 10px; }
 .vl-btn-row .vl-btn { flex: 1; }
 
-/* Keyboard focus ring. */
+/* ---------- Focus ring (keyboard nav) ---------- */
 .vl-btn:focus-visible,
 .vl-link:focus-visible,
 .vl-tab:focus-visible,
@@ -99,4 +128,7 @@
   box-shadow: var(--ring);
 }
 
-/* Comfortable touch targets on phones. */
+/* ---------- Touch targets ---------- */
+@media (pointer: coarse) {
+  .vl-btn { min-height: 44px; }
+}

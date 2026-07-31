@@ -1,54 +1,82 @@
-/* Vostok Labs design tokens, extracted 1:1 from the shipped Clicker Generator
-   (src/style.css) so every new app looks like the existing ones.
-   Dark is the default; light via <html data-theme="light"> (same as the clicker). */
+/* ============================================================
+   Kawaii Pastel Design Tokens
+   Light mode = default; dark via <html data-theme="dark">
+   ============================================================ */
 
+/* ---------- LIGHT MODE (default) ---------- */
+:root,
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #f3f4f6;
-  --panel: #ffffff;
-  --panel-2: #edf0f5;
-  --line: #d1d5db;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --accent: #2563eb;
-  --accent-text: #ffffff;
-  --accent-2: #10b981;
+
+  /* Backgrounds */
+  --bg:       #fdf4ff;   /* soft lavender cream */
+  --panel:    #ffffff;
+  --panel-2:  #f7eeff;   /* lightest mauve */
+
+  /* Borders & dividers */
+  --line:     #e8d4f8;
+
+  /* Text */
+  --text:     #3a1f5c;   /* deep plum */
+  --muted:    #9b7ec0;   /* medium lilac */
+
+  /* Accent colors */
+  --accent:        #b57bee;   /* soft purple */
+  --accent-hover:  #a265de;
+  --accent-text:   #ffffff;
+  --accent-2:      #f0a5c8;   /* pink */
+  --accent-3:      #92d9b4;   /* mint */
+
+  /* Status */
+  --ok:     #92d9b4;
+  --warn:   #f9d57a;
+  --error:  #f0819a;
+  --error-text: #c0366a;
 }
 
-:root[data-theme='dark'],
-:root:not([data-theme='light']) {
+/* ---------- DARK MODE ---------- */
+:root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #15171c;
-  --panel: #1d2027;
-  --panel-2: #252932;
-  --line: #2f3440;
-  --text: #e6e9ef;
-  --muted: #9aa3b2;
-  --accent: #5b9dff;
-  --accent-text: #08122a;
-  --accent-2: #36c08a;
+
+  /* Backgrounds */
+  --bg:       #1a1228;   /* deep violet-black */
+  --panel:    #241a38;
+  --panel-2:  #2e2248;
+
+  /* Borders & dividers */
+  --line:     #3f2e60;
+
+  /* Text */
+  --text:     #ede0ff;
+  --muted:    #a08bc5;
+
+  /* Accent colors */
+  --accent:        #c99af5;   /* bright pastel purple */
+  --accent-hover:  #d9b4ff;
+  --accent-text:   #1a0e30;
+  --accent-2:      #f5acd2;   /* pink */
+  --accent-3:      #a8e6c5;   /* mint */
+
+  /* Status */
+  --ok:     #a8e6c5;
+  --warn:   #f9df95;
+  --error:  #f5a0b5;
+  --error-text: #f5a0b5;
 }
 
+/* ---------- GLOBAL (theme-independent) ---------- */
 :root {
-  /* Brand action colors (theme-independent, same as the clicker topbar/license UI) */
-  --red: #ef4444;
-  --red-hover: #dc2626;
-  --green: #16a34a;
-  --green-hover: #15803d;
-  --warn: #fbbf24;
-  --error-text: #ff6b6b;
+  /* Typography
+     Display: Nunito (rounded, friendly, OFL) — loaded from Google Fonts
+     Body: system-ui stack for speed
+     Mono: for specs/numbers */
+  --font-display: 'Nunito', 'Quicksand', system-ui, sans-serif;
+  --font-body:    'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:    ui-monospace, 'Cascadia Code', 'SF Mono', Consolas, monospace;
+  --fs-base:  16px;
+  --fs-body:  var(--fs-base);
 
-  /* Type. Body = system stack at the clicker's 17.5px base.
-     Display face: Chakra Petch (OFL), confirmed by Ian, bundled locally in ./fonts
-     (see fonts.css; never a CDN). System fallback kept for the font-display swap window.
-     Mono is the utility face for tokens, specs, and numeric readouts. */
-  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Chakra Petch', var(--font-body);
-  --font-mono: ui-monospace, 'Cascadia Code', 'SF Mono', 'Consolas', monospace;
-  --fs-base: 17.5px;
-  --fs-body: var(--fs-base);
-
-  /* Spacing scale (4px base) used for layout rhythm across apps. */
+  /* Spacing (4px base) */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -56,25 +84,24 @@
   --space-5: 32px;
   --space-6: 48px;
 
-  /* Radii ladder — tightened to a technical/engineered feel (2026-07-18): sharper
-     corners read as precise/CAD rather than soft-SaaS, on-brand for parametric tools.
-     Buttons 6, fields 5, chips 4, license box/cards 8, modals 12; pills stay round.
-     s/m/l are convenience aliases for layout chrome. */
-  --radius-chip: 4px;
-  --radius-field: 5px;
-  --radius-btn: 6px;
-  --radius-btn-primary: 6px;
-  --radius-box: 8px;
-  --radius-modal: 12px;
-  --radius-pill: 999px;
-  --radius-s: 4px;
-  --radius-m: 8px;
-  --radius-l: 12px;
+  /* Border radii — rounder than before for kawaii feel */
+  --radius-chip:       8px;
+  --radius-field:      12px;
+  --radius-btn:        12px;
+  --radius-btn-primary: 12px;
+  --radius-box:        16px;
+  --radius-modal:      20px;
+  --radius-pill:       999px;
+  --radius-s:  8px;
+  --radius-m:  14px;
+  --radius-l:  20px;
 
-  /* Shadows (from the app's modals/toasts) */
-  --shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.55);
-  --shadow-toast: 0 16px 40px rgba(0, 0, 0, 0.45);
+  /* Shadows — soft pastel tinted */
+  --shadow-sm:    0 2px 8px rgba(150, 80, 200, 0.10);
+  --shadow-card:  0 6px 24px rgba(150, 80, 200, 0.13);
+  --shadow-modal: 0 24px 60px rgba(90, 30, 150, 0.28);
+  --shadow-toast: 0 12px 40px rgba(90, 30, 150, 0.22);
 
-  /* Focus ring (single source so every control matches). */
-  --ring: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent);
+  /* Focus ring */
+  --ring: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
 }

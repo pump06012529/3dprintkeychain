@@ -1,31 +1,15 @@
-// Vostok Labs Hub — main entry point.
-// Renders the full landing page: nav, hero, generators, seller tools, license, footer.
+// Edu Labs Hub — main entry point.
+// Renders the full landing page: nav, hero, generators, footer.
 
 import '@vostok/ui-kit/styles.css';
 import './hub.css';
 
-import { BRAND } from '@vostok/brand';
-import { el, openCommercialModal, segmentedControl, supportLinks, ICONS, svgEl } from '@vostok/ui-kit';
+import { el, segmentedControl, ICONS, svgEl } from '@vostok/ui-kit';
 import registryData from '../../../generators.json';
 import type { Registry } from './registry';
 import { generatorCard, sellerToolCard } from './cards';
 
 const registry = registryData as unknown as Registry;
-
-// Inline the logo SVG so it inherits currentColor for theming.
-const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 568.55431 524.21602" fill="none" stroke="currentColor" stroke-width="16.551" role="img" aria-label="Vostok Labs" class="hub-logo-svg">
-  <path d="M385.471,8.276 h171.043 l-194.874,507.665 h-165.99 l82.995,-229.373 z"/>
-  <path d="M255.292,225.733 l-82.995,229.373 l-23.352,-60.835 l82.995,-229.373 z"/>
-  <path d="M208.588,104.064 l-82.995,229.373 l-23.352,-60.835 l82.995,-229.373 z"/>
-  <path d="M152.519,8.276 l-73.63,203.492 l-23.352,-60.835 l51.618,-142.657 z"/>
-  <path d="M61.79,8.276 l-29.606,81.823 l-23.352,-60.835 l7.594,-20.988 z"/>
-</svg>`;
-
-function parseSvg(raw: string): Element {
-  const tpl = document.createElement('template');
-  tpl.innerHTML = raw.trim();
-  return tpl.content.firstElementChild!;
-}
 
 const fmt = (n: number) => `$${n.toLocaleString('en-US')}`;
 
@@ -35,29 +19,18 @@ const fmt = (n: number) => `$${n.toLocaleString('en-US')}`;
 function buildNav(): HTMLElement {
   const logoLink = el('a', {
     className: 'hub-nav__logo',
-    attrs: { href: '/', 'aria-label': 'Vostok Labs home' },
+    attrs: { href: './', 'aria-label': 'Edu Labs home' },
   });
-  logoLink.append(parseSvg(LOGO_SVG));
-  logoLink.append(el('span', { className: 'hub-nav__logo-text', text: 'Vostok Labs' }));
+  // Cute geometric logo mark using accent colors
+  logoLink.innerHTML += `<span class="hub-logo-mark" aria-hidden="true">✦</span>`;
+  logoLink.append(el('span', { className: 'hub-nav__logo-text', text: 'Edu Labs' }));
 
   const links = el('nav', { className: 'hub-nav__links' }, [
-    el('a', { className: 'hub-nav__link', text: 'Generators', attrs: { href: '#generators', 'data-filter': 'all' } }),
-    // Seller tools live inside the combined catalog; this jumps there and flips
-    // the category filter to Tools (handled by the anchor click delegate).
-    el('a', { className: 'hub-nav__link', text: 'Seller Tools', attrs: { href: '#generators', 'data-filter': 'tools' } }),
-    el('a', { className: 'hub-nav__link', text: 'Pricing', attrs: { href: '#licensing' } }),
+    el('a', { className: 'hub-nav__link', text: '🎨 Generators', attrs: { href: '#generators', 'data-filter': 'all' } }),
+    el('a', { className: 'hub-nav__link', text: '🛠 Seller Tools', attrs: { href: '#generators', 'data-filter': 'tools' } }),
   ]);
 
-  // Same behavior as the app topbar's commercial button: open the kit's
-  // two-lane license modal rather than jumping straight off-site.
-  const cta = el('button', {
-    className: 'hub-nav__cta',
-    text: 'Get Commercial License',
-    attrs: { type: 'button' },
-    on: { click: () => openCommercialModal() },
-  });
-
-  const inner = el('div', { className: 'hub-nav__inner hub-container' }, [logoLink, links, cta]);
+  const inner = el('div', { className: 'hub-nav__inner hub-container' }, [logoLink, links]);
   return el('header', { className: 'hub-nav' }, [inner]);
 }
 
@@ -323,24 +296,13 @@ function buildLicensing(): HTMLElement {
 function buildFooter(): HTMLElement {
   const year = new Date().getFullYear();
 
-  const supportBanner = el('div', { className: 'hub-footer__support' }, [
-    el('h3', { className: 'hub-footer__support-title', text: 'Support the Designer' }),
-    el('p', {
-      className: 'hub-footer__support-desc',
-      text: 'Vostok Labs provides free parametric models for the maker community. If you find these tools useful, please consider supporting the project by donating on Ko-fi or boosting our models on MakerWorld.',
-    }),
-    supportLinks(),
-  ]);
-
   const copy = el('p', {
     className: 'hub-footer__copy',
-    text: `© ${year} Vostok Labs. Free for personal use (CC BY-NC-ND 4.0).`,
+    text: `© ${year} Edu Labs · Free 3D Print Generators ✦`,
   });
 
   return el('footer', { className: 'hub-footer' }, [
     el('div', { className: 'hub-footer__inner hub-container' }, [
-      supportBanner,
-      el('hr', { className: 'hub-footer__divider' }),
       copy,
     ]),
   ]);

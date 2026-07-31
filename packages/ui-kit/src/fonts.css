@@ -1,26 +1,7 @@
-/* Chakra Petch (OFL), the Vostok Labs display face. Bundled locally as woff2,
-   Latin subset, weights 500/600/700, so the kit never touches a CDN and works
-   fully offline. Downloaded from Google Fonts; see fonts/OFL.txt for the license.
-   font-display: swap keeps text visible while the face loads. */
+/* Nunito + Quicksand — both OFL, loaded from Google Fonts.
+   Preconnect hints let the browser open the connection as early as possible.
+   font-display: swap keeps text readable while the font loads. */
 
-@font-face {
-  font-family: 'Chakra Petch';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('./fonts/ChakraPetch-Medium.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Chakra Petch';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('./fonts/ChakraPetch-SemiBold.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Chakra Petch';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('./fonts/ChakraPetch-Bold.woff2') format('woff2');
-}
+/* NOTE: The <link> preconnect tags are injected by each app's index.html.
+   This @import covers builds where CSS is the only entry point. */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Quicksand:wght@500;600;700&display=swap');
