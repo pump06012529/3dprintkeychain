@@ -52,7 +52,8 @@ export function buildClicker(
   };
 
   // --- Switch assets: drive the Z stack AND the minimum cap size ---
-  const socketBB = socket.boundingBox();
+  try {
+    const socketBB = socket.boundingBox();
   const stemBB = stem.boundingBox();
   const socketDim = Math.max(
     socketBB.max[0] - socketBB.min[0],
@@ -726,39 +727,40 @@ export function buildClicker(
     }
   }
 
-  if (!body.isEmpty()) {
-    parts.push(toPart(body, 'body', 'base', params.bodyColorRgb, 'base-body'));
-  }
+    if (!body.isEmpty()) {
+      parts.push(toPart(body, 'body', 'base', params.bodyColorRgb, 'base-body'));
+    }
 
-  // --- Cap edge modifications. 'capTop' is the global cap-top edge; 'top-base' is
-  //     the cap frame selected directly in Edges mode. Both round the cap's top rim. ---
-  if (parts.length > 0) {
-    const basePartIdx = parts.findIndex(p => p.name === 'top-base');
-    if (basePartIdx >= 0) {
-      for (const es of params.edgeSettings) {
-        if ((es.target === 'capTop' || es.target === 'top-base') && es.style !== 'none') {
-          const r = Math.min(es.radius, (backing + imageDepth) * 0.4, 2.5);
-          if (r > 0.05) {
-            const modBlock = createEdgeBevelBlock(plate, r, es.style, slabTopZ, false);
-            if (modBlock) {
-              base = track(base.subtract(modBlock));
-              parts[basePartIdx] = toPart(base, 'cap', 'top', params.baseFilamentRgb, 'top-base');
+    // --- Cap edge modifications. 'capTop' is the global cap-top edge; 'top-base' is
+    //     the cap frame selected directly in Edges mode. Both round the cap's top rim. ---
+    if (parts.length > 0) {
+      const basePartIdx = parts.findIndex(p => p.name === 'top-base');
+      if (basePartIdx >= 0) {
+        for (const es of params.edgeSettings) {
+          if ((es.target === 'capTop' || es.target === 'top-base') && es.style !== 'none') {
+            const r = Math.min(es.radius, (backing + imageDepth) * 0.4, 2.5);
+            if (r > 0.05) {
+              const modBlock = createEdgeBevelBlock(plate, r, es.style, slabTopZ, false);
+              if (modBlock) {
+                base = track(base.subtract(modBlock));
+                parts[basePartIdx] = toPart(base, 'cap', 'top', params.baseFilamentRgb, 'top-base');
+              }
             }
           }
         }
       }
     }
-  }
 
-  for (const o of trash) {
-    try {
-      o.delete();
-    } catch {
-      /* already freed */
+    return { parts, switchPlacements: applied, warnings };
+  } finally {
+    for (const o of trash) {
+      try {
+        o.delete();
+      } catch {
+        /* already freed */
+      }
     }
   }
-
-  return { parts, switchPlacements: applied, warnings };
 
   /** Apply fillet/chamfer edge modifications to the body solid.
    *  Targets: 'clickerBase' is the merged global control that bevels the body's top
@@ -802,7 +804,7 @@ export function buildClicker(
     name: string,
   ): ClickerPart {
     const creasedSolid = track(solid.calculateNormals(0, 35));
-    const mesh = creasedSolid.getMesh();
+    const mesh = track(creasedSolid.getMesh());
     return {
       kind,
       group,

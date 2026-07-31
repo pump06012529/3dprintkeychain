@@ -36,6 +36,7 @@ function assetToSolid(wasm: any, buf: ArrayBuffer): { solid: any; info: string }
   });
   mesh.merge();
   const solid = wasm.Manifold.ofMesh(mesh);
+  mesh.delete();
   const bb = solid.boundingBox();
   const size = [bb.max[0] - bb.min[0], bb.max[1] - bb.min[1], bb.max[2] - bb.min[2]];
   const status = typeof solid.status === 'function' ? solid.status() : 'ok';
