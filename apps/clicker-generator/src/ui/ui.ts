@@ -618,6 +618,12 @@ export function createUi(
     },
     onHelp: () => showTutorialPrompt(),
     themeStorageKey: 'clicker_theme',
+    onReset: () => {
+      if (confirm('คุณต้องการรีเซ็ตการตั้งค่าทั้งหมดกลับเป็นค่าเริ่มต้นหรือไม่?')) {
+        localStorage.removeItem('clicker_app_state');
+        window.location.reload();
+      }
+    }
   });
 
   if (MAKERLAB) {

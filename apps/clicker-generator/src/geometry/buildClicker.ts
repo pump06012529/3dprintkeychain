@@ -279,8 +279,8 @@ export function buildClicker(
     // from binding or sticking due to excessive friction in the sharp valleys.
     // Then simplify: the round closing fills perimeter arcs with hundreds of points
     // that every later op would carry — collapse them to a print-invisible tolerance.
-    const smoothingRadius = 4.0;
-    plate = simp(track(solidPlate.offset(smoothingRadius, 'Round', 2.0, 24).offset(-smoothingRadius, 'Round', 2.0, 24)), 0.05);
+    const smoothingRadius = Math.max(0.5, params.smoothing * 3);
+    plate = simp(track(solidPlate.offset(smoothingRadius, 'Round', 2.0, 24).offset(-smoothingRadius, 'Round', 2.0, 24)), 0.1);
   } else {
     // The geometric shapes scale linearly with their radius, so rather than guessing
     // a circumscribing radius (which clips the image on concave shapes like the star
@@ -414,8 +414,9 @@ export function buildClicker(
     );
     wellFp = track(wellFp.add(col));
   }
-  const wellFootprint = simp(wellFp);
-  const bodyFootprint = simp(grow(wellFootprint, Math.max(0.4, params.borderWidth)));
+  // 1. Cup Wall & Floor
+  const wellFootprint = simp(wellFp, 0.1);
+  const bodyFootprint = simp(grow(wellFootprint, Math.max(0.4, params.borderWidth)), 0.1);
 
   // --- Z layout (shared assembly frame: Z = 0 is the switch-plate top) ---
   const cavityFloorZ = socketBB.max[2]; // socket top = plate plane (≈ 0); the well opens to it
@@ -515,7 +516,7 @@ export function buildClicker(
   for (const { r } of ordered) {
     const validRings = scaleRings(r.rings).filter(ring => ring.length >= 3 && getRingArea(ring) > 0.001);
     if (validRings.length === 0) continue;
-    let cs: Section = simp(track(new CrossSection(validRings, 'NonZero')), 0.03);
+    let cs: Section = simp(track(new CrossSection(validRings, 'NonZero')), 0.1);
     if (params.colorBleed > 0.001) cs = grow(cs, params.colorBleed);
     const clipped = track(cs.intersect(imageArea));
     if (sectionIsEmpty(clipped)) continue;
@@ -679,7 +680,6 @@ export function buildClicker(
     const loopFootprint = track(localFp.translate([px, py]));
 
     let loop = extrudeAt(loopFootprint, th, zb);
-    loop = bevelAddon(loop, loopFootprint, zb + th, zb);
     body = track(body.add(loop));
 
     // Ring hole at the transformed loop centre (local [0, outward] → world).

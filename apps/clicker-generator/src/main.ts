@@ -811,12 +811,16 @@ worker.onmessage = (e: MessageEvent<GeometryResponse>) => {
         pendingHistoryReset = false;
         resetHistory();
       }
+      isWorkerBusy = false;
+      if (needsRebuild) triggerRebuild();
       break;
     }
     case 'error':
       store.set({ building: false, status: 'Error: ' + firstLine(msg.message) });
       console.error('[geometry worker]', msg.message);
       isInitialLoad = false;
+      isWorkerBusy = false;
+      if (needsRebuild) triggerRebuild();
       break;
   }
 };
@@ -1051,7 +1055,26 @@ function debounce(fn: () => void, ms: number) {
     t = window.setTimeout(fn, ms);
   };
 }
-const debouncedRebuild = debounce(rebuild, 130);
+
+let isWorkerBusy = false;
+let needsRebuild = false;
+let rebuildTimeout: number | undefined;
+
+function triggerRebuild() {
+  needsRebuild = true;
+  if (isWorkerBusy) return;
+  if (rebuildTimeout) clearTimeout(rebuildTimeout);
+  rebuildTimeout = window.setTimeout(runRebuild, 80);
+}
+
+function runRebuild() {
+  if (!needsRebuild) return;
+  needsRebuild = false;
+  isWorkerBusy = true;
+  store.set({ building: true });
+  rebuild();
+}
+
 // Quiet rebuild used by live edit modes (extrude / edges) so the preview reflects
 // the real geometry without flashing the loading overlay on every step.
 const debouncedQuietRebuild = debounce(() => rebuild(true), 160);

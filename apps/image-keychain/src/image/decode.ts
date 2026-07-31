@@ -23,10 +23,18 @@ function getPica(): Pica {
 // Bake EXIF orientation and avoid premultiply surprises. Very old engines throw on
 // the options bag — fall back to a plain decode there.
 async function decodeBitmap(blob: Blob): Promise<ImageBitmap | HTMLImageElement> {
-  if (blob.type === 'image/svg+xml') {
+  const isSvg = blob.type === 'image/svg+xml' || (blob instanceof File && blob.name.toLowerCase().endsWith('.svg'));
+  
+  if (isSvg) {
+    let svgText = await blob.text();
+    // Inject width and height if missing, otherwise Canvas will render it as 0x0
+    if (!/<svg[^>]+(width|height)=/i.test(svgText)) {
+      svgText = svgText.replace(/<svg/, '<svg width="1024" height="1024"');
+    }
     return new Promise((resolve, reject) => {
       const img = new Image();
-      const url = URL.createObjectURL(blob);
+      const svgBlob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
       img.onload = () => {
         URL.revokeObjectURL(url);
         resolve(img);

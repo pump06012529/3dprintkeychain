@@ -129,9 +129,10 @@ async function handleFileSelected(file: File) {
   previewImg.style.display = 'block';
   changeImgBtn.style.display = 'block';
   dropZone.style.display = 'none';
-  colorCountSlider.classList.toggle('hidden', file.type === 'image/svg+xml');
-  imageSmoothingSlider.classList.toggle('hidden', file.type === 'image/svg+xml');
-  removeBgToggle.classList.toggle('hidden', file.type === 'image/svg+xml');
+  const isSvg = file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg');
+  colorCountSlider.classList.toggle('hidden', isSvg);
+  imageSmoothingSlider.classList.toggle('hidden', isSvg);
+  removeBgToggle.classList.toggle('hidden', isSvg);
   await processFile();
 }
 
@@ -461,6 +462,12 @@ const footer = sidebarFooter({
   onSave: () => toast('ยังไม่รองรับการบันทึก', { kind: 'warn' }),
   onLoad: () => toast('ยังไม่รองรับการเปิดไฟล์', { kind: 'warn' }),
   themeStorageKey: 'image-keychain-theme',
+  onReset: () => {
+    if (confirm('คุณต้องการรีเซ็ตการตั้งค่าทั้งหมดกลับเป็นค่าเริ่มต้นหรือไม่?')) {
+      localStorage.removeItem('ikState');
+      window.location.reload();
+    }
+  }
 });
 
 const shell = appShell({

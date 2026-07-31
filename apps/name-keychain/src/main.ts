@@ -1030,6 +1030,12 @@ const controlsRightExport = sidebarFooter({
     });
   },
   themeStorageKey: 'name-keychain-theme',
+  onReset: () => {
+    if (confirm('คุณต้องการรีเซ็ตการตั้งค่าทั้งหมดกลับเป็นค่าเริ่มต้นหรือไม่?')) {
+      localStorage.removeItem('nkState');
+      window.location.reload();
+    }
+  }
 });
 
 const controlsRight = el('aside', { className: 'vl-panel vl-panel--right' }, [
