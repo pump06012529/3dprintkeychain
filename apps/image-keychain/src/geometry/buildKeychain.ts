@@ -81,9 +81,6 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
     const bolded = keep(glyphsCS.offset(params.boldness, 'Round', 2.0, 12));
     if (bolded.area() > 0.1) glyphsCS = bolded;
   }
-  
-  const gapOffset = params.colorBleed;
-  glyphsCS = keep(glyphsCS.offset(gapOffset, 'Round', 1.0, 12));
   const emptyText = glyphsCS.area() < 0.1;
 
   const orderedRegions = [...regionSet.regions].sort((a, b) => (a.coverage ?? 1) - (b.coverage ?? 1));
