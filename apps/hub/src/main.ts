@@ -40,7 +40,7 @@ function buildNav(): HTMLElement {
 function buildHero(): HTMLElement {
   const eyebrow = el('p', {
     className: 'hub-hero__eyebrow',
-    text: 'Free for makers · License for sellers',
+    text: '✦ ฟรีเพื่อการศึกษา · Free for Education',
   });
 
   const title = el('h1', { className: 'hub-hero__title' });
@@ -48,7 +48,7 @@ function buildHero(): HTMLElement {
 
   const sub = el('p', {
     className: 'hub-hero__sub',
-    text: 'Parametric model generators for makers and sellers. Customize, download, print. No account needed.',
+    text: 'เครื่องมือสร้างโมเดล 3D สำหรับการศึกษา ใช้งานได้ฟรี ปรับแต่ง ดาวน์โหลด พิมพ์ได้ทันที',
   });
 
   const licenseLink = el('a', {
@@ -202,7 +202,7 @@ function buildFooter(): HTMLElement {
 
   const copy = el('p', {
     className: 'hub-footer__copy',
-    text: `© ${year} Edu Labs · Free 3D Print Generators ✦`,
+    text: `© ${year} Edu Labs · ฟรีเพื่อการศึกษา · Free for Education ✦`,
   });
 
   return el('footer', { className: 'hub-footer' }, [
