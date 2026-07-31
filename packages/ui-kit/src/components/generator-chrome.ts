@@ -104,6 +104,7 @@ export function projectActions(opts: ProjectActionsOptions): HTMLElement {
 
   const save = actionBtn('บันทึกโปรเจกต์', ICONS.save, () => opts.onSave());
   const load = actionBtn('โหลดโปรเจกต์', ICONS.load, () => fileInput.click());
+  const reset = actionBtn('เริ่มต้นใหม่', ICONS.rotateLeft, () => window.location.reload());
 
   const row2: HTMLElement[] = [];
   if (opts.onHelp) row2.push(actionBtn('ช่วยเหลือ', ICONS.help, () => opts.onHelp!()));
@@ -115,7 +116,7 @@ export function projectActions(opts: ProjectActionsOptions): HTMLElement {
   }
 
   return el('div', { className: 'vl-project-actions' }, [
-    el('div', { className: 'vl-action-row' }, [save, load, fileInput]),
+    el('div', { className: 'vl-action-row' }, [save, load, reset, fileInput]),
     el('div', { className: 'vl-action-row' }, row2),
   ]);
 }
