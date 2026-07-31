@@ -50,6 +50,7 @@ const state = {
   layerHeight: 0.2,
 
   // Image specific
+  imageSmoothing: 0.5,
   colorCount: 4,
   removeBg: true,
 };
@@ -127,6 +128,7 @@ async function handleFileSelected(file: File) {
   changeImgBtn.style.display = 'block';
   dropZone.style.display = 'none';
   colorCountSlider.classList.toggle('hidden', file.type === 'image/svg+xml');
+  imageSmoothingSlider.classList.toggle('hidden', file.type === 'image/svg+xml');
   removeBgToggle.classList.toggle('hidden', file.type === 'image/svg+xml');
   await processFile();
 }
@@ -135,8 +137,9 @@ async function processFile() {
   if (!uploadedFile) return;
   showStatus('กำลังประมวลผลรูปภาพ...');
   try {
-    const res = await processImageToRegions(uploadedFile, state.colorCount, state.removeBg);
+    const res = await processImageToRegions(uploadedFile, state.colorCount, state.removeBg, state.imageSmoothing);
     currentRegionSet = res;
+    updatePaletteUI();
     // The new trace.ts normalizes the longest side to 1.
     if (res.aspect >= 1) {
       currentImageWidth = 1;
@@ -254,9 +257,45 @@ const imageColorField = colorField('รูปภาพ', state.image, (value) =>
 function updateControlsVisibility() {
   const haloVisible = state.colorScheme === 'plate-halo-image';
   haloColorField.classList.toggle('hidden', !haloVisible);
-  imageColorField.classList.toggle('hidden', state.colorScheme === 'single');
+  
+  const isMultiColor = Boolean(currentRegionSet && currentRegionSet.regions.length > 1);
+  imageColorField.classList.toggle('hidden', state.colorScheme === 'single' || isMultiColor);
+  paletteContainer.classList.toggle('hidden', state.colorScheme === 'single' || !isMultiColor);
 }
 updateControlsVisibility();
+
+const paletteContainer = el('div', { className: 'nk-palette', attrs: { style: 'margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;' } });
+
+function updatePaletteUI() {
+  paletteContainer.innerHTML = '';
+  if (!currentRegionSet || currentRegionSet.regions.length <= 1) {
+    updateControlsVisibility();
+    return;
+  }
+  
+  const hex = (rgb: [number, number, number]) => {
+    const h = (v: number) => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0');
+    return `#${h(rgb[0])}${h(rgb[1])}${h(rgb[2])}`;
+  };
+
+  currentRegionSet.regions.forEach((r, i) => {
+    const colorHex = hex(r.quantRgb);
+    const pf = colorField(`สี ${i+1}`, colorHex, (val) => {
+      // update rgb
+      const clean = val.replace('#', '');
+      r.quantRgb = [parseInt(clean.slice(0, 2), 16), parseInt(clean.slice(2, 4), 16), parseInt(clean.slice(4, 6), 16)];
+      if (viewer) viewer.setPartColor('image_' + i, val);
+      // We don't need to rebuild geometry, just update the color property so export works
+      if (lastParts.length) {
+         const part = lastParts.find(p => p.name === 'image_' + i);
+         if (part) part.colorRgb = r.quantRgb;
+      }
+    });
+    pf.style.flex = '1 1 auto';
+    paletteContainer.appendChild(pf);
+  });
+  updateControlsVisibility();
+}
 
 const colorCountSlider = sliderRow({
   label: 'จำนวนสี', min: 2, max: 16, step: 1, value: state.colorCount,
@@ -264,6 +303,13 @@ const colorCountSlider = sliderRow({
   onInput: (v) => { state.colorCount = v; if (uploadedFile && uploadedFile.type !== 'image/svg+xml') processFile(); }
 });
 colorCountSlider.classList.add('hidden'); // hidden by default until PNG uploaded
+
+const imageSmoothingSlider = sliderRow({
+  label: 'ความโค้งมน', min: 0.0, max: 1.0, step: 0.1, value: state.imageSmoothing,
+  help: 'เพิ่มความเนียนให้ขอบภาพ (0 = แข็ง, 1 = มนสุด)',
+  onInput: (v) => { state.imageSmoothing = v; if (uploadedFile && uploadedFile.type !== 'image/svg+xml') processFile(); }
+});
+imageSmoothingSlider.classList.add('hidden');
 
 const removeBgToggle = el('div', { className: 'vl-slider-row hidden' }, [
   el('label', { className: 'vl-slider-label' }, [
@@ -287,7 +333,7 @@ const settings = el('div', { className: 'vl-section' }, [
   changeImgBtn,
   dropZone,
   fileInput,
-  el('div', { attrs: { style: 'margin-top: 12px;' } }, [colorCountSlider, removeBgToggle]),
+  el('div', { attrs: { style: 'margin-top: 12px;' } }, [colorCountSlider, imageSmoothingSlider, removeBgToggle]),
   el('p', { className: 'vl-label', text: 'ขนาด' }),
   sizeSlider,
   outlineSlider,
@@ -368,6 +414,7 @@ const colorSettings = el('div', { className: 'vl-section' }, [
     plateColorField,
     haloColorField,
     imageColorField,
+    paletteContainer
   ])
 ]);
 
