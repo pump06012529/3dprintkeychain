@@ -758,6 +758,26 @@ const worker = new Worker(new URL('./workers/geometry.worker.ts', import.meta.ur
   type: 'module',
 });
 
+const preprocessWorker = new Worker(new URL('./workers/preprocess.worker.ts', import.meta.url), {
+  type: 'module',
+});
+
+preprocessWorker.onmessage = (e) => {
+  const msg = e.data;
+  if (msg.type === 'processImageDone') {
+    isImageWorkerBusy = false;
+    regionSet = msg.regionSet;
+    triggerRebuild();
+    if (needsReprocess) {
+      needsReprocess = false;
+      debouncedReprocess();
+    }
+  } else if (msg.type === 'error') {
+    isImageWorkerBusy = false;
+    store.set({ building: false, status: 'Error: ' + msg.error });
+  }
+};
+
 worker.onmessage = (e: MessageEvent<GeometryResponse>) => {
   const msg = e.data;
   switch (msg.type) {
@@ -910,6 +930,11 @@ async function openWizard(getter: () => Promise<RgbaImage>) {
 }
 
 function reprocess() {
+  if (isImageWorkerBusy) {
+    needsReprocess = true;
+    return;
+  }
+  
   // A fresh trace means fresh regions, so start a new undo baseline and drop any
   // pinned frame color so it re-derives.
   pendingHistoryReset = true;
@@ -919,11 +944,20 @@ function reprocess() {
   if (s.importMode === 'image') {
     if (!originalImage) return;
     store.set({ building: true, status: 'Removing background & tracing…' });
-    regionSet = processImage(cloneImage(originalImage), s.colorCount, {
-      removeBg: s.removeBg,
-      smoothing: s.smoothing,
-      customColors: s.colorMode === 'limited' ? s.limitedColors : undefined,
-    });
+    isImageWorkerBusy = true;
+    const imgClone = cloneImage(originalImage);
+    preprocessWorker.postMessage({
+      type: 'processImage',
+      img: imgClone,
+      colorCount: s.colorCount,
+      opts: {
+        removeBg: s.removeBg,
+        smoothing: s.smoothing,
+        customColors: s.colorMode === 'limited' ? s.limitedColors : undefined,
+      }
+    }, [imgClone.data.buffer]);
+    // Returning early because the rest will be handled by the worker callback
+    return;
   } else if (s.importMode === 'svg') {
     if (!currentSvgText) {
       store.set({ status: 'Upload an SVG file first.' });
@@ -1057,6 +1091,8 @@ function debounce(fn: () => void, ms: number) {
 }
 
 let isWorkerBusy = false;
+let isImageWorkerBusy = false;
+let needsReprocess = false;
 let needsRebuild = false;
 let needsQuietRebuild = false;
 let rebuildTimeout: number | undefined;
