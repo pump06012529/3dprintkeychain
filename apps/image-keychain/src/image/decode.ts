@@ -22,7 +22,23 @@ function getPica(): Pica {
 
 // Bake EXIF orientation and avoid premultiply surprises. Very old engines throw on
 // the options bag — fall back to a plain decode there.
-async function decodeBitmap(blob: Blob): Promise<ImageBitmap> {
+async function decodeBitmap(blob: Blob): Promise<ImageBitmap | HTMLImageElement> {
+  if (blob.type === 'image/svg+xml') {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(blob);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        resolve(img);
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error('Failed to load SVG image'));
+      };
+      img.src = url;
+    });
+  }
+
   try {
     return await createImageBitmap(blob, {
       imageOrientation: 'from-image',
@@ -39,7 +55,7 @@ export async function loadFileToImage(file: File, maxSize = TARGET): Promise<Rgb
   try {
     return await drawToImageData(bitmap, bitmap.width, bitmap.height, maxSize);
   } finally {
-    bitmap.close();
+    if ('close' in bitmap) (bitmap as ImageBitmap).close();
   }
 }
 
@@ -52,7 +68,7 @@ export async function loadUrlToImage(url: string, maxSize = TARGET): Promise<Rgb
   try {
     return await drawToImageData(bitmap, bitmap.width, bitmap.height, maxSize);
   } finally {
-    bitmap.close();
+    if ('close' in bitmap) (bitmap as ImageBitmap).close();
   }
 }
 
