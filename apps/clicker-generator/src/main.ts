@@ -173,33 +173,33 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
   },
   onShape: (kind) => {
     store.set({ baseShape: kind });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onWidth: (mm) => {
     store.set({ capWidthMm: mm });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onTopThickness: (mm) => {
     store.set({ topThickness: mm });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onImageDepth: (mm) => {
     store.set({ imageDepth: mm });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onSocketTolStep: (delta) => {
     // "Switch socket" fit = clearance between the top and the base it presses into.
     // Baseline is 0.4 mm (shown as 0); + loosens, − tightens. Clamp to a safe range.
     const next = Math.round(Math.max(0.1, Math.min(1.0, store.get().tolerance + delta)) * 100) / 100;
     store.set({ tolerance: next });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onStemTolStep: (delta) => {
     // "Switch stem" fit = XY scale offset on the cap's keycap-mount stem (0.2 mm steps).
     // + loosens (opens the cross socket), − tightens. 0 = as authored.
     const next = Math.round(Math.max(-1.0, Math.min(1.0, store.get().stemTolerance + delta)) * 10) / 10;
     store.set({ stemTolerance: next });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onSwitchNudge: (dx, dy) => {
     // Move only the active switch. Bound the requested offset; the worker does the
@@ -213,7 +213,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
       idx === i ? { ...sw, x: clamp(sw.x + dx), y: clamp(sw.y + dy) } : sw,
     );
     store.set({ switches });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onSwitchRotate: (deltaDeg) => {
     // Rotate only the active switch a couple of degrees per press; clamp so the socket
@@ -224,7 +224,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
       idx === i ? { ...sw, rotation: Math.round(Math.max(-30, Math.min(30, sw.rotation + deltaDeg))) } : sw,
     );
     store.set({ switches });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onSwitchReset: () => {
     // Recenter only the active switch to its default slot for the current count.
@@ -233,7 +233,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
     const i = Math.min(s.activeSwitchIndex, s.switches.length - 1);
     const switches = s.switches.map((sw, idx) => (idx === i ? layout[idx] : sw));
     store.set({ switches });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onSwitchCount: (n) => {
     // Changing count replaces the whole array with the symmetric default layout
@@ -241,7 +241,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
     const s = store.get();
     if (n === s.switches.length) return;
     store.set({ switches: defaultSwitchLayout(n, s.capWidthMm), activeSwitchIndex: 0 });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onActiveSwitch: (i) => {
     // Selection only — no rebuild.
@@ -253,30 +253,30 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
       switches: defaultSwitchLayout(s.switches.length, s.capWidthMm),
       activeSwitchIndex: 0,
     });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onKeychainToggle: (on) => {
     store.set({ keychain: { ...store.get().keychain, enabled: on } });
-    debouncedRebuild();
+    triggerRebuild();
   },
 
   onKeychainRotate: (deltaDeg) => {
     const kc = store.get().keychain;
     const angleDeg = (((kc.angleDeg + deltaDeg) % 360) + 360) % 360;
     store.set({ keychain: { ...kc, angleDeg } });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onKeychainSize: (deltaMm) => {
     const kc = store.get().keychain;
     const holeDiameterMm = Math.round(Math.max(3.0, Math.min(8.0, kc.holeDiameterMm + deltaMm)) * 10) / 10;
     store.set({ keychain: { ...kc, holeDiameterMm } });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onKeychainOffset: (deltaMm) => {
     const kc = store.get().keychain;
     const offsetMm = Math.round(Math.max(-15.0, Math.min(15.0, (kc.offsetMm ?? 0) + deltaMm)) * 10) / 10;
     store.set({ keychain: { ...kc, offsetMm } });
-    debouncedRebuild();
+    triggerRebuild();
   },
   onSmoothing: (v) => {
     store.set({ smoothing: v });

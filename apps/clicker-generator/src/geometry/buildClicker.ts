@@ -279,7 +279,7 @@ export function buildClicker(
     // from binding or sticking due to excessive friction in the sharp valleys.
     // Then simplify: the round closing fills perimeter arcs with hundreds of points
     // that every later op would carry — collapse them to a print-invisible tolerance.
-    const smoothingRadius = Math.max(0.5, params.smoothing * 3);
+    const smoothingRadius = 4.0;
     plate = simp(track(solidPlate.offset(smoothingRadius, 'Round', 2.0, 24).offset(-smoothingRadius, 'Round', 2.0, 24)), 0.1);
   } else {
     // The geometric shapes scale linearly with their radius, so rather than guessing
@@ -651,17 +651,7 @@ export function buildClicker(
     const bodyEdge = params.edgeSettings?.find(
       (s) => (s.target === 'clickerBase' || s.target === 'baseTop') && s.style !== 'none' && s.radius >= 0.05,
     );
-    const bevelAddon = (solid: Solid, fp: Section, top: number, bottom: number): Solid => {
-      if (!bodyEdge) return solid;
-      const r = Math.min(bodyEdge.radius, (top - bottom) * 0.45, 2.5);
-      if (r < 0.05) return solid;
-      let out = solid;
-      const topBlock = createEdgeBevelBlock(fp, r, bodyEdge.style, top, false);
-      if (topBlock) out = track(out.subtract(topBlock));
-      const botBlock = createEdgeBevelBlock(fp, r, bodyEdge.style, bottom, true);
-      if (botBlock) out = track(out.subtract(botBlock));
-      return out;
-    };
+
 
     // Loop style: a disc tab with a ring hole, built in a local frame (+Y outward)
     // then rotated to the requested angle and moved onto the body edge point.
