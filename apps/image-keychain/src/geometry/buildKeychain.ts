@@ -174,6 +174,8 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
     let bodyCS = keep(plateBodySrc.offset(plateMargin + smoothR, 'Round', 2.0, 24));
     bodyCS = keep(bodyCS.offset(-smoothR, 'Round', 2.0, 24));
     haloCS = keep(bodyCS.offset(-params.haloWidth, 'Round', 1.0, 12));
+    // Ensure halo doesn't fill internal holes by subtracting the solid plateBodySrc
+    haloCS = keep(haloCS.subtract(plateBodySrc));
   }
 
   return {
@@ -249,6 +251,9 @@ export function buildKeychain(
       // Engraved: base plate with a recess, flush-filled with coloured inlays.
       let baseSolid = bevelExtrude(p.plateNoHole, p.baseT, chamBase, keep);
       const cutDepth = Math.min(params.imageThickness, p.baseT * 0.6);
+      
+      // The recess cut should exactly match the inlays (and halo) so the base plate 
+      // sticks up to fill any gaps or missing regions (like removed backgrounds).
       const recessCS = p.hasHalo && p.haloCS ? keep(p.haloCS.add(p.inlaysCS ?? p.textCS)) : (p.inlaysCS ?? p.textCS);
       const recessCut = keep(recessCS.extrude(cutDepth + 1).translate([0, 0, p.baseT - cutDepth]));
       let engraved = keep(baseSolid.subtract(recessCut));
@@ -257,9 +262,8 @@ export function buildKeychain(
 
       if (params.colorScheme !== 'single') {
         if (p.hasHalo && p.haloCS) {
-          const ringCS = keep(p.haloCS.subtract(p.textCS));
-          if (ringCS.area() > 0.02) {
-            const ringSolid = keep(ringCS.extrude(cutDepth).translate([0, 0, p.baseT - cutDepth]));
+          if (p.haloCS.area() > 0.02) {
+            const ringSolid = keep(p.haloCS.extrude(cutDepth).translate([0, 0, p.baseT - cutDepth]));
             finalParts.push({ name: 'halo', ...getMeshData(ringSolid), colorRgb: hexToRgb(params.haloColor) });
           }
         }

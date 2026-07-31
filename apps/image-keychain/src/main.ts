@@ -325,7 +325,7 @@ removeBgCheckbox.addEventListener('change', () => {
 });
 
 const sizeSlider = sliderRow({ label: 'ความกว้าง', min: 20, max: 200, value: state.size, unit: 'mm', onInput: (v) => { state.size = v; triggerRebuild(); } });
-const outlineSlider = sliderRow({ label: 'ความกว้างแผ่นหลัง', min: 0, max: 10, step: 0.1, value: state.outlineWidth, unit: 'mm', onInput: (v) => { state.outlineWidth = v; triggerRebuild(); } });
+const outlineSlider = sliderRow({ label: 'ความกว้างขอบเอ้าไลน์', min: 0, max: 10, step: 0.1, value: state.outlineWidth, unit: 'mm', onInput: (v) => { state.outlineWidth = v; triggerRebuild(); } });
 const boldnessSlider = sliderRow({ label: 'ความหนารูปภาพ', min: -2.0, max: 2.0, step: 0.1, value: state.boldness, unit: 'mm', onInput: (v) => { state.boldness = v; triggerRebuild(); } });
 const colorBleedSlider = sliderRow({ label: 'ความกว้างรอยต่อสี', min: 0.0, max: 0.5, step: 0.01, value: state.colorBleed, unit: 'mm', onInput: (v) => { state.colorBleed = v; triggerRebuild(); } });
 
