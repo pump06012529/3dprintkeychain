@@ -143,6 +143,9 @@ const MAP = {
   'nova-square': ['Nova Square', 'Tech'],
   'rajdhani': ['Rajdhani', 'Tech'],
   'electrolize': ['Electrolize', 'Tech'],
+  'bungee-inline': ['Bungee Inline', 'Tech'],
+  'bungee-shade': ['Bungee Shade', 'Tech'],
+  'shojumaru': ['Shojumaru', 'Tech'],
 
   // ----- Pixel / Mono -----
   'silkscreen': ['Silkscreen', 'Pixel'],

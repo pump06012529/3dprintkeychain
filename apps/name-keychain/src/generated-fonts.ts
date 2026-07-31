@@ -279,6 +279,28 @@ export const FONTS: FontChoice[] = [
     ]
   },
   {
+    "id": "bungee-inline",
+    "label": "Bungee Inline",
+    "category": "Tech",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "id": "bungee-shade",
+    "label": "Bungee Shade",
+    "category": "Tech",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "id": "butcherman",
     "label": "Butcherman",
     "category": "Spooky",
@@ -1601,6 +1623,16 @@ export const FONTS: FontChoice[] = [
     "curated": false,
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "id": "shojumaru",
+    "label": "Shojumaru",
+    "category": "Tech",
+    "curated": false,
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {

@@ -1,6 +1,6 @@
 # Bundled fonts
 
-All 174 fonts in this folder are from [Google Fonts](https://fonts.google.com). Each is
+All 177 fonts in this folder are from [Google Fonts](https://fonts.google.com). Each is
 licensed under the **SIL Open Font License 1.1** ([`OFL.txt`](OFL.txt)) or the
 **Apache License 2.0** (https://www.apache.org/licenses/LICENSE-2.0), as stated on its
 Google Fonts specimen page linked below. Both licenses permit embedding and bundling in
@@ -35,6 +35,8 @@ redistributed on its own — they ship only as part of this generator.
 | Bowlby One SC | Display | https://fonts.google.com/specimen/Bowlby+One+SC |
 | Bree Serif | Serif | https://fonts.google.com/specimen/Bree+Serif |
 | Bungee | Display | https://fonts.google.com/specimen/Bungee |
+| Bungee Inline | Tech | https://fonts.google.com/specimen/Bungee+Inline |
+| Bungee Shade | Tech | https://fonts.google.com/specimen/Bungee+Shade |
 | Butcherman | Spooky | https://fonts.google.com/specimen/Butcherman |
 | Caveat | Handwriting | https://fonts.google.com/specimen/Caveat |
 | Chakra Petch | Tech | https://fonts.google.com/specimen/Chakra+Petch |
@@ -157,6 +159,7 @@ redistributed on its own — they ship only as part of this generator.
 | Satisfy | Script | https://fonts.google.com/specimen/Satisfy |
 | Schoolbell | Handwriting | https://fonts.google.com/specimen/Schoolbell |
 | Share Tech Mono | Mono | https://fonts.google.com/specimen/Share+Tech+Mono |
+| Shojumaru | Tech | https://fonts.google.com/specimen/Shojumaru |
 | Shrikhand | Display | https://fonts.google.com/specimen/Shrikhand |
 | Sigmar One | Display | https://fonts.google.com/specimen/Sigmar+One |
 | Silkscreen | Pixel | https://fonts.google.com/specimen/Silkscreen |

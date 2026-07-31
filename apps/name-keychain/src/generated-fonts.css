@@ -25,6 +25,8 @@
 @font-face { font-family: NK-bowlby-one-sc; src: url('./fonts/bowlby-one-sc.ttf'); font-display: swap; }
 @font-face { font-family: NK-bree-serif; src: url('./fonts/bree-serif.ttf'); font-display: swap; }
 @font-face { font-family: NK-bungee; src: url('./fonts/bungee.ttf'); font-display: swap; }
+@font-face { font-family: NK-bungee-inline; src: url('./fonts/bungee-inline.ttf'); font-display: swap; }
+@font-face { font-family: NK-bungee-shade; src: url('./fonts/bungee-shade.ttf'); font-display: swap; }
 @font-face { font-family: NK-butcherman; src: url('./fonts/butcherman.ttf'); font-display: swap; }
 @font-face { font-family: NK-caveat; src: url('./fonts/caveat.ttf'); font-display: swap; }
 @font-face { font-family: NK-chakra-petch; src: url('./fonts/chakra-petch.ttf'); font-display: swap; }
@@ -147,6 +149,7 @@
 @font-face { font-family: NK-satisfy; src: url('./fonts/satisfy.ttf'); font-display: swap; }
 @font-face { font-family: NK-schoolbell; src: url('./fonts/schoolbell.ttf'); font-display: swap; }
 @font-face { font-family: NK-share-tech-mono; src: url('./fonts/share-tech-mono.ttf'); font-display: swap; }
+@font-face { font-family: NK-shojumaru; src: url('./fonts/shojumaru.ttf'); font-display: swap; }
 @font-face { font-family: NK-shrikhand; src: url('./fonts/shrikhand.ttf'); font-display: swap; }
 @font-face { font-family: NK-sigmar-one; src: url('./fonts/sigmar-one.ttf'); font-display: swap; }
 @font-face { font-family: NK-silkscreen; src: url('./fonts/silkscreen.ttf'); font-display: swap; }
