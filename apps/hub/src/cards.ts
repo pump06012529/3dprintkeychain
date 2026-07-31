@@ -1,7 +1,6 @@
 // Card rendering — the same component for EVERY generator, external or internal.
 // The only difference is where the action button links to.
 
-import { BRAND } from '@vostok/brand';
 import { el } from '@vostok/ui-kit';
 import type { Generator, SellerTool } from './registry';
 
@@ -76,7 +75,7 @@ export function generatorCard(gen: Generator): HTMLElement {
     if (gen.route === 'mw' || gen.route === 'both') {
       const mwUrl = gen.mwUrl && !gen.mwUrl.startsWith('TODO')
         ? gen.mwUrl
-        : BRAND.urls.makerworld;
+        : 'https://makerworld.com';
       const btn = el('a', {
         className: `vl-btn ${gen.route === 'mw' ? 'vl-btn--primary' : 'vl-btn--secondary'} hub-card__action`,
         text: 'MakerWorld',
