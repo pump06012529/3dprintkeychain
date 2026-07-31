@@ -44,7 +44,7 @@ const curatedFonts = FONTS.filter((f) => f.curated);
 const state = {
   name: 'ชื่อ',
   secondLine: '',
-  font: 'luckiest-guy',
+  font: 'chonburi',
   layout: 'horizontal' as Layout,
   style: 'raised' as LetterStyle,
   plateShape: 'outline' as 'outline' | 'rectangle',
