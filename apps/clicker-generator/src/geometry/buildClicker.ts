@@ -801,7 +801,8 @@ export function buildClicker(
     colorRgb: RGB,
     name: string,
   ): ClickerPart {
-    const mesh = solid.getMesh();
+    const creasedSolid = track(solid.calculateNormals(0, 35));
+    const mesh = creasedSolid.getMesh();
     return {
       kind,
       group,

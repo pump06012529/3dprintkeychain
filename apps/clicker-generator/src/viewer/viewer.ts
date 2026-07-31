@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 import type { ClickerPart, MeshData, RGB, SwitchPlacement, ViewMode } from '../types';
 import { MAKERLAB } from 'virtual:makerlab';
@@ -46,24 +45,32 @@ const GRID_GAP = 1.0;
 function partToGeometry(p: ClickerPart): THREE.BufferGeometry {
   const geo = new THREE.BufferGeometry();
   let positions: Float32Array;
+  let normals: Float32Array | null = null;
   if (p.numProp === 3) {
     positions = p.vertProperties;
   } else {
     const count = p.vertProperties.length / p.numProp;
     positions = new Float32Array(count * 3);
+    if (p.numProp >= 6) normals = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       positions[i * 3] = p.vertProperties[i * p.numProp];
       positions[i * 3 + 1] = p.vertProperties[i * p.numProp + 1];
       positions[i * 3 + 2] = p.vertProperties[i * p.numProp + 2];
+      if (normals) {
+        normals[i * 3] = p.vertProperties[i * p.numProp + 3];
+        normals[i * 3 + 1] = p.vertProperties[i * p.numProp + 4];
+        normals[i * 3 + 2] = p.vertProperties[i * p.numProp + 5];
+      }
     }
   }
   geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  if (normals) {
+    geo.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+  } else {
+    geo.computeVertexNormals();
+  }
   geo.setIndex(new THREE.BufferAttribute(p.triVerts, 1));
-  // Crease-split normals: keep the domed top / round walls smooth while keeping
-  // hard edges crisp (preview shading only — matches the keycap generator).
-  const creased = toCreasedNormals(geo, (35 * Math.PI) / 180);
-  geo.dispose();
-  return creased;
+  return geo;
 }
 
 function color(rgb: RGB): THREE.Color {
