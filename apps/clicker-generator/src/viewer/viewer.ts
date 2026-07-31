@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 import type { ClickerPart, MeshData, RGB, SwitchPlacement, ViewMode } from '../types';
 import { MAKERLAB } from 'virtual:makerlab';
@@ -66,11 +67,15 @@ function partToGeometry(p: ClickerPart): THREE.BufferGeometry {
   geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   if (normals) {
     geo.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+    geo.setIndex(new THREE.BufferAttribute(p.triVerts, 1));
+    return geo;
   } else {
+    geo.setIndex(new THREE.BufferAttribute(p.triVerts, 1));
     geo.computeVertexNormals();
+    const creased = toCreasedNormals(geo, (35 * Math.PI) / 180);
+    geo.dispose();
+    return creased;
   }
-  geo.setIndex(new THREE.BufferAttribute(p.triVerts, 1));
-  return geo;
 }
 
 function color(rgb: RGB): THREE.Color {
