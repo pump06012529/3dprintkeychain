@@ -752,16 +752,6 @@ export function buildClicker(
     }
 
     return { parts, switchPlacements: applied, warnings };
-  } finally {
-    for (const o of trash) {
-      try {
-        o.delete();
-      } catch {
-        /* already freed */
-      }
-    }
-  }
-
   /** Apply fillet/chamfer edge modifications to the body solid.
    *  Targets: 'clickerBase' is the merged global control that bevels the body's top
    *  AND bottom edges together; 'baseTop'/'baseBottom' remain for older saved projects;
@@ -814,6 +804,15 @@ export function buildClicker(
       vertProperties: new Float32Array(mesh.vertProperties),
       triVerts: new Uint32Array(mesh.triVerts),
     };
+  }
+  } finally {
+    for (const o of trash) {
+      try {
+        o.delete();
+      } catch {
+        /* already freed */
+      }
+    }
   }
 }
 
