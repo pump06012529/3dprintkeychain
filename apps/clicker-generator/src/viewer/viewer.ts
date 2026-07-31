@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 import type { ClickerPart, MeshData, RGB, SwitchPlacement, ViewMode } from '../types';
 import { MAKERLAB } from 'virtual:makerlab';
@@ -58,8 +59,11 @@ function partToGeometry(p: ClickerPart): THREE.BufferGeometry {
   }
   geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geo.setIndex(new THREE.BufferAttribute(p.triVerts, 1));
-  geo.computeVertexNormals();
-  return geo;
+  // Crease-split normals: keep the domed top / round walls smooth while keeping
+  // hard edges crisp (preview shading only — matches the keycap generator).
+  const creased = toCreasedNormals(geo, (35 * Math.PI) / 180);
+  geo.dispose();
+  return creased;
 }
 
 function color(rgb: RGB): THREE.Color {
