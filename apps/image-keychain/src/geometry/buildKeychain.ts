@@ -240,8 +240,7 @@ export function buildKeychain(
       }
 
       p.regionProfiles.forEach((rp, i) => {
-        const regionBev = bevelExtrude(rp.cs, params.imageThickness, chamText, keep);
-        const regionSolid = keep(regionBev.translate([0, 0, p.letterZ]));
+        const regionSolid = keep(rp.cs.extrude(params.imageThickness).translate([0, 0, p.letterZ]));
         const isSingle = p.regionProfiles.length === 1;
         const name = isSingle ? 'image' : `image_${i}`;
         const color = isSingle ? hexToRgb(params.imageColor) : rp.quantRgb;

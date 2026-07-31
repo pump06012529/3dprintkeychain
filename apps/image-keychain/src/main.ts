@@ -339,7 +339,7 @@ const settings = el('div', { className: 'vl-section' }, [
   el('p', { className: 'vl-label', text: 'ขนาด' }),
   sizeSlider,
   outlineSlider,
-  boldnessSlider,
+  // boldnessSlider, // Hidden per user request
   colorBleedSlider,
   segmentedControl({
     label: 'รูปแบบ', value: state.style,
