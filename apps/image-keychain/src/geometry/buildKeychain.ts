@@ -140,7 +140,26 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
   const anchorDisc = keep(CrossSection.circle(anchorR, 16).translate([anchorX, anchorY]));
   const tabCS = keep(CrossSection.hull([lugDisc, anchorDisc]));
 
-  let plateBodySrc = glyphsCS;
+  const sectionIsEmpty = (cs: any) => cs.area() < 0.0001;
+  const removeHoles = (cs: any): any => {
+    if (sectionIsEmpty(cs)) return cs;
+    const rect = keep(CrossSection.square([1000, 1000], true));
+    const inverted = keep(rect.subtract(cs));
+    const islands = [...inverted.decompose()];
+    if (islands.length <= 1) return cs;
+    let maxArea = -1;
+    let outerSpace = islands[0];
+    for (let i = 0; i < islands.length; i++) {
+      const area = islands[i].area();
+      if (area > maxArea) {
+        maxArea = area;
+        outerSpace = islands[i];
+      }
+    }
+    return keep(rect.subtract(outerSpace));
+  };
+
+  let plateBodySrc = removeHoles(glyphsCS);
   if (params.plateShape === 'rectangle') {
     plateBodySrc = keep(CrossSection.square([gBox.maxX - gBox.minX, gBox.maxY - gBox.minY], true).translate([(gBox.minX + gBox.maxX)/2, (gBox.minY + gBox.maxY)/2]));
   }
