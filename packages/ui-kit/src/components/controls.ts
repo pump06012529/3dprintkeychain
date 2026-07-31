@@ -15,10 +15,23 @@ export interface ToggleOptions {
   help?: string;
 }
 
+export const globalControlResets: Array<() => void> = [];
+
+export function resetAllControls() {
+  for (const reset of globalControlResets) reset();
+}
+
 /** A labelled iOS-style switch (green when on). Returns the whole row. */
 export function toggleSwitch(opts: ToggleOptions): HTMLElement {
   const input = el('input', { attrs: { type: 'checkbox' } });
-  input.checked = opts.checked ?? false;
+  const initialValue = opts.checked ?? false;
+  input.checked = initialValue;
+
+  globalControlResets.push(() => {
+    input.checked = initialValue;
+    opts.onChange?.(initialValue);
+  });
+
   input.addEventListener('change', () => opts.onChange?.(input.checked));
 
   const label = el('span', { className: 'vl-switch-label', text: opts.label });
@@ -77,12 +90,16 @@ export function sliderRow(opts: SliderOptions): HTMLElement {
   valBox.value = fmt(opts.value);
 
   let current = opts.value;
+  const initialValue = opts.value;
+
   const commit = (v: number, syncRange = true) => {
     current = snap(v);
     if (syncRange) range.value = String(current);
     valBox.value = fmt(current);
     opts.onInput?.(current);
   };
+
+  globalControlResets.push(() => commit(initialValue));
 
   range.addEventListener('input', () => commit(Number(range.value), false));
   valBox.addEventListener('change', () => {
@@ -153,6 +170,11 @@ export function segmentedControl<T extends string = string>(
     root.append(btn);
   }
 
+  const initialValue = opts.value ?? opts.options[0]?.value;
+  globalControlResets.push(() => {
+    if (initialValue) buttons.get(initialValue)?.click();
+  });
+
   if (opts.label || opts.help) {
     const lab = el('span', { className: 'vl-control-label', text: opts.label ?? '' });
     if (opts.help) lab.append(helpTip(opts.help));
@@ -174,17 +196,25 @@ export interface SelectFieldOptions {
 
 /** Labelled dropdown, styled to match the app's fields. */
 export function selectField(opts: SelectFieldOptions): HTMLElement {
-  const select = el('select');
+  const sel = el('select', { attrs: { 'aria-label': opts.label } });
+  const initialValue = opts.value ?? opts.options[0]?.value;
+
   for (const o of opts.options) {
-    const option = el('option', { text: o.label, attrs: { value: o.value } });
-    if (o.value === opts.value) option.selected = true;
-    select.append(option);
+    const isSel = o.value === initialValue;
+    const optEl = el('option', { text: o.label, attrs: { value: o.value } }) as HTMLOptionElement;
+    if (isSel) optEl.selected = true;
+    sel.append(optEl);
   }
-  select.addEventListener('change', () => opts.onChange?.(select.value));
+
+  globalControlResets.push(() => {
+    sel.value = initialValue as string;
+    opts.onChange?.(initialValue as string);
+  });
+  sel.addEventListener('change', () => opts.onChange?.(sel.value));
 
   const label = el('label', { text: opts.label });
   if (opts.help) label.append(helpTip(opts.help));
-  return el('div', { className: 'vl-field' }, [label, select]);
+  return el('div', { className: 'vl-field' }, [label, sel]);
 }
 
 /* ---------------- Help tip ---------------- */

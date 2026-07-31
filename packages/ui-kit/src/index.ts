@@ -35,6 +35,8 @@ export {
   segmentedControl,
   selectField,
   helpTip,
+  resetAllControls,
+  globalControlResets,
   type ToggleOptions,
   type SliderOptions,
   type SegmentedOption,

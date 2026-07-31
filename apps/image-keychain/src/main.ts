@@ -13,7 +13,8 @@ import {
   qualityCallout,
   sidebarFooter,
   selectField,
-  appShell
+  appShell,
+  globalControlResets
 } from '@vostok/ui-kit';
 import { BRAND } from '@vostok/brand';
 import { createViewer } from './viewer/viewer';
@@ -236,6 +237,12 @@ const viewer = createViewer(stage);
 function colorField(label: string, value: string, onInput: (value: string) => void): HTMLElement {
   const input = el('input', { attrs: { type: 'color', value, 'aria-label': label } });
   input.addEventListener('input', () => onInput(input.value));
+  
+  globalControlResets.push(() => {
+    input.value = value;
+    onInput(value);
+  });
+
   return el('label', { className: 'nk-color' }, [el('span', { text: label }), input]);
 }
 

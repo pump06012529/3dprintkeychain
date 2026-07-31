@@ -1,6 +1,7 @@
 import { el } from '../dom';
 import { ICONS, svgEl } from '../icons';
 import { themeToggleButton } from './theme';
+import { resetAllControls } from './controls';
 
 /* Shared chrome for every Vostok generator so they all look the same: a header
    (name + description + "Made by Vostok Labs"), an optional dismissable quality
@@ -86,6 +87,8 @@ export interface ProjectActionsOptions {
   theme?: boolean;
   /** localStorage key for the theme toggle. */
   themeStorageKey?: string;
+  /** Custom reset logic (soft reset). Defaults to location.reload(). */
+  onReset?: () => void;
 }
 
 /**
@@ -104,7 +107,10 @@ export function projectActions(opts: ProjectActionsOptions): HTMLElement {
 
   const save = actionBtn('บันทึกโปรเจกต์', ICONS.save, () => opts.onSave());
   const load = actionBtn('โหลดโปรเจกต์', ICONS.load, () => fileInput.click());
-  const reset = actionBtn('เริ่มต้นใหม่', ICONS.rotateLeft, () => window.location.reload());
+  const reset = actionBtn('เริ่มต้นใหม่', ICONS.rotateLeft, () => {
+    if (opts.onReset) opts.onReset();
+    else resetAllControls();
+  });
 
   const row2: HTMLElement[] = [];
   if (opts.onHelp) row2.push(actionBtn('ช่วยเหลือ', ICONS.help, () => opts.onHelp!()));

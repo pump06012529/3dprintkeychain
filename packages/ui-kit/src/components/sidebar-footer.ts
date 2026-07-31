@@ -25,6 +25,8 @@ export interface SidebarFooterOptions {
   theme?: boolean;
   /** localStorage key for the theme toggle. */
   themeStorageKey?: string;
+  /** Custom reset logic (soft reset). Defaults to location.reload(). */
+  onReset?: () => void;
 
   /** Extra elements to append after the project actions (e.g. a share button). */
   extra?: HTMLElement[];
@@ -48,6 +50,7 @@ export function sidebarFooter(opts: SidebarFooterOptions): HTMLElement {
     onHelp: opts.onHelp,
     theme: opts.theme,
     themeStorageKey: opts.themeStorageKey,
+    onReset: opts.onReset,
   });
 
   const children: (HTMLElement | Node)[] = [ep, pa];
