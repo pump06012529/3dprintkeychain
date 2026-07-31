@@ -628,7 +628,7 @@ function openFontBrowser() {
       (!q || f.label.toLowerCase().includes(q) || f.category.toLowerCase().includes(q)),
     );
     if (!matches.length) {
-      list.append(el('p', { className: 'nk-fb__empty', text: `No fonts match “${search.trim()}”.` }));
+      list.append(el('p', { className: 'nk-fb__empty', text: `ไม่พบฟอนต์ที่ตรงกับ “${search.trim()}”` }));
       return;
     }
     const sample = sampleText();

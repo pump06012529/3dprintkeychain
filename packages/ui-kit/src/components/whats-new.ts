@@ -27,7 +27,7 @@ export function showWhatsNew(opts: WhatsNewOptions): { close(): void } {
   }
 
   const checkbox = el('input', { attrs: { type: 'checkbox' } });
-  const dismiss = el('label', { className: 'vl-dismiss' }, [checkbox, "Don't show again"]);
+  const dismiss = el('label', { className: 'vl-dismiss' }, [checkbox, "ไม่ต้องแสดงหน้านี้อีก"]);
 
   const overlay = el('div', { className: 'vl-overlay' });
   const handle = {
@@ -38,16 +38,16 @@ export function showWhatsNew(opts: WhatsNewOptions): { close(): void } {
     },
   };
 
-  const card = el('div', { className: 'vl-card', attrs: { role: 'dialog', 'aria-modal': 'true', 'aria-label': "What's new" } }, [
-    el('div', { className: 'vl-badge vl-badge--accent', text: "What's new" }),
-    el('h2', { text: opts.title ?? 'Latest updates ✨' }),
-    el('p', { text: opts.intro ?? 'A few improvements landed since your last visit:' }),
+  const card = el('div', { className: 'vl-card', attrs: { role: 'dialog', 'aria-modal': 'true', 'aria-label': "อัปเดตใหม่ล่าสุด" } }, [
+    el('div', { className: 'vl-badge vl-badge--accent', text: "มีอะไรใหม่บ้าง" }),
+    el('h2', { text: opts.title ?? 'อัปเดตล่าสุด ✨' }),
+    el('p', { text: opts.intro ?? 'นี่คือสิ่งที่เราเพิ่งปรับปรุงมาใหม่:' }),
     list,
     el('div', { className: 'vl-whatsnew-foot' }, [
       dismiss,
       el('button', {
         className: 'vl-btn vl-btn--primary',
-        text: 'Got it →',
+        text: 'รับทราบ →',
         on: { click: () => handle.close() },
       }),
     ]),

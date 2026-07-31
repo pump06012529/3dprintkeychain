@@ -170,13 +170,13 @@ const hexRgb = (hex: string): [number, number, number] => [
 
 // Friendly label for an edge target (global edge, body, cap frame, or a color part).
 const friendlyTargetLabel = (t: string): string => {
-  if (t === 'capTop') return 'Cap Top';
-  if (t === 'baseTop') return 'Base Top';
-  if (t === 'baseBottom') return 'Base Bottom';
-  if (t === 'base-body') return 'Body';
-  if (t === 'top-base') return 'Cap Frame';
+  if (t === 'capTop') return 'ขอบฝาปุ่ม';
+  if (t === 'baseTop') return 'ขอบฐานบน';
+  if (t === 'baseBottom') return 'ขอบฐานล่าง';
+  if (t === 'base-body') return 'ตัวฐาน';
+  if (t === 'top-base') return 'โครงฝาปุ่ม';
   const m = /^top-color-(\d+)-\d+$/.exec(t);
-  if (m) return `Color ${+m[1] + 1}`;
+  if (m) return `สี ${+m[1] + 1}`;
   return t;
 };
 
@@ -192,8 +192,8 @@ export function createUi(
     `<span class="help-tip" tabindex="0" role="img" aria-label="Help: ${text.replace(/"/g, '&quot;')}" data-tip="${text.replace(/"/g, '&quot;')}">?</span>`;
 
   const headerEl = generatorHeader({
-    title: 'Clicker Generator',
-    description: 'Generate printable 3D model of a clicker from an image',
+    title: 'เครื่องสร้างของเล่นปุ่มกด (Clicker Generator)',
+    description: 'สร้างของเล่นกดเล่น 3 มิติจากรูปภาพ เวกเตอร์ และข้อความ',
   });
 
   // The quality callout links to an external MakerWorld page — suppress when embedded
@@ -210,39 +210,39 @@ export function createUi(
   leftScroll.className = 'vl-panel__scroll';
   leftScroll.innerHTML = `
     <div class="section" id="previewViewSection">
-      <span class="label">Preview &amp; View</span>
+      <span class="label">มุมมอง & แสดงผล</span>
       <div class="tabs" id="viewTabs" role="tablist" style="margin-bottom: 12px;">
-        <button class="tab active" data-view="assembled" type="button">Assembled</button>
-        <button class="tab" data-view="exploded" type="button">Exploded</button>
+        <button class="tab active" data-view="assembled" type="button">ประกอบเสร็จ</button>
+        <button class="tab" data-view="exploded" type="button">แยกชิ้นส่วน</button>
       </div>
       <div class="switch-row">
-        <span class="switch-label">Show MX switch ${tip('Shows a reference MX switch in the preview so you can check the fit. It is not part of the exported model.')}</span>
+        <span class="switch-label">แสดงสวิตช์ MX ${tip('แสดงสวิตช์จำลองเพื่อให้คุณเห็นว่าตำแหน่งสวิตช์อยู่ตรงไหน (ไม่มีผลกับโมเดล 3D ที่จะส่งออก)')}</span>
         <label class="toggle"><input id="showswitch" type="checkbox" /><span class="slider"></span></label>
       </div>
     </div>
 
     <div class="section" id="baseStyleSection">
-      <span class="label">Base style ${tip('Outline follows your image silhouette. Shape places the image on a preset base such as a circle or square.')}</span>
+      <span class="label">รูปร่างฐานรอง ${tip('แบบ "ตามรูปทรง" จะอิงตามรูปภาพที่คุณเลือก, แบบ "กำหนดเอง" จะวางรูปลงบนรูปทรงเรขาคณิต')}</span>
       <div class="field">
         <div class="tabs" id="shapeTypeTabs" role="tablist" style="margin-bottom: 12px;">
-          <button class="tab" data-style="outline" type="button">Outline</button>
-          <button class="tab" data-style="shape" type="button">Shape</button>
+          <button class="tab" data-style="outline" type="button">ตามรูปทรง</button>
+          <button class="tab" data-style="shape" type="button">กำหนดเอง</button>
         </div>
       </div>
       <div class="field" id="shapeSelectField" style="margin-bottom: 12px;">
-        <label for="shapeSelect">Shape geometry ${tip('The preset base shape used when the Shape base style is selected.')}</label>
+        <label for="shapeSelect">รูปทรงฐานรอง ${tip('เลือกรูปทรงฐานรองที่คุณต้องการใช้งาน')}</label>
         <select id="shapeSelect">
-          <option value="circle">Circle</option>
-          <option value="square">Square</option>
-          <option value="hexagon">Hexagon</option>
-          <option value="heart">Heart</option>
-          <option value="star">Star</option>
-          <option value="egg">Egg</option>
+          <option value="circle">วงกลม</option>
+          <option value="square">สี่เหลี่ยม</option>
+          <option value="hexagon">หกเหลี่ยม</option>
+          <option value="heart">หัวใจ</option>
+          <option value="star">ดาว</option>
+          <option value="egg">ไข่</option>
         </select>
       </div>
       <div class="prow-stacked">
         <div class="prow-header">
-          <label for="width">Size ${tip('Overall size of the clicker (its longest side, in mm). This scales the whole model proportionally, not just the width.')}</label>
+          <label for="width">ขนาดความกว้าง ${tip('ขนาดของชิ้นงานโดยรวมด้านที่กว้างที่สุด (มิลลิเมตร)')}</label>
           <input type="text" class="val" id="widthVal" />
         </div>
         <input type="range" id="width" min="20" max="70" step="1" />
@@ -251,50 +251,50 @@ export function createUi(
 
     <div id="geometrySettingsContainer">
       <details class="section section-collapsible" id="sectionColors">
-        <summary class="label collapsible-head">1 · Colors &amp; Smoothing</summary>
+        <summary class="label collapsible-head">1 · สี &amp; ความโค้งมน</summary>
         <div class="collapsible-body">
         <div class="field" id="colorCountField">
-          <label for="ccount">Colors ${tip('How many distinct filament colors the image is split into. Each color becomes a separate part in the export.')}</label>
+          <label for="ccount">จำนวนสี ${tip('คุณต้องการให้รูปภาพนี้ถูกแบ่งออกเป็นกี่สี เพื่อแยกชิ้นพลาสติกแต่ละสี')}</label>
           <select id="ccount">
-            <option value="2">2 Colors</option>
-            <option value="3">3 Colors</option>
-            <option value="4">4 Colors</option>
-            <option value="5">5 Colors</option>
-            <option value="6">6 Colors</option>
-            <option value="7">7 Colors</option>
-            <option value="8">8 Colors</option>
-            <option value="9">9 Colors</option>
-            <option value="10">10 Colors</option>
-            <option value="11">11 Colors</option>
-            <option value="12">12 Colors</option>
+            <option value="2">2 สี</option>
+            <option value="3">3 สี</option>
+            <option value="4">4 สี</option>
+            <option value="5">5 สี</option>
+            <option value="6">6 สี</option>
+            <option value="7">7 สี</option>
+            <option value="8">8 สี</option>
+            <option value="9">9 สี</option>
+            <option value="10">10 สี</option>
+            <option value="11">11 สี</option>
+            <option value="12">12 สี</option>
           </select>
         </div>
         <div class="prow-stacked" id="smoothingField">
           <div class="prow-header">
-            <label for="smooth">Smoothing ${tip('Simplifies and smooths the traced outlines. Higher values give fewer, cleaner edges; lower keeps more fine detail.')}</label>
+            <label for="smooth">ความโค้งมน ${tip('ปรับให้เส้นขอบมีความเรียบเนียน ยิ่งค่ามากจะยิ่งทำให้ขอบมนลดรายละเอียดหยักๆ')}</label>
             <input type="text" class="val" id="smoothVal" />
           </div>
           <input type="range" id="smooth" min="0" max="1" step="0.05" />
         </div>
         <div class="palette" id="palette">
-          <div class="hint">Load an image/vector to pick colors.</div>
+          <div class="hint">อัปโหลดรูปภาพเพื่อเลือกสี</div>
         </div>
         </div>
       </details>
 
       <details class="section section-collapsible" id="sectionShape">
-        <summary class="label collapsible-head">2 · More Settings</summary>
+        <summary class="label collapsible-head">2 · ตั้งค่าเพิ่มเติม</summary>
         <div class="collapsible-body">
         <div class="keychain-panel" style="margin-bottom: 16px;">
           <div class="switch-row" style="margin-bottom: 12px;">
-            <span class="switch-label">Keychain ${tip('Adds a keyring attachment to the body so you can clip the clicker to a keychain.')}</span>
+            <span class="switch-label">ห่วงพวงกุญแจ ${tip('เพิ่มห่วงที่ขอบชิ้นงานสำหรับร้อยพวงกุญแจ')}</span>
             <label class="toggle"><input id="keychain" type="checkbox" /><span class="slider"></span></label>
           </div>
           <div id="keychainOpts" style="display:none;">
 
             <div class="prow-stacked">
               <div class="prow-header">
-                <label>Position ${tip('Slides the keychain attachment around the edge of the body.')}</label>
+                <label>หมุนตำแหน่ง ${tip('หมุนห่วงพวงกุญแจไปรอบๆ ตัวชิ้นงาน')}</label>
               </div>
               <div class="tol-stepper" id="keychainRotStepper">
                 <button class="btn" id="keychainRotMinus" type="button" aria-label="Rotate counter-clockwise">⟲</button>
@@ -304,7 +304,7 @@ export function createUi(
             </div>
             <div class="prow-stacked">
               <div class="prow-header">
-                <label>Slide offset ${tip('Slides the keychain along the tangent of the body edge (fine-tuning).')}</label>
+                <label>เลื่อนชดเชย ${tip('เลื่อนห่วงไปตามขอบแบบละเอียด')}</label>
               </div>
               <div class="tol-stepper" id="keychainOffsetStepper">
                 <button class="btn" id="keychainOffsetMinus" type="button" aria-label="Slide left">−</button>
@@ -314,7 +314,7 @@ export function createUi(
             </div>
             <div class="prow-stacked">
               <div class="prow-header">
-                <label>Hole size ${tip('Diameter of the ring hole — size it for a keyring, cord, or carabiner.')}</label>
+                <label>ขนาดรูพวงกุญแจ ${tip('เส้นผ่านศูนย์กลางของรูเจาะ')}</label>
               </div>
               <div class="tol-stepper" id="keychainSizeStepper">
                 <button class="btn" id="keychainSizeMinus" type="button" aria-label="Smaller hole">−</button>
@@ -326,13 +326,13 @@ export function createUi(
         </div>
 
         <div class="global-edges" id="globalEdges" style="display:none; margin-bottom: 16px;">
-          <span class="gedge-heading">Edges ${tip('Round (fillet) or bevel (chamfer) the outer edges. “Cap top” shapes the keycap’s top rim. “Clicker base” shapes the body’s top and bottom edges together.')}</span>
+          <span class="gedge-heading">ลบมุมขอบ ${tip('ทำขอบชิ้นงานให้มน (Fillet) หรือปาดเหลี่ยม (Chamfer)')}</span>
           <div class="gedge-row">
-            <span class="gedge-name">Cap top</span>
+            <span class="gedge-name">ขอบฝาปุ่ม</span>
             <div class="edge-style-btns" data-edge="capTop">
-              <button class="edge-style-btn active" data-style="none" type="button">None</button>
-              <button class="edge-style-btn" data-style="fillet" type="button">Fillet</button>
-              <button class="edge-style-btn" data-style="chamfer" type="button">Chamfer</button>
+              <button class="edge-style-btn active" data-style="none" type="button">ไม่ตัด</button>
+              <button class="edge-style-btn" data-style="fillet" type="button">โค้งมน</button>
+              <button class="edge-style-btn" data-style="chamfer" type="button">ปาดเหลี่ยม</button>
             </div>
             <div class="edge-size-btns gedge-size" data-edge="capTop" style="display:none;">
               <button class="btn edge-size-minus" type="button">−</button>
@@ -341,11 +341,11 @@ export function createUi(
             </div>
           </div>
           <div class="gedge-row">
-            <span class="gedge-name">Clicker base</span>
+            <span class="gedge-name">ขอบฐานของเล่น</span>
             <div class="edge-style-btns" data-edge="clickerBase">
-              <button class="edge-style-btn active" data-style="none" type="button">None</button>
-              <button class="edge-style-btn" data-style="fillet" type="button">Fillet</button>
-              <button class="edge-style-btn" data-style="chamfer" type="button">Chamfer</button>
+              <button class="edge-style-btn active" data-style="none" type="button">ไม่ตัด</button>
+              <button class="edge-style-btn" data-style="fillet" type="button">โค้งมน</button>
+              <button class="edge-style-btn" data-style="chamfer" type="button">ปาดเหลี่ยม</button>
             </div>
             <div class="edge-size-btns gedge-size" data-edge="clickerBase" style="display:none;">
               <button class="btn edge-size-minus" type="button">−</button>
@@ -357,21 +357,21 @@ export function createUi(
 
         <div class="prow-stacked">
           <div class="prow-header">
-            <label for="topthick">Top thickness ${tip('Thickness of the solid top layer beneath the colored image, in mm.')}</label>
+            <label for="topthick">ความหนาชั้นบนสุด ${tip('ความหนาของแผ่นแข็งด้านบนที่มีลวดลายสี')}</label>
             <input type="text" class="val" id="topthickVal" />
           </div>
           <input type="range" id="topthick" min="1" max="4" step="0.1" />
         </div>
         <div class="prow-stacked">
           <div class="prow-header">
-            <label for="imgdepth">Image depth ${tip('How far the colored image is raised into the top surface, in mm.')}</label>
+            <label for="imgdepth">ความลึกรูปภาพ ${tip('ระยะเจาะลึกของสีแต่ละชั้นเข้าไปในพลาสติก')}</label>
             <input type="text" class="val" id="imgdepthVal" />
           </div>
           <input type="range" id="imgdepth" min="0.2" max="3" step="0.1" />
         </div>
         <div class="prow-stacked">
           <div class="prow-header">
-            <label>Switch socket tolerance ${tip('Clearance between the top part and the base it presses into. Press + if the two halves are hard to fit together, − if they feel loose. 0 = default fit.')}</label>
+            <label>ค่าความหลวม/แน่น ของสวิตช์ซ็อกเก็ต ${tip('ปรับให้คลิกเกอร์หลวมหรือแน่น หากประกบยากให้กด + หากหลวมไปให้กด - (0 คือค่าแนะนำ)')}</label>
           </div>
           <div class="tol-stepper" id="socketTolStepper">
             <button class="btn" id="socketTolMinus" type="button" aria-label="Tighter fit">−</button>
@@ -381,7 +381,7 @@ export function createUi(
         </div>
         <div class="prow-stacked">
           <div class="prow-header">
-            <label>Switch stem (top part) tolerance ${tip('Scales the stem under the top part that grips your MX switch. If the stem is too tight to push onto the switch, press + to loosen it; press − for a firmer grip. Adjusts in 0.2 mm steps.')}</label>
+            <label>ค่าความหลวม/แน่น แกนสวิตช์ (ด้านบน) ${tip('หากกดแกนเข้ากับสวิตช์คีย์บอร์ดได้ยากให้กด + หากหลวมไปให้กด -')}</label>
           </div>
           <div class="tol-stepper" id="stemTolStepper">
             <button class="btn" id="stemTolMinus" type="button" aria-label="Tighter stem">−</button>
@@ -393,10 +393,10 @@ export function createUi(
       </details>
 
       <details class="section section-collapsible" id="sectionSwitch">
-        <summary class="label collapsible-head">3 · Switch</summary>
+        <summary class="label collapsible-head">3 · สวิตช์</summary>
         <div class="collapsible-body">
         <div class="field" style="margin-bottom:10px;">
-          <label>Switches ${tip('Use 1–3 MX switches for larger or wider designs — more click points and stability. Each switch can be moved and rotated individually.')}</label>
+          <label>จำนวนสวิตช์ ${tip('เลือกว่าต้องการใส่สวิตช์ MX กี่อัน เหมาะกับของเล่นชิ้นใหญ่')}</label>
           <div class="tabs" id="switchCount" role="tablist">
             <button class="tab active" data-count="1" type="button">1</button>
             <button class="tab" data-count="2" type="button">2</button>
@@ -404,7 +404,7 @@ export function createUi(
           </div>
         </div>
         <div class="tabs" id="switchChips" role="tablist" style="display:none; margin-bottom:10px;"></div>
-        <p class="switch-pad-hint">Move &amp; rotate the MX switch ${tip('Slide and rotate the selected MX switch away from the design centre. Handy when a switch doesn\'t sit neatly in the centre of your design.')}</p>
+        <p class="switch-pad-hint">เลื่อนและหมุนสวิตช์ ${tip('ใช้ลูกศรด้านล่างเพื่อขยับตำแหน่งสวิตช์คีย์บอร์ดที่ซ่อนอยู่ข้างใน')}</p>
         <div class="switch-pad" id="switchPad">
           <button type="button" class="switch-pad-btn pad-rotl" data-rot="3" aria-label="Rotate switch left" title="Rotate left">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -428,8 +428,8 @@ export function createUi(
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
           </button>
         </div>
-        <div class="switch-pad-readout" id="switchReadout">Centered</div>
-        <button class="secondary" id="switchResetAll" type="button" style="display:none; width:100%; margin-top:8px;">Reset all switches</button>
+        <div class="switch-pad-readout" id="switchReadout">ตรงกลางพอดี</div>
+        <button class="secondary" id="switchResetAll" type="button" style="display:none; width:100%; margin-top:8px;">รีเซ็ตสวิตช์ทั้งหมด</button>
         </div>
       </details>
     </div>
@@ -471,7 +471,7 @@ export function createUi(
   rightScroll.className = 'vl-panel__scroll';
   rightScroll.innerHTML = `
     <div class="section" id="importSourceSection">
-      <span class="label">Import Source ${tip('Switch between raster image, SVG vector, built-in icon, or custom text to create your clicker.')}</span>
+      <span class="label">เลือกรูปแบบ ${tip('สลับเลือกระหว่าง รูปภาพ (Image), เวกเตอร์ (SVG), ไอคอนที่มีให้ หรือพิมพ์ข้อความ (Text) เพื่อสร้างโมเดลของคุณ')}</span>
       <div class="import-grid" id="importTabs">
         <button class="import-card active" data-mode="image" type="button">
           <span class="card-icon">
@@ -481,7 +481,7 @@ export function createUi(
               <polyline points="21 15 16 10 5 21"/>
             </svg>
           </span>
-          <span class="card-label">Image</span>
+          <span class="card-label">รูปภาพ</span>
         </button>
         <button class="import-card" data-mode="svg" type="button">
           <span class="card-icon">
@@ -491,7 +491,7 @@ export function createUi(
               <line x1="12" y1="22.08" x2="12" y2="12"/>
             </svg>
           </span>
-          <span class="card-label">SVG</span>
+          <span class="card-label">เวกเตอร์ (SVG)</span>
         </button>
         <button class="import-card" data-mode="icon" type="button">
           <span class="card-icon">
@@ -502,7 +502,7 @@ export function createUi(
               <line x1="15" y1="9" x2="15.01" y2="9"/>
             </svg>
           </span>
-          <span class="card-label">Icon</span>
+          <span class="card-label">ไอคอน</span>
         </button>
         <button class="import-card" data-mode="text" type="button">
           <span class="card-icon">
@@ -512,7 +512,7 @@ export function createUi(
               <line x1="12" y1="4" x2="12" y2="20"/>
             </svg>
           </span>
-          <span class="card-label">Text</span>
+          <span class="card-label">ข้อความ</span>
         </button>
       </div>
 
@@ -524,16 +524,16 @@ export function createUi(
             <polyline points="17 8 12 3 7 8"/>
             <line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
-          <div class="drop-title">Upload image</div>
-          <div class="drop-text">Drop an image, or <u>click to browse</u></div>
-          <span style="font-size:10px; opacity:0.8; display:block; margin-top:4px;">PNG with transparency works best</span>
+          <div class="drop-title">อัปโหลดรูปภาพ</div>
+          <div class="drop-text">ลากไฟล์มาวาง หรือ <u>คลิกเพื่อเลือกไฟล์</u></div>
+          <span style="font-size:10px; opacity:0.8; display:block; margin-top:4px;">แนะนำให้ใช้ภาพ PNG พื้นหลังโปร่งใส</span>
         </div>
         <input type="file" id="file" accept="image/*" hidden />
         <div class="switch-row">
-          <span class="switch-label">Remove background ${tip('Automatically removes a solid or near-uniform background from the uploaded image so only the subject is traced.')}</span>
+          <span class="switch-label">ลบพื้นหลังอัจฉริยะ ${tip('ลบพื้นหลังสีพื้นออกอัตโนมัติ เพื่อให้เหลือเฉพาะตัวแบบของรูปภาพ')}</span>
           <label class="toggle"><input id="removebg" type="checkbox" /><span class="slider"></span></label>
         </div>
-        <span class="sample-heading">Choose a sample image</span>
+        <span class="sample-heading">หรือเลือกรูปภาพตัวอย่างด้านล่าง</span>
         <div class="sample-inline-grid" id="sampleGrid">
           ${SAMPLES.map((s, idx) => `
             <div class="sample-inline-item" data-idx="${idx}">
@@ -547,16 +547,16 @@ export function createUi(
       <!-- SVG Panel -->
       <div id="svgPanel" class="mode-panel" hidden>
         <p class="hint-text">
-          Drop or upload SVG vector files. Color paths will map to filament slots.
+          ลากไฟล์มาวาง หรืออัปโหลดไฟล์เวกเตอร์ SVG เข้ามา สีแต่ละชั้นจะแยกเป็นสีเส้นพลาสติก
         </p>
         <div id="uploadGallery"></div>
         <label class="upload-cta">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Upload SVG file(s)
+          อัปโหลดไฟล์ SVG
           <input id="svgUpload" type="file" accept=".svg,image/svg+xml" multiple />
         </label>
         <div class="switch-row">
-          <span class="switch-label">Remove background ${tip('Drops a solid rectangle painted behind the artwork so only the logo is kept. Turn off to keep the SVG background.')}</span>
+          <span class="switch-label">ลบกรอบพื้นหลังออก ${tip('หากมีสีพื้นสี่เหลี่ยมรองหลังโลโก้ ระบบจะตัดออกให้อัตโนมัติ ปิดอันนี้หากต้องการคงไว้')}</span>
           <label class="toggle"><input id="removebgSvg" type="checkbox" /><span class="slider"></span></label>
         </div>
       </div>
@@ -564,7 +564,7 @@ export function createUi(
       <!-- Icon Panel -->
       <div id="iconPanel" class="mode-panel" hidden>
         <div id="iconSearchWrap">
-          <input id="iconSearch" type="search" placeholder="Search Lucide icons…" autocomplete="off" spellcheck="false" />
+          <input id="iconSearch" type="search" placeholder="ค้นหาไอคอน (ภาษาอังกฤษ)…" autocomplete="off" spellcheck="false" />
           <button id="iconSearchClear" type="button" aria-label="Clear search">×</button>
         </div>
         <div id="iconCount"></div>
@@ -574,14 +574,14 @@ export function createUi(
       <!-- Text Panel -->
       <div id="letterPanel" class="mode-panel" hidden>
         <div class="field">
-          <label for="letterText">Custom Text</label>
-          <textarea id="letterText" rows="2" maxlength="30" autocomplete="off" spellcheck="false" style="width: 100%; resize: vertical; min-height: 48px;">Custom\nText</textarea>
+          <label for="letterText">พิมพ์ข้อความ</label>
+          <textarea id="letterText" rows="2" maxlength="30" autocomplete="off" spellcheck="false" style="width: 100%; resize: vertical; min-height: 48px;">ข้อความ</textarea>
         </div>
         <div class="field">
-          <label>Font</label>
+          <label>ฟอนต์</label>
           <div id="fontGrid" class="font-grid"></div>
           <label class="upload">
-            + Import font
+            + นำเข้าฟอนต์ของคุณเอง
             <input id="fontUpload" type="file" accept=".ttf,.otf,.json,font/ttf,font/otf,application/json" />
           </label>
         </div>
@@ -709,7 +709,7 @@ export function createUi(
     if (empty && !uploadEmptyEl) {
       uploadEmptyEl = document.createElement('div');
       uploadEmptyEl.id = 'uploadGalleryEmpty';
-      uploadEmptyEl.textContent = 'No SVGs yet. Drop files or use the upload button.';
+      uploadEmptyEl.textContent = 'ยังไม่มีไฟล์ SVG ลากไฟล์มาวางที่นี่หรือกดปุ่มอัปโหลด';
       uploadGalleryEl.appendChild(uploadEmptyEl);
     } else if (!empty && uploadEmptyEl) {
       uploadEmptyEl.remove();
@@ -1322,73 +1322,73 @@ export function createUi(
     {
       focus: 'right',
       target: '#importTabs',
-      title: 'Import Source',
-      text: 'Choose how to generate your 3D clicker model. You can upload any custom <strong>Image</strong> (PNG with transparency works best), choose from <strong>1700+ vector icons</strong>, import custom <strong>SVG</strong> files, or enter your own custom <strong>Text</strong>.',
+      title: 'เลือกรูปแบบการนำเข้า',
+      text: 'เลือกวิธีสร้างโมเดล Clicker ของคุณ โดยสามารถอัปโหลด <strong>รูปภาพ</strong> (แนะนำ PNG พื้นโปร่งใส), เลือก <strong>เวกเตอร์ไอคอน</strong> กว่า 1700+ แบบ, อัปโหลดไฟล์ <strong>SVG</strong> หรือพิมพ์ <strong>ข้อความ</strong> ของคุณเองได้',
       arrow: 'right'
     },
     {
       focus: 'right',
       target: '#export',
-      title: 'Export 3MF Model',
-      text: 'Once you are satisfied with your clicker design, click here to download the high-quality, print-ready <strong>3MF file</strong>. 3MF is the modern standard format which contains multi-color data, ready to open directly in your favorite slicer (such as Bambu Studio, OrcaSlicer, or PrusaSlicer).',
+      title: 'ส่งออกโมเดล 3MF',
+      text: 'เมื่อคุณพอใจกับแบบแล้ว คลิกที่นี่เพื่อดาวน์โหลดไฟล์ <strong>3MF</strong> สำหรับนำไปเปิดในโปรแกรม Slicer (เช่น Bambu Studio, OrcaSlicer) เพื่อสั่งพิมพ์ได้ทันที',
       arrow: 'right'
     },
     {
       focus: 'right',
       target: '#projectSettingsContainer',
-      title: 'Project Settings',
-      text: 'Save your work-in-progress clicker as a <code>.json</code> file to resume editing later, load previous projects, toggle between dark and light themes, or access this help guide.',
+      title: 'การตั้งค่าโปรเจกต์',
+      text: 'บันทึกงานของคุณเป็นไฟล์ <code>.json</code> เพื่อกลับมาทำต่อภายหลังได้ รวมถึงสลับธีมสว่าง/มืด และเปิดดูคำแนะนำการใช้งานนี้ได้ตลอด',
       arrow: 'right'
     },
     {
       focus: 'center',
       target: '#app',
-      title: '3D Preview Viewport',
-      text: 'This is where you can preview your design in 3D. Tip: <strong>Left-click & drag</strong> to orbit, <strong>Right-click & drag</strong> to pan, and <strong>Scroll</strong> to zoom.',
+      title: 'หน้าจอแสดงผล 3 มิติ',
+      text: 'นี่คือพื้นที่สำหรับดูตัวอย่างโมเดล 3 มิติ เคล็ดลับ: <strong>คลิกซ้ายค้างแล้วลาก</strong> เพื่อหมุน, <strong>คลิกขวาค้างแล้วลาก</strong> เพื่อเลื่อน และ <strong>เลื่อนลูกกลิ้งเมาส์</strong> เพื่อซูม',
       arrow: 'none',
       cardPosition: 'left'
     },
     {
       focus: 'center',
       target: '#editModeBar',
-      title: 'Paint & Height Modes',
-      text: 'Switch between <strong>Color Mode</strong> (paint individual segments with different filament colors) and <strong>Extrude Mode</strong> (raise parts of the design, adjust their thickness and height, and chamfer the raised edges). Working with custom <strong>Text</strong>? Toggle <strong>Separate letters</strong> here to color or extrude each letter on its own.',
+      title: 'โหมดลงสี & ปรับความสูง',
+      text: 'สลับระหว่าง <strong>โหมดสี (Color)</strong> (เพื่อทาสีพลาสติกแต่ละส่วน) และ <strong>โหมดความสูง (Extrude)</strong> (เพื่อดึงให้ส่วนที่ต้องการนูนขึ้นหรือเว้าลง) หากใช้ <strong>ข้อความ</strong> สามารถเปิด <strong>แยกตัวอักษร</strong> เพื่อปรับแต่งทีละตัวได้',
       arrow: 'up',
       cardPosition: 'left'
     },
     {
       focus: 'left',
       target: '#previewViewSection',
-      title: 'Assembly Preview',
-      text: 'Preview your model in an <strong>Assembled</strong> state or view it <strong>Exploded</strong> to see how all the 3D-printable parts fit together. You can also show a reference mechanical keyboard MX switch to check fitment.',
+      title: 'ตัวอย่างการประกอบ',
+      text: 'ดูตัวอย่างโมเดลแบบ <strong>ประกอบเข้าด้วยกัน (Assembled)</strong> หรือ <strong>แยกชิ้นส่วน (Exploded)</strong> เพื่อดูวิธีการประกอบ คุณยังสามารถเปิดดูสวิตช์คีย์บอร์ดจำลองได้ด้วย',
       arrow: 'left'
     },
     {
       focus: 'left',
       target: '#baseStyleSection',
-      title: 'Base Outline Shape',
-      text: 'Select the overall base shape for your clicker. You can choose a <strong>Custom Outline</strong> (which matches your imported graphic\'s boundaries), or standard geometries like a <strong>Circle</strong> or <strong>Hexagon</strong>. You can also scale the overall size here.',
+      title: 'รูปร่างฐานรอง',
+      text: 'เลือกรูปทรงฐานสำหรับโมเดลของคุณ ไม่ว่าจะเป็น <strong>ตามรูปทรง (Custom)</strong> หรือทรงมาตรฐานอย่าง <strong>วงกลม</strong> หรือ <strong>หกเหลี่ยม</strong> และยังปรับขนาดความใหญ่ได้ที่นี่',
       arrow: 'left'
     },
     {
       focus: 'left',
       target: '#geometrySettingsContainer',
-      title: 'Geometry & Style Settings',
-      text: 'Fine-tune your model in collapsible sections. <strong>1 · Colors &amp; Smoothing</strong> picks filament colors and smooths the outline. <strong>2 · More Settings</strong> adds a keychain loop, changes thicknesses, and dials in the <strong>switch socket &amp; stem fit tolerances</strong> that control how tightly the top and bottom parts clip together.',
+      title: 'ตั้งค่าสี & สไตล์',
+      text: 'ปรับแต่งรายละเอียดเพิ่มเติม: <strong>1 · สี & ความโค้งมน</strong> สำหรับเลือกสีและปรับขอบมน, <strong>2 · ตั้งค่าเพิ่มเติม</strong> เพื่อเพิ่มห่วงพวงกุญแจ ปรับความหนา และตั้งค่า <strong>ความหลวม/แน่น ของสวิตช์</strong>',
       arrow: 'left'
     },
     {
       focus: 'left',
       target: '#sectionSwitch',
-      title: 'Position the Switch',
-      text: 'Open the <strong>3 · Switch</strong> section to <strong>move and rotate</strong> the MX switch. Handy when the switch doesn\'t sit neatly in the centre of your design.',
+      title: 'ตำแหน่งสวิตช์คีย์บอร์ด',
+      text: 'เปิดเมนู <strong>3 · สวิตช์</strong> เพื่อเลื่อนและหมุนตำแหน่งของสวิตช์คีย์บอร์ดให้ตรงกับจุดที่ต้องการกดมากที่สุด',
       arrow: 'left'
     },
     {
       focus: 'left',
       target: '#historyControls',
-      title: 'Undo, Redo & Refresh',
-      text: 'Use these buttons to easily undo or redo your design steps, or refresh the model to its original state.',
+      title: 'ย้อนกลับ, ทำซ้ำ & เริ่มใหม่',
+      text: 'ใช้ปุ่มเหล่านี้เพื่อย้อนกลับ (Undo) ทำซ้ำ (Redo) หรือรีเฟรชกลับไปค่าเริ่มต้นของโมเดล',
       arrow: 'left'
     }
   ];

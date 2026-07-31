@@ -1,7 +1,4 @@
-import { BRAND } from '@vostok/brand';
 import { el } from '../dom';
-
-const fmt = (n: number) => `$${n.toLocaleString('en-US')}`;
 
 export interface LicenseModalOptions {
   /** Green pill text at the top, e.g. '✓ Download started'. Pass null to hide. */
@@ -13,55 +10,33 @@ export interface LicenseModalOptions {
  *  green badge → "Free for personal use 🎉" → CC line → red commercial focal
  *  box (subscription CTA + lifetime alternative) → blue full-width "Got it". */
 export function openLicenseModal(opts: LicenseModalOptions = {}): { close(): void } {
-  const s = BRAND.pricing.subscription;
-  const l = BRAND.pricing.lifetime;
   const previouslyFocused =
     document.activeElement instanceof HTMLElement ? document.activeElement : null;
 
   const ccLine = el('p');
   ccLine.append(
-    'Free for personal use — print as many as you like for yourself. Selling prints requires a commercial license (below).',
+    'เครื่องมือนี้สร้างขึ้นเพื่อให้คุณครู นักเรียน และบุคลากรทางการศึกษาใช้งานได้ฟรี',
   );
 
   const commercialTitle = el('div', { className: 'vl-commercial-title' });
   commercialTitle.append(
-    '💰 Want to ',
-    el('span', { className: 'vl-sell', text: 'sell' }),
-    ' your prints?',
+    '🎓 สนับสนุนโดย ',
+    el('span', { className: 'vl-sell', text: 'Edu Labs' })
   );
 
   const commercialBody = el('p');
   commercialBody.append(
-    'If you plan to sell these as 3D-printed products, you need a ',
-    el('strong', { text: 'commercial license membership' }),
-    ', just ',
-    el('span', { className: 'vl-price', text: `${fmt(s.month)} / month` }),
-    ` (or ${fmt(s.quarter)}/quarter, ${fmt(s.year)}/year), and it unlocks full commercial rights to ${s.covers}.`,
-  );
-
-  const lifetimeLine = el('p', { className: 'vl-commercial-alt' });
-  lifetimeLine.append(
-    `Prefer to own it outright? Lifetime license from ${fmt(l.one)} one-time, `,
-    el('a', {
-      text: 'get in touch',
-      attrs: { href: BRAND.urls.kofi, target: '_blank', rel: 'noopener noreferrer' },
-    }),
-    '.',
+    'คุณสามารถนำโมเดล 3 มิติไปพิมพ์เพื่อเป็นสื่อการเรียนการสอน ของเล่น หรือโครงงานวิทยาศาสตร์ได้อย่างอิสระโดย ',
+    el('strong', { text: 'ไม่มีค่าใช้จ่ายใดๆ ทั้งสิ้น' })
   );
 
   const card = el('div', { className: 'vl-card', attrs: { role: 'dialog', 'aria-modal': 'true', 'aria-label': 'License' } }, [
-    ...(opts.badge === null ? [] : [el('div', { className: 'vl-badge', text: opts.badge ?? '✓ Download started' })]),
-    el('h2', { text: 'Free for personal use \u{1F389}' }),
+    ...(opts.badge === null ? [] : [el('div', { className: 'vl-badge', text: opts.badge ?? '✓ เริ่มการดาวน์โหลดแล้ว' })]),
+    el('h2', { text: 'ฟรีเพื่อการศึกษา \u{1F389}' }),
     ccLine,
     el('div', { className: 'vl-commercial' }, [
       commercialTitle,
-      commercialBody,
-      el('a', {
-        className: 'vl-commercial-cta',
-        text: 'Get the commercial license →',
-        attrs: { href: BRAND.urls.mwCommercial, target: '_blank', rel: 'noopener noreferrer' },
-      }),
-      lifetimeLine,
+      commercialBody
     ]),
   ]);
 
@@ -78,7 +53,7 @@ export function openLicenseModal(opts: LicenseModalOptions = {}): { close(): voi
   card.append(
     el('button', {
       className: 'vl-btn vl-btn--primary vl-btn--block',
-      text: 'Got it',
+      text: 'เข้าใจแล้ว',
       on: { click: () => handle.close() },
     }),
   );
@@ -99,13 +74,10 @@ export function openLicenseModal(opts: LicenseModalOptions = {}): { close(): voi
 /** Corner reminder for subsequent downloads (red-bordered card, top right),
  *  the clicker's lighter-touch nudge after the first full modal. */
 export function licenseReminderToast(): { close(): void } {
-  const s = BRAND.pricing.subscription;
-
   const body = el('p');
   body.append(
-    'Selling these prints requires a ',
-    el('strong', { text: 'commercial license' }),
-    `. ${fmt(s.month)}/month covers ${s.covers}.`,
+    'เครื่องมือทั้งหมดฟรีเพื่อการศึกษา ',
+    el('strong', { text: 'สนับสนุนโดย Edu Labs' })
   );
 
   const closeBtn = el('button', {
@@ -116,13 +88,8 @@ export function licenseReminderToast(): { close(): void } {
 
   const toastCard = el('div', { className: 'vl-license-toast', attrs: { role: 'status' } }, [
     closeBtn,
-    el('div', { className: 'vl-license-toast-title', text: '✓ Download started' }),
-    body,
-    el('a', {
-      className: 'vl-commercial-cta',
-      text: 'Get the license →',
-      attrs: { href: BRAND.urls.mwCommercial, target: '_blank', rel: 'noopener noreferrer' },
-    }),
+    el('div', { className: 'vl-license-toast-title', text: '✓ เริ่มการดาวน์โหลดแล้ว' }),
+    body
   ]);
 
   const handle = { close: () => toastCard.remove() };
@@ -139,15 +106,9 @@ export interface LicenseNudgeOptions {
 
 /** Inline hint for export paths, free tier line + link to open the full modal. */
 export function licenseNudge(opts: LicenseNudgeOptions = {}): HTMLElement {
-  const name = opts.generatorName ?? 'This generator';
+  const name = opts.generatorName ?? 'แอปนี้';
   const hint = el('p', { className: 'vl-hint' });
-  const link = el('button', {
-    className: 'vl-link',
-    text: 'Get a commercial license',
-    attrs: { type: 'button' },
-    on: { click: () => openCommercialModal() },
-  });
-  hint.append(`${name} is free for personal use. Selling prints? `, link, '.');
+  hint.append(`${name} ใช้งานได้ฟรีเพื่อการศึกษา ไม่มีค่าใช้จ่ายแอบแฝง!`);
   return hint;
 }
 
