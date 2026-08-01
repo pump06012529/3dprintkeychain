@@ -52,8 +52,7 @@ export function buildClicker(
   };
 
   // --- Switch assets: drive the Z stack AND the minimum cap size ---
-  try {
-    const socketBB = socket.boundingBox();
+  const socketBB = socket.boundingBox();
   const stemBB = stem.boundingBox();
   const socketDim = Math.max(
     socketBB.max[0] - socketBB.min[0],
@@ -281,7 +280,7 @@ export function buildClicker(
     // Then simplify: the round closing fills perimeter arcs with hundreds of points
     // that every later op would carry — collapse them to a print-invisible tolerance.
     const smoothingRadius = 4.0;
-    plate = simp(track(solidPlate.offset(smoothingRadius, 'Round', 2.0, 24).offset(-smoothingRadius, 'Round', 2.0, 24)), 0.1);
+    plate = simp(track(solidPlate.offset(smoothingRadius, 'Round', 2.0, 24).offset(-smoothingRadius, 'Round', 2.0, 24)), 0.05);
   } else {
     // The geometric shapes scale linearly with their radius, so rather than guessing
     // a circumscribing radius (which clips the image on concave shapes like the star
@@ -415,9 +414,8 @@ export function buildClicker(
     );
     wellFp = track(wellFp.add(col));
   }
-  // 1. Cup Wall & Floor
-  const wellFootprint = simp(wellFp, 0.1);
-  const bodyFootprint = simp(grow(wellFootprint, Math.max(0.4, params.borderWidth)), 0.1);
+  const wellFootprint = simp(wellFp);
+  const bodyFootprint = simp(grow(wellFootprint, Math.max(0.4, params.borderWidth)));
 
   // --- Z layout (shared assembly frame: Z = 0 is the switch-plate top) ---
   const cavityFloorZ = socketBB.max[2]; // socket top = plate plane (≈ 0); the well opens to it
@@ -517,7 +515,7 @@ export function buildClicker(
   for (const { r } of ordered) {
     const validRings = scaleRings(r.rings).filter(ring => ring.length >= 3 && getRingArea(ring) > 0.001);
     if (validRings.length === 0) continue;
-    let cs: Section = simp(track(new CrossSection(validRings, 'NonZero')), 0.1);
+    let cs: Section = simp(track(new CrossSection(validRings, 'NonZero')), 0.03);
     if (params.colorBleed > 0.001) cs = grow(cs, params.colorBleed);
     const clipped = track(cs.intersect(imageArea));
     if (sectionIsEmpty(clipped)) continue;
@@ -647,6 +645,23 @@ export function buildClicker(
     const px = p[0] + tangent[0] * (kc.offsetMm ?? 0);
     const py = p[1] + tangent[1] * (kc.offsetMm ?? 0);
 
+    // Apply the body's own edge ('clickerBase') bevel to a keychain add-on footprint
+    // so it reads as one piece with the body, not a bolt-on.
+    const bodyEdge = params.edgeSettings?.find(
+      (s) => (s.target === 'clickerBase' || s.target === 'baseTop') && s.style !== 'none' && s.radius >= 0.05,
+    );
+    const bevelAddon = (solid: Solid, fp: Section, top: number, bottom: number): Solid => {
+      if (!bodyEdge) return solid;
+      const r = Math.min(bodyEdge.radius, (top - bottom) * 0.45, 2.5);
+      if (r < 0.05) return solid;
+      let out = solid;
+      const topBlock = createEdgeBevelBlock(fp, r, bodyEdge.style, top, false);
+      if (topBlock) out = track(out.subtract(topBlock));
+      const botBlock = createEdgeBevelBlock(fp, r, bodyEdge.style, bottom, true);
+      if (botBlock) out = track(out.subtract(botBlock));
+      return out;
+    };
+
     // Loop style: a disc tab with a ring hole, built in a local frame (+Y outward)
     // then rotated to the requested angle and moved onto the body edge point.
     // The loop center is placed a full radius beyond the edge so the ENTIRE circle
@@ -664,6 +679,7 @@ export function buildClicker(
     const loopFootprint = track(localFp.translate([px, py]));
 
     let loop = extrudeAt(loopFootprint, th, zb);
+    loop = bevelAddon(loop, loopFootprint, zb + th, zb);
     body = track(body.add(loop));
 
     // Ring hole at the transformed loop centre (local [0, outward] → world).
@@ -727,31 +743,40 @@ export function buildClicker(
     }
   }
 
-    if (!body.isEmpty()) {
-      parts.push(toPart(body, 'body', 'base', params.bodyColorRgb, 'base-body'));
-    }
+  if (!body.isEmpty()) {
+    parts.push(toPart(body, 'body', 'base', params.bodyColorRgb, 'base-body'));
+  }
 
-    // --- Cap edge modifications. 'capTop' is the global cap-top edge; 'top-base' is
-    //     the cap frame selected directly in Edges mode. Both round the cap's top rim. ---
-    if (parts.length > 0) {
-      const basePartIdx = parts.findIndex(p => p.name === 'top-base');
-      if (basePartIdx >= 0) {
-        for (const es of params.edgeSettings) {
-          if ((es.target === 'capTop' || es.target === 'top-base') && es.style !== 'none') {
-            const r = Math.min(es.radius, (backing + imageDepth) * 0.4, 2.5);
-            if (r > 0.05) {
-              const modBlock = createEdgeBevelBlock(plate, r, es.style, slabTopZ, false);
-              if (modBlock) {
-                base = track(base.subtract(modBlock));
-                parts[basePartIdx] = toPart(base, 'cap', 'top', params.baseFilamentRgb, 'top-base');
-              }
+  // --- Cap edge modifications. 'capTop' is the global cap-top edge; 'top-base' is
+  //     the cap frame selected directly in Edges mode. Both round the cap's top rim. ---
+  if (parts.length > 0) {
+    const basePartIdx = parts.findIndex(p => p.name === 'top-base');
+    if (basePartIdx >= 0) {
+      for (const es of params.edgeSettings) {
+        if ((es.target === 'capTop' || es.target === 'top-base') && es.style !== 'none') {
+          const r = Math.min(es.radius, (backing + imageDepth) * 0.4, 2.5);
+          if (r > 0.05) {
+            const modBlock = createEdgeBevelBlock(plate, r, es.style, slabTopZ, false);
+            if (modBlock) {
+              base = track(base.subtract(modBlock));
+              parts[basePartIdx] = toPart(base, 'cap', 'top', params.baseFilamentRgb, 'top-base');
             }
           }
         }
       }
     }
+  }
 
-    return { parts, switchPlacements: applied, warnings };
+  for (const o of trash) {
+    try {
+      o.delete();
+    } catch {
+      /* already freed */
+    }
+  }
+
+  return { parts, switchPlacements: applied, warnings };
+
   /** Apply fillet/chamfer edge modifications to the body solid.
    *  Targets: 'clickerBase' is the merged global control that bevels the body's top
    *  AND bottom edges together; 'baseTop'/'baseBottom' remain for older saved projects;
@@ -803,15 +828,6 @@ export function buildClicker(
       vertProperties: new Float32Array(mesh.vertProperties),
       triVerts: new Uint32Array(mesh.triVerts),
     };
-  }
-  } finally {
-    for (const o of trash) {
-      try {
-        o.delete();
-      } catch {
-        /* already freed */
-      }
-    }
   }
 }
 

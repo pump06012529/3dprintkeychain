@@ -1,4 +1,4 @@
-
+import { BRAND } from '@vostok/brand';
 import '@vostok/ui-kit/styles.css';
 import { topbarLinks } from '@vostok/ui-kit';
 import './style.css';
@@ -6,7 +6,7 @@ import { createStore } from './store/store';
 import { createViewer } from './viewer/viewer';
 import { createUi, type UiState } from './ui/ui';
 import { loadFileToImage, type RgbaImage } from './image/decode';
-
+import { processImage } from './image/pipeline';
 import { runWizard } from './ui/wizard';
 import { downloadThreeMF } from './export/threemfExport';
 import { buildObjMtl, objToArrayBuffer } from './export/objExport';
@@ -45,7 +45,8 @@ if (oldTopbar) {
     oldTopbar.remove();
   } else {
     oldTopbar.replaceWith(topbarLinks({
-      homeUrl: '../',
+      githubUrl: BRAND.urls.github,
+      boostUrl: BRAND.urls.makerworld,
     }));
   }
 }
@@ -173,33 +174,33 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
   },
   onShape: (kind) => {
     store.set({ baseShape: kind });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onWidth: (mm) => {
     store.set({ capWidthMm: mm });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onTopThickness: (mm) => {
     store.set({ topThickness: mm });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onImageDepth: (mm) => {
     store.set({ imageDepth: mm });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onSocketTolStep: (delta) => {
     // "Switch socket" fit = clearance between the top and the base it presses into.
     // Baseline is 0.4 mm (shown as 0); + loosens, − tightens. Clamp to a safe range.
     const next = Math.round(Math.max(0.1, Math.min(1.0, store.get().tolerance + delta)) * 100) / 100;
     store.set({ tolerance: next });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onStemTolStep: (delta) => {
     // "Switch stem" fit = XY scale offset on the cap's keycap-mount stem (0.2 mm steps).
     // + loosens (opens the cross socket), − tightens. 0 = as authored.
     const next = Math.round(Math.max(-1.0, Math.min(1.0, store.get().stemTolerance + delta)) * 10) / 10;
     store.set({ stemTolerance: next });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onSwitchNudge: (dx, dy) => {
     // Move only the active switch. Bound the requested offset; the worker does the
@@ -213,7 +214,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
       idx === i ? { ...sw, x: clamp(sw.x + dx), y: clamp(sw.y + dy) } : sw,
     );
     store.set({ switches });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onSwitchRotate: (deltaDeg) => {
     // Rotate only the active switch a couple of degrees per press; clamp so the socket
@@ -224,7 +225,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
       idx === i ? { ...sw, rotation: Math.round(Math.max(-30, Math.min(30, sw.rotation + deltaDeg))) } : sw,
     );
     store.set({ switches });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onSwitchReset: () => {
     // Recenter only the active switch to its default slot for the current count.
@@ -233,7 +234,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
     const i = Math.min(s.activeSwitchIndex, s.switches.length - 1);
     const switches = s.switches.map((sw, idx) => (idx === i ? layout[idx] : sw));
     store.set({ switches });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onSwitchCount: (n) => {
     // Changing count replaces the whole array with the symmetric default layout
@@ -241,7 +242,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
     const s = store.get();
     if (n === s.switches.length) return;
     store.set({ switches: defaultSwitchLayout(n, s.capWidthMm), activeSwitchIndex: 0 });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onActiveSwitch: (i) => {
     // Selection only — no rebuild.
@@ -253,30 +254,30 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
       switches: defaultSwitchLayout(s.switches.length, s.capWidthMm),
       activeSwitchIndex: 0,
     });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onKeychainToggle: (on) => {
     store.set({ keychain: { ...store.get().keychain, enabled: on } });
-    triggerRebuild();
+    debouncedRebuild();
   },
 
   onKeychainRotate: (deltaDeg) => {
     const kc = store.get().keychain;
     const angleDeg = (((kc.angleDeg + deltaDeg) % 360) + 360) % 360;
     store.set({ keychain: { ...kc, angleDeg } });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onKeychainSize: (deltaMm) => {
     const kc = store.get().keychain;
     const holeDiameterMm = Math.round(Math.max(3.0, Math.min(8.0, kc.holeDiameterMm + deltaMm)) * 10) / 10;
     store.set({ keychain: { ...kc, holeDiameterMm } });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onKeychainOffset: (deltaMm) => {
     const kc = store.get().keychain;
     const offsetMm = Math.round(Math.max(-15.0, Math.min(15.0, (kc.offsetMm ?? 0) + deltaMm)) * 10) / 10;
     store.set({ keychain: { ...kc, offsetMm } });
-    triggerRebuild();
+    debouncedRebuild();
   },
   onSmoothing: (v) => {
     store.set({ smoothing: v });
@@ -398,7 +399,7 @@ const ui = createUi(sidebarLeft, sidebarRight, statusEl, {
   },
   onTextChange: (text) => {
     currentText = text;
-    debouncedTextReprocess(); // live rebuild as you type with longer delay to prevent keyboard freeze
+    debouncedReprocess(); // live rebuild as you type
   },
   onFontSelect: (fontId) => {
     currentFontId = fontId;
@@ -758,26 +759,6 @@ const worker = new Worker(new URL('./workers/geometry.worker.ts', import.meta.ur
   type: 'module',
 });
 
-const preprocessWorker = new Worker(new URL('./workers/preprocess.worker.ts', import.meta.url), {
-  type: 'module',
-});
-
-preprocessWorker.onmessage = (e) => {
-  const msg = e.data;
-  if (msg.type === 'processImageDone') {
-    isImageWorkerBusy = false;
-    regionSet = msg.regionSet;
-    triggerRebuild();
-    if (needsReprocess) {
-      needsReprocess = false;
-      debouncedReprocess();
-    }
-  } else if (msg.type === 'error') {
-    isImageWorkerBusy = false;
-    store.set({ building: false, status: 'Error: ' + msg.error });
-  }
-};
-
 worker.onmessage = (e: MessageEvent<GeometryResponse>) => {
   const msg = e.data;
   switch (msg.type) {
@@ -831,16 +812,12 @@ worker.onmessage = (e: MessageEvent<GeometryResponse>) => {
         pendingHistoryReset = false;
         resetHistory();
       }
-      isWorkerBusy = false;
-      if (needsRebuild || needsQuietRebuild) triggerRebuild();
       break;
     }
     case 'error':
       store.set({ building: false, status: 'Error: ' + firstLine(msg.message) });
       console.error('[geometry worker]', msg.message);
       isInitialLoad = false;
-      isWorkerBusy = false;
-      if (needsRebuild || needsQuietRebuild) triggerRebuild();
       break;
   }
 };
@@ -930,11 +907,6 @@ async function openWizard(getter: () => Promise<RgbaImage>) {
 }
 
 function reprocess() {
-  if (isImageWorkerBusy) {
-    needsReprocess = true;
-    return;
-  }
-  
   // A fresh trace means fresh regions, so start a new undo baseline and drop any
   // pinned frame color so it re-derives.
   pendingHistoryReset = true;
@@ -944,20 +916,11 @@ function reprocess() {
   if (s.importMode === 'image') {
     if (!originalImage) return;
     store.set({ building: true, status: 'Removing background & tracing…' });
-    isImageWorkerBusy = true;
-    const imgClone = cloneImage(originalImage);
-    preprocessWorker.postMessage({
-      type: 'processImage',
-      img: imgClone,
-      colorCount: s.colorCount,
-      opts: {
-        removeBg: s.removeBg,
-        smoothing: s.smoothing,
-        customColors: s.colorMode === 'limited' ? s.limitedColors : undefined,
-      }
-    }, [imgClone.data.buffer]);
-    // Returning early because the rest will be handled by the worker callback
-    return;
+    regionSet = processImage(cloneImage(originalImage), s.colorCount, {
+      removeBg: s.removeBg,
+      smoothing: s.smoothing,
+      customColors: s.colorMode === 'limited' ? s.limitedColors : undefined,
+    });
   } else if (s.importMode === 'svg') {
     if (!currentSvgText) {
       store.set({ status: 'Upload an SVG file first.' });
@@ -1013,7 +976,7 @@ function reprocess() {
     store.set({ building: false, status: 'No outline found.' });
     return;
   }
-  triggerRebuild();
+  rebuild();
 }
 
 function rebuild(quiet = false) {
@@ -1089,43 +1052,11 @@ function debounce(fn: () => void, ms: number) {
     t = window.setTimeout(fn, ms);
   };
 }
-
-let isWorkerBusy = false;
-let isImageWorkerBusy = false;
-let needsReprocess = false;
-let needsRebuild = false;
-let needsQuietRebuild = false;
-let rebuildTimeout: number | undefined;
-
-function triggerRebuild() {
-  needsRebuild = true;
-  if (isWorkerBusy) return;
-  if (rebuildTimeout) clearTimeout(rebuildTimeout);
-  rebuildTimeout = window.setTimeout(runRebuild, 80);
-}
-
-function triggerQuietRebuild() {
-  needsQuietRebuild = true;
-  if (isWorkerBusy) return;
-  if (rebuildTimeout) clearTimeout(rebuildTimeout);
-  rebuildTimeout = window.setTimeout(runRebuild, 80);
-}
-
-function runRebuild() {
-  if (!needsRebuild && !needsQuietRebuild) return;
-  const quiet = needsQuietRebuild && !needsRebuild;
-  needsRebuild = false;
-  needsQuietRebuild = false;
-  isWorkerBusy = true;
-  if (!quiet) store.set({ building: true });
-  rebuild(quiet);
-}
-
+const debouncedRebuild = debounce(rebuild, 130);
 // Quiet rebuild used by live edit modes (extrude / edges) so the preview reflects
 // the real geometry without flashing the loading overlay on every step.
-const debouncedQuietRebuild = debounce(triggerQuietRebuild, 160);
+const debouncedQuietRebuild = debounce(() => rebuild(true), 160);
 const debouncedReprocess = debounce(reprocess, 220);
-const debouncedTextReprocess = debounce(reprocess, 800);
 
 function hexToRgb(hex: string): RGB {
   return [
