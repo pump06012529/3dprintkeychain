@@ -487,3 +487,31 @@ body {
 .edges-panel .btn:hover {
   background: var(--hover);
 }
+
+/* ===== View Controls Bar ===== */
+.view-controls-bar {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+.view-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.view-btn:hover {
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  border-color: var(--muted);
+}

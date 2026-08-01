@@ -239,6 +239,26 @@ worker.postMessage({ type: 'init' });
 
 const viewer = createViewer(stage);
 
+// --- View Controls UI ---
+const viewBar = document.createElement('div');
+viewBar.className = 'view-controls-bar';
+viewBar.innerHTML = `
+  <button class="view-btn" data-view="front" type="button">Front</button>
+  <button class="view-btn" data-view="iso" type="button">Iso</button>
+  <button class="view-btn" data-view="top" type="button">Top</button>
+  <button class="view-btn" data-view="fit" type="button">Fit</button>
+  <button class="view-btn" data-view="reset" type="button">Reset View</button>
+`;
+stage.appendChild(viewBar);
+
+viewBar.addEventListener('click', (e) => {
+  const btn = (e.target as HTMLElement).closest('.view-btn') as HTMLElement | null;
+  if (btn) {
+    const view = btn.dataset.view as 'front' | 'iso' | 'top' | 'fit' | 'reset';
+    viewer.setView(view);
+  }
+});
+
 // --- Edit Mode UI ---
 let selectedPartName: string | null = null;
 

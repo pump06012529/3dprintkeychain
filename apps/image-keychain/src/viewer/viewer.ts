@@ -21,6 +21,7 @@ export interface Viewer {
   setEditMode(mode: 'color' | 'extrude' | null): void;
   onPartSelected(cb: (name: string | null) => void): void;
   highlightPart(name: string | null): void;
+  setView(viewName: 'front' | 'iso' | 'top' | 'fit' | 'reset'): void;
   dispose(): void;
 }
 
@@ -229,7 +230,9 @@ export function createViewer(container: HTMLElement): Viewer {
     return creased;
   }
 
-    const meshesMap = new Map<string, THREE.Mesh>();
+  const meshesMap = new Map<string, THREE.Mesh>();
+  let baseRadius = 100;
+  let baseTargetZ = 0;
 
   return {
     setParts(parts: PartMesh[], preserveCamera = false) {
@@ -263,9 +266,10 @@ export function createViewer(container: HTMLElement): Viewer {
       modelGroup.position.set(-center.x, -center.y, -box.min.z);
 
       if (!preserveCamera) {
-        const radius = Math.max(size.x, size.y, size.z) * 1.5 + 20;
-        camera.position.set(radius, -radius, radius * 0.9);
-        controls.target.set(0, 0, size.z / 2);
+        baseRadius = Math.max(size.x, size.y, size.z) * 1.5 + 20;
+        baseTargetZ = size.z / 2;
+        camera.position.set(baseRadius, -baseRadius, baseRadius * 0.9);
+        controls.target.set(0, 0, baseTargetZ);
         controls.update();
       }
     },
@@ -294,6 +298,29 @@ export function createViewer(container: HTMLElement): Viewer {
     highlightPart(name: string | null) {
       selectedName = name;
       applyHighlight();
+    },
+
+    setView(viewName: 'front' | 'iso' | 'top' | 'fit' | 'reset') {
+      switch (viewName) {
+        case 'front':
+          camera.position.set(0, -baseRadius * 1.5, baseTargetZ);
+          controls.target.set(0, 0, baseTargetZ);
+          break;
+        case 'top':
+          camera.position.set(0, 0, baseRadius * 1.5);
+          controls.target.set(0, 0, baseTargetZ);
+          break;
+        case 'iso':
+        case 'reset':
+          camera.position.set(baseRadius, -baseRadius, baseRadius * 0.9);
+          controls.target.set(0, 0, baseTargetZ);
+          break;
+        case 'fit':
+          const dir = new THREE.Vector3().subVectors(camera.position, controls.target).normalize();
+          camera.position.copy(controls.target).add(dir.multiplyScalar(baseRadius * 1.5));
+          break;
+      }
+      controls.update();
     },
 
     dispose() {
