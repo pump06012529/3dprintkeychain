@@ -18,6 +18,9 @@ export interface Viewer {
   setParts(parts: PartMesh[], preserveCamera?: boolean): void;
   setPartColor(name: string, colorHex: string): void;
   setTheme(theme: 'dark' | 'light'): void;
+  setEditMode(mode: 'color' | 'extrude' | null): void;
+  onPartSelected(cb: (name: string | null) => void): void;
+  highlightPart(name: string | null): void;
   dispose(): void;
 }
 
@@ -109,6 +112,112 @@ export function createViewer(container: HTMLElement): Viewer {
     }
   }
 
+  // --- Raycasting & Selection ---
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  const HILITE = new THREE.Color(0x3b82f6);
+  let hoveredName: string | null = null;
+  let selectedName: string | null = null;
+  let pickCb: ((name: string | null) => void) | null = null;
+  let currentEditMode: 'color' | 'extrude' | null = null;
+
+  let downX = 0;
+  let downY = 0;
+  let downT = 0;
+  let outlineMesh: THREE.LineSegments | null = null;
+  const outlineMaterial = new THREE.LineBasicMaterial({ color: 0x3b82f6, depthTest: false });
+
+  function applyHighlight() {
+    if (outlineMesh) {
+      outlineMesh.removeFromParent();
+      if (outlineMesh.geometry) outlineMesh.geometry.dispose();
+      outlineMesh = null;
+    }
+
+    const meshes = Array.from(meshesMap.values());
+    for (const mesh of meshes) {
+      const isSelected = selectedName === mesh.name;
+      const isHovered = hoveredName === mesh.name;
+      const m = mesh.material as THREE.MeshStandardMaterial;
+      if (m && mesh.name.startsWith('image')) { // Only highlight image parts
+        if ((isSelected || isHovered) && currentEditMode) {
+          m.emissive.copy(HILITE);
+          m.emissiveIntensity = isHovered ? 0.4 : 0.2;
+        } else {
+          m.emissiveIntensity = 0;
+        }
+      }
+    }
+
+    if (currentEditMode && selectedName && meshesMap.has(selectedName)) {
+      const mesh = meshesMap.get(selectedName)!;
+      const edges = new THREE.EdgesGeometry(mesh.geometry, 15);
+      outlineMesh = new THREE.LineSegments(edges, outlineMaterial) as any;
+      outlineMesh!.renderOrder = 999;
+      outlineMesh!.position.copy(mesh.position);
+      outlineMesh!.quaternion.copy(mesh.quaternion);
+      outlineMesh!.scale.copy(mesh.scale);
+      modelGroup.add(outlineMesh!);
+    } else if (currentEditMode && hoveredName && meshesMap.has(hoveredName)) {
+      const mesh = meshesMap.get(hoveredName)!;
+      const edges = new THREE.EdgesGeometry(mesh.geometry, 15);
+      outlineMesh = new THREE.LineSegments(edges, outlineMaterial) as any;
+      outlineMesh!.renderOrder = 999;
+      outlineMesh!.position.copy(mesh.position);
+      outlineMesh!.quaternion.copy(mesh.quaternion);
+      outlineMesh!.scale.copy(mesh.scale);
+      modelGroup.add(outlineMesh!);
+    }
+  }
+
+  function pickNameAt(clientX: number, clientY: number): string | null {
+    if (!currentEditMode || meshesMap.size === 0) return null;
+    const rect = renderer.domElement.getBoundingClientRect();
+    pointer.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    const meshes = Array.from(meshesMap.values()).filter(m => m.name.startsWith('image'));
+    const hits = raycaster.intersectObjects(meshes, false);
+    if (hits.length > 0) return hits[0].object.name;
+    return null;
+  }
+
+  const onPointerMove = (e: PointerEvent) => {
+    if (e.buttons !== 0) return;
+    const name = pickNameAt(e.clientX, e.clientY);
+    renderer.domElement.style.cursor = name === null ? '' : 'pointer';
+    if (name !== hoveredName) {
+      hoveredName = name;
+      applyHighlight();
+    }
+  };
+  const onPointerLeave = () => {
+    if (hoveredName !== null) {
+      hoveredName = null;
+      applyHighlight();
+    }
+  };
+  const onPointerDown = (e: PointerEvent) => {
+    downX = e.clientX;
+    downY = e.clientY;
+    downT = performance.now();
+  };
+  const onPointerUp = (e: PointerEvent) => {
+    if (Math.hypot(e.clientX - downX, e.clientY - downY) > 5) return;
+    if (performance.now() - downT > 500) return;
+    const name = pickNameAt(e.clientX, e.clientY);
+    if (name !== selectedName) {
+      selectedName = name;
+      applyHighlight();
+      pickCb?.(name);
+    }
+  };
+
+  renderer.domElement.addEventListener('pointermove', onPointerMove);
+  renderer.domElement.addEventListener('pointerleave', onPointerLeave);
+  renderer.domElement.addEventListener('pointerdown', onPointerDown);
+  renderer.domElement.addEventListener('pointerup', onPointerUp);
+
   function parsePartGeometry(p: PartMesh): THREE.BufferGeometry {
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(p.vertProperties, 3));
@@ -120,13 +229,13 @@ export function createViewer(container: HTMLElement): Viewer {
     return creased;
   }
 
-  const meshes = new Map<string, THREE.Mesh>();
+    const meshesMap = new Map<string, THREE.Mesh>();
 
   return {
     setParts(parts: PartMesh[], preserveCamera = false) {
       console.log('setParts called with:', parts);
       clearGroup(modelGroup);
-      meshes.clear();
+      meshesMap.clear();
 
       for (const p of parts) {
         console.log('Part:', p.name, 'Vertices:', p.vertProperties.length / 3, 'Triangles:', p.triVerts.length / 3);
@@ -141,7 +250,7 @@ export function createViewer(container: HTMLElement): Viewer {
         const mesh = new THREE.Mesh(geom, mat);
         mesh.name = p.name;
         modelGroup.add(mesh);
-        meshes.set(p.name, mesh);
+        meshesMap.set(p.name, mesh);
       }
 
       // Re-center assembly
@@ -162,7 +271,7 @@ export function createViewer(container: HTMLElement): Viewer {
     },
 
     setPartColor(name: string, colorHex: string) {
-      const mesh = meshes.get(name);
+      const mesh = meshesMap.get(name);
       if (mesh && mesh.material instanceof THREE.MeshStandardMaterial) {
         mesh.material.color.set(colorHex);
       }
@@ -171,6 +280,20 @@ export function createViewer(container: HTMLElement): Viewer {
     setTheme(theme: 'dark' | 'light') {
       scene.background = new THREE.Color(theme === 'dark' ? 0x15171c : 0xf3f4f6);
       rebuildGrid(theme, -0.2);
+    },
+
+    setEditMode(mode: 'color' | 'extrude' | null) {
+      currentEditMode = mode;
+      applyHighlight();
+    },
+
+    onPartSelected(cb: (name: string | null) => void) {
+      pickCb = cb;
+    },
+
+    highlightPart(name: string | null) {
+      selectedName = name;
+      applyHighlight();
     },
 
     dispose() {

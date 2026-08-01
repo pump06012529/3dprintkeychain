@@ -34,9 +34,16 @@ export interface BuildParams {
   /** Layer height used to snap the colour bands in no-AMS mode. */
   layerHeight: number;
 
+  /** Component-specific height levels (partName -> level integer) */
+  componentHeights: Record<string, number>;
+  /** Step height in mm for each extrude level */
+  stepHeight: number;
+
   imageWidth: number;
   imageHeight: number;
 }
+
+export type EditMode = 'color' | 'extrude';
 
 export type GeometryRequest =
   | { type: 'build'; regionSet: RegionSet; params: BuildParams }

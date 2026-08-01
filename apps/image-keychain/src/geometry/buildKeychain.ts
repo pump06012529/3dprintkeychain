@@ -105,7 +105,12 @@ export function buildProfiles(wasm: any, regionSet: RegionSet, params: BuildPara
     }
 
     if (cs.area() > 0.01) {
-      regionProfiles.push({ cs, quantRgb: r.quantRgb });
+      const islands = [...cs.decompose()];
+      for (const island of islands) {
+        if (island.area() > 0.001) {
+          regionProfiles.push({ cs: keep(island), quantRgb: r.quantRgb });
+        }
+      }
       placed2D = placed2D ? keep(placed2D.add(cs)) : cs;
     }
   }
@@ -242,9 +247,11 @@ export function buildKeychain(
       }
 
       p.regionProfiles.forEach((rp, i) => {
-        const regionSolid = keep(rp.cs.extrude(params.imageThickness).translate([0, 0, p.letterZ]));
         const isSingle = p.regionProfiles.length === 1;
         const name = isSingle ? 'image' : `image_${i}`;
+        const level = params.componentHeights?.[name] || 0;
+        const extrudeH = Math.max(0.1, params.imageThickness + level * (params.stepHeight || 0.2));
+        const regionSolid = keep(rp.cs.extrude(extrudeH).translate([0, 0, p.letterZ]));
         const color = isSingle ? hexToRgb(params.imageColor) : rp.quantRgb;
         finalParts.push({ name, ...getMeshData(regionSolid), colorRgb: color });
       });
@@ -270,9 +277,11 @@ export function buildKeychain(
         }
 
         p.regionProfiles.forEach((rp, i) => {
-          const regionInfill = keep(rp.cs.extrude(cutDepth).translate([0, 0, p.baseT - cutDepth]));
           const isSingle = p.regionProfiles.length === 1;
           const name = isSingle ? 'image' : `image_${i}`;
+          const level = params.componentHeights?.[name] || 0;
+          const extrudeH = Math.max(0.1, cutDepth + level * (params.stepHeight || 0.2));
+          const regionInfill = keep(rp.cs.extrude(extrudeH).translate([0, 0, p.baseT - cutDepth]));
           const color = isSingle ? hexToRgb(params.imageColor) : rp.quantRgb;
           finalParts.push({ name, ...getMeshData(regionInfill), colorRgb: color });
         });

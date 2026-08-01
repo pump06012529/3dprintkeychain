@@ -55,6 +55,10 @@ const state = {
   colorCount: 4,
   removeBg: true,
   colorBleed: 0.15,
+  // Extrude Mode specific
+  editMode: 'color' as 'color' | 'extrude',
+  componentHeights: {} as Record<string, number>,
+  stepHeight: 0.2,
 };
 
 let uploadedFile: File | null = null;
@@ -234,6 +238,87 @@ worker.onmessage = (e: MessageEvent<GeometryResponse>) => {
 worker.postMessage({ type: 'init' });
 
 const viewer = createViewer(stage);
+
+// --- Edit Mode UI ---
+let selectedPartName: string | null = null;
+
+const modeBar = document.createElement('div');
+modeBar.id = 'editModeBar';
+modeBar.className = 'edit-mode-bar';
+modeBar.innerHTML = `
+  <button class="edit-mode-btn active" data-editmode="color" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+    Color
+  </button>
+  <button class="edit-mode-btn" data-editmode="extrude" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+    Extrude
+  </button>
+`;
+stage.appendChild(modeBar);
+
+modeBar.addEventListener('click', (e) => {
+  const btn = (e.target as HTMLElement).closest('[data-editmode]') as HTMLElement | null;
+  if (btn) {
+    state.editMode = btn.dataset.editmode as 'color' | 'extrude';
+    modeBar.querySelectorAll('.edit-mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    viewer.setEditMode(state.editMode);
+    
+    // Clear selection when switching modes
+    selectedPartName = null;
+    viewer.highlightPart(null);
+    extrudePanel.setAttribute('hidden', '');
+  }
+});
+
+// --- Extrude Panel ---
+const extrudePanel = document.createElement('div');
+extrudePanel.id = 'extrudePanel';
+extrudePanel.className = 'edges-panel';
+extrudePanel.setAttribute('hidden', '');
+extrudePanel.innerHTML = `
+  <div class="edges-title">Extrude Part</div>
+  <div id="extrudeLevelLabel" style="text-align:center; margin-top:8px; font-size:13px; color:var(--muted);">Level: 0</div>
+  <div style="display:flex; gap:8px; margin-top:8px;">
+    <button type="button" class="btn" id="extrudeMinus" style="flex:1; font-size:18px;">-</button>
+    <button type="button" class="btn" id="extrudePlus" style="flex:1; font-size:18px;">+</button>
+  </div>
+`;
+stage.appendChild(extrudePanel);
+
+const extrudeLabel = extrudePanel.querySelector('#extrudeLevelLabel') as HTMLElement;
+extrudePanel.querySelector('#extrudeMinus')?.addEventListener('click', () => adjustExtrude(-1));
+extrudePanel.querySelector('#extrudePlus')?.addEventListener('click', () => adjustExtrude(1));
+
+function adjustExtrude(delta: number) {
+  if (!selectedPartName) return;
+  const current = state.componentHeights[selectedPartName] || 0;
+  const next = Math.max(-5, Math.min(10, current + delta)); // restrict range somewhat
+  if (current === next) return;
+  state.componentHeights[selectedPartName] = next;
+  extrudeLabel.textContent = \`Level: \${next > 0 ? '+' : ''}\${next}\`;
+  triggerRebuild();
+}
+
+viewer.setEditMode(state.editMode);
+viewer.onPartSelected((name) => {
+  selectedPartName = name;
+  if (state.editMode === 'extrude') {
+    if (name) {
+      extrudePanel.removeAttribute('hidden');
+      const level = state.componentHeights[name] || 0;
+      extrudeLabel.textContent = \`Level: \${level > 0 ? '+' : ''}\${level}\`;
+    } else {
+      extrudePanel.setAttribute('hidden', '');
+    }
+  } else {
+    extrudePanel.setAttribute('hidden', '');
+    // In color mode, we might want to pop up a color picker for the selected part.
+    // (This can be added later if needed)
+  }
+});
+
 
 function colorField(label: string, value: string, onInput: (value: string) => void): HTMLElement {
   const input = el('input', { attrs: { type: 'color', value, 'aria-label': label } });
