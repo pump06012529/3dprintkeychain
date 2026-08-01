@@ -257,21 +257,6 @@ modeBar.innerHTML = `
 `;
 stage.appendChild(modeBar);
 
-modeBar.addEventListener('click', (e) => {
-  const btn = (e.target as HTMLElement).closest('[data-editmode]') as HTMLElement | null;
-  if (btn) {
-    state.editMode = btn.dataset.editmode as 'color' | 'extrude';
-    modeBar.querySelectorAll('.edit-mode-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    viewer.setEditMode(state.editMode);
-    
-    // Clear selection when switching modes
-    selectedPartName = null;
-    viewer.highlightPart(null);
-    extrudePanel.setAttribute('hidden', '');
-  }
-});
-
 // --- Extrude Panel ---
 const extrudePanel = document.createElement('div');
 extrudePanel.id = 'extrudePanel';
@@ -286,6 +271,21 @@ extrudePanel.innerHTML = `
   </div>
 `;
 stage.appendChild(extrudePanel);
+
+modeBar.addEventListener('click', (e) => {
+  const btn = (e.target as HTMLElement).closest('[data-editmode]') as HTMLElement | null;
+  if (btn) {
+    state.editMode = btn.dataset.editmode as 'color' | 'extrude';
+    modeBar.querySelectorAll('.edit-mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    viewer.setEditMode(state.editMode);
+    
+    // Clear selection when switching modes
+    selectedPartName = null;
+    viewer.highlightPart(null);
+    extrudePanel.setAttribute('hidden', '');
+  }
+});
 
 const extrudeLabel = extrudePanel.querySelector('#extrudeLevelLabel') as HTMLElement;
 extrudePanel.querySelector('#extrudeMinus')?.addEventListener('click', () => adjustExtrude(-1));
