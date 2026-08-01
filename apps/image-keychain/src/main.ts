@@ -297,7 +297,7 @@ function adjustExtrude(delta: number) {
   const next = Math.max(-5, Math.min(10, current + delta)); // restrict range somewhat
   if (current === next) return;
   state.componentHeights[selectedPartName] = next;
-  extrudeLabel.textContent = \`Level: \${next > 0 ? '+' : ''}\${next}\`;
+  extrudeLabel.textContent = `Level: ${next > 0 ? '+' : ''}${next}`;
   triggerRebuild();
 }
 
@@ -308,7 +308,7 @@ viewer.onPartSelected((name) => {
     if (name) {
       extrudePanel.removeAttribute('hidden');
       const level = state.componentHeights[name] || 0;
-      extrudeLabel.textContent = \`Level: \${level > 0 ? '+' : ''}\${level}\`;
+      extrudeLabel.textContent = `Level: ${level > 0 ? '+' : ''}${level}`;
     } else {
       extrudePanel.setAttribute('hidden', '');
     }
