@@ -228,7 +228,10 @@ worker.onmessage = (e: MessageEvent<GeometryResponse>) => {
     if (res.warnings?.length) toast(res.warnings.join('\n'), { kind: 'warn' });
     lastParts = res.parts;
     viewer.setParts(res.parts);
-    if (needsRebuild) runRebuild();
+    if (needsRebuild) {
+      needsRebuild = false;
+      triggerRebuild();
+    }
   } else if (res.type === 'error') {
     isWorkerBusy = false;
     needsRebuild = false;

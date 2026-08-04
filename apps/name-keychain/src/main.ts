@@ -1093,7 +1093,10 @@ worker.onmessage = (e: MessageEvent<GeometryResponse>) => {
     viewer.setParts(msg.parts, true);
     hideStatus();
     isWorkerBusy = false;
-    if (needsRebuild) runRebuild();
+    if (needsRebuild) {
+      needsRebuild = false;
+      triggerRebuild();
+    }
     return;
   }
   if (msg.type === 'error') {
