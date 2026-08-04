@@ -151,23 +151,9 @@ export function createViewer(container: HTMLElement): Viewer {
     }
 
     if (currentEditMode && selectedName && meshesMap.has(selectedName)) {
-      const mesh = meshesMap.get(selectedName)!;
-      const edges = new THREE.EdgesGeometry(mesh.geometry, 15);
-      outlineMesh = new THREE.LineSegments(edges, outlineMaterial) as any;
-      outlineMesh!.renderOrder = 999;
-      outlineMesh!.position.copy(mesh.position);
-      outlineMesh!.quaternion.copy(mesh.quaternion);
-      outlineMesh!.scale.copy(mesh.scale);
-      modelGroup.add(outlineMesh!);
+      // EdgesGeometry is too slow for high-poly SVG traces, relying purely on emissive glow.
     } else if (currentEditMode && hoveredName && meshesMap.has(hoveredName)) {
-      const mesh = meshesMap.get(hoveredName)!;
-      const edges = new THREE.EdgesGeometry(mesh.geometry, 15);
-      outlineMesh = new THREE.LineSegments(edges, outlineMaterial) as any;
-      outlineMesh!.renderOrder = 999;
-      outlineMesh!.position.copy(mesh.position);
-      outlineMesh!.quaternion.copy(mesh.quaternion);
-      outlineMesh!.scale.copy(mesh.scale);
-      modelGroup.add(outlineMesh!);
+      // EdgesGeometry is too slow for high-poly SVG traces, relying purely on emissive glow.
     }
   }
 
@@ -183,8 +169,13 @@ export function createViewer(container: HTMLElement): Viewer {
     return null;
   }
 
+  let lastPickT = 0;
   const onPointerMove = (e: PointerEvent) => {
     if (e.buttons !== 0) return;
+    const now = performance.now();
+    if (now - lastPickT < 50) return;
+    lastPickT = now;
+    
     const name = pickNameAt(e.clientX, e.clientY);
     renderer.domElement.style.cursor = name === null ? '' : 'pointer';
     if (name !== hoveredName) {
