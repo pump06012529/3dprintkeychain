@@ -72,6 +72,9 @@ function partToGeometry(p: ClickerPart): THREE.BufferGeometry {
   } else {
     geo.setIndex(new THREE.BufferAttribute(p.triVerts, 1));
     geo.computeVertexNormals();
+    if (p.name === 'sw') {
+      return geo; // Skip expensive creasing for the preview switch
+    }
     const creased = toCreasedNormals(geo, (35 * Math.PI) / 180);
     geo.dispose();
     return creased;
