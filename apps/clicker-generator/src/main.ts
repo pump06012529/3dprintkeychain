@@ -6,7 +6,7 @@ import { createStore } from './store/store';
 import { createViewer } from './viewer/viewer';
 import { createUi, type UiState } from './ui/ui';
 import { loadFileToImage, type RgbaImage } from './image/decode';
-import { processImage } from './image/pipeline';
+import type { ImageWorkerRequest, ImageWorkerResponse } from './types';
 import { runWizard } from './ui/wizard';
 import { downloadThreeMF } from './export/threemfExport';
 import { buildObjMtl, objToArrayBuffer } from './export/objExport';
@@ -136,9 +136,62 @@ let currentFontId = 'helvetiker-regular';
 let isInitialLoad = true;
 
 const hasImage = () => originalImage !== null;
-function cloneImage(img: RgbaImage): RgbaImage {
-  return { data: new Uint8ClampedArray(img.data), width: img.width, height: img.height };
+
+// ---- Image Worker Setup ----
+const imageWorker = new Worker(new URL('./workers/image.worker.ts', import.meta.url), {
+  type: 'module',
+});
+let imageWorkerBusy = false;
+let pendingProcessArgs: { colorCount: number; removeBg: boolean; smoothing: number; customColors?: RGB[] } | null = null;
+
+imageWorker.onmessage = (e: MessageEvent<ImageWorkerResponse>) => {
+  imageWorkerBusy = false;
+  const msg = e.data;
+  if (msg.type === 'done') {
+    regionSet = msg.regionSet;
+    const s = store.get();
+    const palette: PaletteEntry[] = regionSet.regions.map((r, i) => ({
+      quantRgb: r.quantRgb,
+      filamentRgb: s.paletteOverrides[i] ?? r.quantRgb,
+      coverage: r.coverage,
+    }));
+    store.set({ palette, building: false, status: 'Ready.' });
+    if (palette.length === 0) {
+      store.set({ status: 'No outline found.' });
+      return;
+    }
+    rebuild();
+  } else {
+    store.set({ building: false, status: 'Image processing failed: ' + msg.message });
+  }
+
+  // If new inputs arrived while busy, process them now
+  if (pendingProcessArgs) {
+    const args = pendingProcessArgs;
+    pendingProcessArgs = null;
+    if (originalImage) {
+      runImageWorker(args);
+    }
+  }
+};
+
+function runImageWorker(args: { colorCount: number; removeBg: boolean; smoothing: number; customColors?: RGB[] }) {
+  if (!originalImage) return;
+  imageWorkerBusy = true;
+  store.set({ building: true, status: 'Removing background & tracing…' });
+  const req: ImageWorkerRequest = {
+    type: 'process',
+    data: originalImage.data, // Uint8ClampedArray
+    width: originalImage.width,
+    height: originalImage.height,
+    colorCount: args.colorCount,
+    removeBg: args.removeBg,
+    smoothing: args.smoothing,
+    customColors: args.customColors,
+  };
+  imageWorker.postMessage(req);
 }
+
 
 // ---- DOM / subsystems ----
 const sidebarLeft = document.getElementById('sidebar-left')!;
@@ -914,12 +967,18 @@ function reprocess() {
 
   if (s.importMode === 'image') {
     if (!originalImage) return;
-    store.set({ building: true, status: 'Removing background & tracing…' });
-    regionSet = processImage(cloneImage(originalImage), s.colorCount, {
+    const args = {
+      colorCount: s.colorCount,
       removeBg: s.removeBg,
       smoothing: s.smoothing,
       customColors: s.colorMode === 'limited' ? s.limitedColors : undefined,
-    });
+    };
+    if (imageWorkerBusy) {
+      pendingProcessArgs = args;
+      return;
+    }
+    runImageWorker(args);
+    return; // Early return because the rest happens in onmessage
   } else if (s.importMode === 'svg') {
     if (!currentSvgText) {
       store.set({ status: 'Upload an SVG file first.' });

@@ -194,3 +194,19 @@ export type GeometryResponse =
   // for the keychain hole) for the status line.
   | { type: 'parts'; parts: ClickerPart[]; switchPlacements: SwitchPlacement[]; warnings: string[] }
   | { type: 'error'; message: string };
+
+// ---- Image Worker message types ----
+export type ImageWorkerRequest = {
+  type: 'process';
+  data: Uint8ClampedArray;
+  width: number;
+  height: number;
+  colorCount: number;
+  removeBg: boolean;
+  smoothing: number;
+  customColors?: RGB[];
+};
+
+export type ImageWorkerResponse =
+  | { type: 'done'; regionSet: RegionSet }
+  | { type: 'error'; message: string };
