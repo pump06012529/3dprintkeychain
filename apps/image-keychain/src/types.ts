@@ -75,3 +75,18 @@ export interface PaletteEntry {
   filamentRgb: RGB;
   coverage: number;
 }
+
+// ---- Image Worker message types ----
+export type ImageWorkerRequest = {
+  type: 'process';
+  data: Uint8ClampedArray;
+  width: number;
+  height: number;
+  colorCount: number;
+  removeBg: boolean;
+  smoothing: number;
+};
+
+export type ImageWorkerResponse =
+  | { type: 'done'; regionSet: RegionSet }
+  | { type: 'error'; message: string };

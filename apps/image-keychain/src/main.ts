@@ -19,10 +19,9 @@ import {
 import { BRAND } from '@vostok/brand';
 import { createViewer } from './viewer/viewer';
 import { downloadThreeMF } from './export/threemfExport';
-import type { GeometryResponse, PartMesh, RegionSet } from './types';
+import type { GeometryResponse, PartMesh, RegionSet, ImageWorkerResponse } from './types';
 import { loadFileToImage } from './image/decode';
 import { noAmsPauses } from './geometry/noAms';
-import type { ImageResponse } from './workers/image.worker';
 
 const state = {
   size: 50, // width in mm
@@ -146,7 +145,7 @@ const imageWorker = new Worker(new URL('./workers/image.worker.ts', import.meta.
 let imageWorkerBusy = false;
 let pendingProcessArgs: { colorCount: number; removeBg: boolean; smoothing: number } | null = null;
 
-imageWorker.onmessage = (e: MessageEvent<ImageResponse>) => {
+imageWorker.onmessage = (e: MessageEvent<ImageWorkerResponse>) => {
   imageWorkerBusy = false;
   const msg = e.data;
   if (msg.type === 'done') {

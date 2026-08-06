@@ -3,24 +3,9 @@
 // The main thread handles decode (Canvas API required) then sends raw RGBA pixels here.
 
 import { processImage } from '../image/pipeline';
-import type { RegionSet, RGB } from '../types';
+import type { ImageWorkerRequest, ImageWorkerResponse } from '../types';
 
-export type ImageRequest =
-  | {
-      type: 'process';
-      data: Uint8ClampedArray;
-      width: number;
-      height: number;
-      colorCount: number;
-      removeBg: boolean;
-      smoothing: number;
-    };
-
-export type ImageResponse =
-  | { type: 'done'; regionSet: RegionSet }
-  | { type: 'error'; message: string };
-
-self.onmessage = (e: MessageEvent<ImageRequest>) => {
+self.onmessage = (e: MessageEvent<ImageWorkerRequest>) => {
   const msg = e.data;
   if (msg.type === 'process') {
     try {
@@ -30,12 +15,12 @@ self.onmessage = (e: MessageEvent<ImageRequest>) => {
         smoothing: msg.smoothing,
         preserveDetail: true,
       });
-      (self as unknown as Worker).postMessage({ type: 'done', regionSet } as ImageResponse);
+      (self as unknown as Worker).postMessage({ type: 'done', regionSet } as ImageWorkerResponse);
     } catch (err: any) {
       (self as unknown as Worker).postMessage({
         type: 'error',
         message: err?.message ?? String(err),
-      } as ImageResponse);
+      } as ImageWorkerResponse);
     }
   }
 };
