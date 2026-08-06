@@ -20,8 +20,9 @@ import { BRAND } from '@vostok/brand';
 import { createViewer } from './viewer/viewer';
 import { downloadThreeMF } from './export/threemfExport';
 import type { GeometryResponse, PartMesh, RegionSet } from './types';
-import { processImageToRegions } from './imageProcessor';
+import { loadFileToImage } from './image/decode';
 import { noAmsPauses } from './geometry/noAms';
+import type { ImageResponse } from './workers/image.worker';
 
 const state = {
   size: 50, // width in mm
@@ -140,14 +141,18 @@ async function handleFileSelected(file: File) {
   await processFile();
 }
 
-async function processFile() {
-  if (!uploadedFile) return;
-  showStatus('กำลังประมวลผลรูปภาพ...');
-  try {
-    const res = await processImageToRegions(uploadedFile, state.colorCount, state.removeBg, state.imageSmoothing);
-    currentRegionSet = res;
+// ---- Image Worker (quantize + trace off-thread) ----
+const imageWorker = new Worker(new URL('./workers/image.worker.ts', import.meta.url), { type: 'module' });
+let imageWorkerBusy = false;
+let pendingProcessArgs: { colorCount: number; removeBg: boolean; smoothing: number } | null = null;
+
+imageWorker.onmessage = (e: MessageEvent<ImageResponse>) => {
+  imageWorkerBusy = false;
+  const msg = e.data;
+  if (msg.type === 'done') {
+    currentRegionSet = msg.regionSet;
+    const res = msg.regionSet;
     updatePaletteUI();
-    // The new trace.ts normalizes the longest side to 1.
     if (res.aspect >= 1) {
       currentImageWidth = 1;
       currentImageHeight = 1 / res.aspect;
@@ -156,10 +161,46 @@ async function processFile() {
       currentImageHeight = 1;
     }
     triggerRebuild();
-  } catch (err: any) {
-    console.error(err);
-    showStatus('เกิดข้อผิดพลาดในการประมวลผล: ' + err.message);
+    // If a new request came in while we were busy, process it now
+    if (pendingProcessArgs) {
+      const args = pendingProcessArgs;
+      pendingProcessArgs = null;
+      _sendToImageWorker(args);
+    }
+  } else if (msg.type === 'error') {
+    showStatus('เกิดข้อผิดพลาดในการประมวลผล: ' + msg.message);
   }
+};
+
+async function _sendToImageWorker(args: { colorCount: number; removeBg: boolean; smoothing: number }) {
+  if (!uploadedFile) return;
+  showStatus('กำลังประมวลผลรูปภาพ...');
+  imageWorkerBusy = true;
+  try {
+    // Decode (Canvas API) on main thread — fast, just draw+getImageData
+    const img = await loadFileToImage(uploadedFile);
+    imageWorker.postMessage({
+      type: 'process',
+      data: img.data,
+      width: img.width,
+      height: img.height,
+      ...args,
+    });
+  } catch (err: any) {
+    imageWorkerBusy = false;
+    showStatus('เกิดข้อผิดพลาดในการโหลดรูป: ' + err.message);
+  }
+}
+
+async function processFile() {
+  if (!uploadedFile) return;
+  const args = { colorCount: state.colorCount, removeBg: state.removeBg, smoothing: state.imageSmoothing };
+  if (imageWorkerBusy) {
+    // Queue the latest args — worker will pick up when done
+    pendingProcessArgs = args;
+    return;
+  }
+  await _sendToImageWorker(args);
 }
 
 const worker = new Worker(new URL('./workers/geometry.worker.ts', import.meta.url), { type: 'module' });
